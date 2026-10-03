@@ -99,7 +99,7 @@ COLOR = {
 # (no reflection map here, so fully metallic surfaces render near-black: keep metals half-metallic)
 METAL = {"screws_base": (0.55, 0.3), "screws_lid": (0.55, 0.3), "torque_hinge": (0.5, 0.4), "m2_hardware": (0.55, 0.35), "lid_inserts": (0.55, 0.35), "lora": (0.5, 0.35)}
 PLASTIC_PRINT = {"bottom", "screen_back", "box_hatch", "keyboard_top", "screen_front", "battery_door",
-                 "door_lock", "hinge_cap", "hinge_axle"
+                 "door_lock", "hinge_cap", "hinge_axle",
                  "fill_logos_base", "fill_logos_lid", "fill_caps_base", "fill_stripes_base", "fill_stripes_lid"}
 PARTS = [(f, l, COLOR.get(f, c), v) for f, l, c, v in PARTS]
 
