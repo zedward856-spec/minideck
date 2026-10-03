@@ -102,15 +102,22 @@ def sd_card():
     outline = Polygon([(x0, y0), (x1, y0), (x1, y0 + W), (x0 + 6.4, y0 + W), (x0 + 6.4, y0 + W - 0.8),
                        (x0 + 5.6, y0 + W - 1.6), (x0, y0 + W - 1.6)]).buffer(0.3).buffer(-0.3)
     tm = trimesh.creation.extrude_polygon(outline, T); tm.apply_translation((0, 0, z0))
-    return tm
+    from logo import logo_poly
+    lp = logo_poly(6.6, x0 + 9.6, yc, 90.0)            # on the end that shows when the card is out
+    ink = trimesh.creation.extrude_polygon(lp, 0.04) if lp.geom_type == "Polygon" else trimesh.util.concatenate(
+        [trimesh.creation.extrude_polygon(g, 0.04) for g in lp.geoms])
+    ink.apply_translation((0, 0, z0 + T + 0.005))
+    return tm, ink
 extra = []                                          # (name, mesh, role, host)
-meshes["sdcard"] = sd_card()
+meshes["sdcard"], _sd_ink = sd_card()
+extra.append(("sdcard_logo", _sd_ink, "fill", "sdcard"))
 board, shells = radxa_box(); meshes["radxa"] = board; extra.append(("radxa_ports", shells, "metal", "radxa"))
 for f, role in (("tp4056", "metal"), ("dac", "dark")):
     meshes[f], port = port_split(f, meshes[f]); extra.append((f + "_port", port, role, f))
 
 def add(name, tm, role, parent):
     tm = tm.copy()
+    trimesh.repair.fix_winding(tm); trimesh.repair.fix_inversion(tm, multibody=True)   # outward faces (web renders one side)
     if parent == "lid":
         tm.apply_translation((0, -HY, -HZ))
     tm.metadata["name"] = name

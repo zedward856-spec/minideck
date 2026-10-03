@@ -427,6 +427,13 @@
   "list": false,
   "stripes": true
  },
+ "sdcard_logo": {
+  "label": "",
+  "role": "fill",
+  "host": "sdcard",
+  "lid": false,
+  "list": false
+ },
  "radxa_ports": {
   "label": "",
   "role": "metal",

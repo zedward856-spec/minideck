@@ -16,7 +16,7 @@ const FIXED = {          // electronics: colour, roughness, metalness
   pcb_green: ["#1f7a45", 0.5, 0.1], pcb_red: ["#a3232a", 0.5, 0.1], pcb_purple: ["#4b2a8a", 0.5, 0.1],
   pcb_blue: ["#1e4fc0", 0.5, 0.1], metal: ["#c9cacc", 0.32, 0.9], brass: ["#c8a03c", 0.35, 0.9],
   cell: ["#2f5fd0", 0.35, 0.2], flex: ["#d39a1c", 0.45, 0.1], dark: ["#1d1d1f", 0.45, 0.2],
-  glass: ["#04060a", 0.08, 0.3], ceramic: ["#e6e6dc", 0.7, 0.0], sdcard: ["#dfe2e8", 0.3, 0.15],
+  glass: ["#04060a", 0.08, 0.3], ceramic: ["#e6e6dc", 0.7, 0.0], sdcard: ["#0d0d0f", 0.28, 0.25],
 };
 const TAGGED = ["sdcard", "radxa", "18650", "lora", "pn532", "dac", "keyboard", "driver_board", "battery_door", "hinge_axle",
   "gps_module", "sdr_dongle", "mt3608", "tp4056", "screen_panel", "torque_hinge"];
@@ -118,6 +118,8 @@ const deck = new THREE.Group(); scene.add(deck);            // spins / moves
 const caseFrame = new THREE.Group(); deck.add(caseFrame);   // case mm frame (Z up) -> three (Y up)
 caseFrame.rotation.x = -Math.PI / 2;
 
+const sdLamp = new THREE.PointLight(0xffffff, 0, 90, 1.5);    // lights the card in the storage section
+sdLamp.position.set(118, 4, 34); caseFrame.add(sdLamp);
 const mats = {};
 function mat(role) {
   if (mats[role]) return mats[role];
@@ -273,20 +275,34 @@ function countUp(el) {
   requestAnimationFrame(f);
 }
 
-// ------------------------------------------------------------------ interaction: drag to spin, tap to blow it apart
-let dragV = 0, dragSpin = 0, dragging = false, lastX = 0, downX = 0, downT = 0;
-let pointer = { x: 0, y: 0 };
+// ------------------------------------------------------------------ interaction
+// drag sideways to turn the deck (it stays where you leave it); double-click / double-tap to blow it apart.
+// Vertical swipes on a phone still scroll the page.
+let dragSpin = 0, dragTarget = 0, dragging = false, moved = false, lastX = 0, downX = 0, lastTap = 0;
+let pointer = { x: 0, y: 0 }, touchUser = false;
 addEventListener("pointermove", (e) => {
-  pointer.x = e.clientX / innerWidth - .5; pointer.y = e.clientY / innerHeight - .5;
-  if (dragging) { const dx = e.clientX - lastX; lastX = e.clientX; dragV = dx * 0.01; dragSpin += dragV; }
+  if (e.pointerType === "mouse") { pointer.x = e.clientX / innerWidth - .5; pointer.y = e.clientY / innerHeight - .5; }
+  if (!dragging) return;
+  if (Math.abs(e.clientX - downX) > 6) moved = true;
+  if (moved) { dragTarget += (e.clientX - lastX) * 0.008; if (hold === null) hold = S.spin; }
+  lastX = e.clientX;
 });
-canvas.addEventListener("pointerdown", (e) => { dragging = true; lastX = downX = e.clientX; downT = performance.now(); });
-addEventListener("pointerup", (e) => {
-  if (dragging && Math.abs(e.clientX - downX) < 6 && performance.now() - downT < 300) burst(1);
+canvas.addEventListener("pointerdown", (e) => {
+  dragging = true; moved = false; lastX = downX = e.clientX;
+  touchUser = e.pointerType !== "mouse";
+});
+addEventListener("pointerup", () => {
+  if (dragging && !moved) {
+    const now = performance.now();
+    if (now - lastTap < 350) { burst(1); lastTap = 0; } else lastTap = now;
+  }
   dragging = false;
 });
+addEventListener("pointercancel", () => { dragging = false; });
+canvas.addEventListener("dblclick", (e) => e.preventDefault());
 let burstT = -10, burstAmp = 1;
 function burst(a) { if (performance.now() / 1000 - burstT > 3.2) { burstT = performance.now() / 1000; burstAmp = a; } }
+let lastScene = null, hold = null;     // after a drag the deck stays exactly where you left it
 
 // ------------------------------------------------------------------ scroll -> scene targets
 const sections = [...document.querySelectorAll("[data-scene]")];
@@ -347,6 +363,7 @@ function frame(now) {
   requestAnimationFrame(frame);
   const dt = Math.min(0.05, (now - last) / 1000); last = now;
   const t = now / 1000;
+  if (window.__inspectCam) { renderer.render(scene, window.__inspectCam); return; }   // test hook
   if (!meta || !lidNode) { renderer.render(scene, camera); return; }
   if (t0 === null) t0 = t;
   const it = t - t0;                              // intro clock
@@ -367,13 +384,16 @@ function frame(now) {
   const targetE = clamp(Math.max(T.explode, introE, burstE));
   S.explode = it < 2.6 ? targetE : damp(S.explode, targetE, burstE > 0 ? 10 : k, dt);
   S.lid = introLid !== null ? introLid : damp(S.lid, T.lid, 3.2, dt);
-  dragSpin *= Math.exp(-dt * 0.6); dragV *= 0.92;
+  if (T.scene !== lastScene) { dragTarget = 0; hold = null; lastScene = T.scene; }   // a new section takes back its view
+  if (hold !== null) T.spin = hold;
+  dragSpin = damp(dragSpin, dragTarget, 10, dt);
   // turn the short way round to the next section's angle (no unwinding whole turns)
   const dA = Math.atan2(Math.sin(T.spin - S.spin), Math.cos(T.spin - S.spin));
   S.spin += dA * (1 - Math.exp(-(it < 3 ? 1.8 : 2.4) * dt));
   for (const f of ["tilt", "x", "y", "z", "scale"]) S[f] = damp(S[f], T[f], 3, dt);
   S.battery = damp(S.battery, T.battery, 5, dt);
   S.sd = damp(S.sd, T.sd, 6, dt);
+  sdLamp.intensity = damp(sdLamp.intensity, T.scene === "storage" ? 2600 : 0, 4, dt);
 
   deck.position.set(S.x, S.y, S.z);
   deck.rotation.set(S.tilt, S.spin + dragSpin, 0, "XYZ");
@@ -426,7 +446,7 @@ function frame(now) {
     if (show) {
       P.tag.style.opacity = 1;
       P.pivot.getWorldPosition(v); v.project(camera);
-      P.tag.style.transform = `translate(${(v.x * .5 + .5) * innerWidth + 14}px, ${(-v.y * .5 + .5) * innerHeight - 10}px)`;
+      P.tag.style.transform = `translate(${(v.x * .5 + .5) * innerWidth + 70}px, ${(-v.y * .5 + .5) * innerHeight - 46}px)`;
     }
   }
 
@@ -442,8 +462,9 @@ function frame(now) {
   floorMat.uniforms.uTime.value = t;
   floorMat.uniforms.uScroll.value = scrollY / innerHeight;
   dust.rotation.y = t * 0.02; dust.position.y = -scrollY * 0.05;
-  camera.position.x = damp(camera.position.x, pointer.x * 40, 2, dt);
-  camera.position.y = damp(camera.position.y, 80 - pointer.y * 24, 2, dt);
+  const par = dragging || touchUser ? 0 : 1;         // gentle mouse parallax, none while dragging / on touch
+  camera.position.x = damp(camera.position.x, pointer.x * 24 * par, 1.5, dt);
+  camera.position.y = damp(camera.position.y, 80 - pointer.y * 14 * par, 1.5, dt);
   camera.lookAt(0, 10, 0);
 
   renderer.render(scene, camera);
