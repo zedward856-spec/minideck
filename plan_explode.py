@@ -41,8 +41,11 @@ for name, m in meta.items():
     if name.startswith("_") or "explode" not in m or name in FOLLOW:
         continue
     g = scene.geometry.get(name)
-    if g is None:
-        continue
+    if g is None:                                  # real-colour parts: one mesh per colour
+        gs = [v for k, v in scene.geometry.items() if k.startswith(name + "__c")]
+        if not gs:
+            continue
+        g = trimesh.util.concatenate(gs)
     tm = g.copy()
     if m["lid"]:
         tm.apply_transform(LIDM)

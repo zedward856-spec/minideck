@@ -111,9 +111,19 @@ def sd_card():
 extra = []                                          # (name, mesh, role, host)
 meshes["sdcard"], _sd_ink = sd_card()
 extra.append(("sdcard_logo", _sd_ink, "fill", "sdcard"))
-board, shells = radxa_box(); meshes["radxa"] = board; extra.append(("radxa_ports", shells, "metal", "radxa"))
+# real-colour models (components_web.py / coloured_radxa.py) replace the plain parts where they exist
+NATIVE = {}
+for f in list(P):
+    path = f"models/coloured/{'radxa_zero3w' if f == 'radxa' else f}.glb"
+    if os.path.exists(path):
+        sc = trimesh.load(path)
+        NATIVE[f] = [(g, tuple(int(x) for x in g.visual.face_colors[0][:3])) for g in sc.geometry.values()]
+        meshes[f] = trimesh.util.concatenate([g for g, _ in NATIVE[f]])
+if "radxa" not in NATIVE:
+    board, shells = radxa_box(); meshes["radxa"] = board; extra.append(("radxa_ports", shells, "metal", "radxa"))
 for f, role in (("tp4056", "metal"), ("dac", "dark")):
-    meshes[f], port = port_split(f, meshes[f]); extra.append((f + "_port", port, role, f))
+    if f not in NATIVE:
+        meshes[f], port = port_split(f, meshes[f]); extra.append((f + "_port", port, role, f))
 
 def add(name, tm, role, parent):
     tm = tm.copy()
@@ -155,12 +165,31 @@ for n, tm, role, host in extra:
     add(n, tm, role, "world")
     meta[n] = dict(label="", role=role, host=host, lid=False, list=False)
 
+def add_native(name, parts, parent):
+    """one node per part, one child mesh per real colour"""
+    scene.graph.update(frame_to=name, frame_from=parent, matrix=np.eye(4), geometry=None)
+    cols = {}
+    for i, (g, rgb) in enumerate(parts):
+        g = g.copy()
+        if parent == "lid":
+            g.apply_translation((0, -HY, -HZ))
+        trimesh.repair.fix_winding(g); trimesh.repair.fix_inversion(g, multibody=True)
+        cn = f"{name}__c{i}"
+        scene.add_geometry(g, geom_name=cn, node_name=cn, parent_node_name=name)
+        cols[cn] = "#%02x%02x%02x" % rgb
+    return cols
+
 for f, tm in meshes.items():
     label, role, faces, off = P[f]
-    add(f, tm, role, "lid" if f in LID else "world")
+    parent = "lid" if f in LID else "world"
+    extra_meta = {}
+    if f in NATIVE:
+        extra_meta = dict(colours=add_native(f, NATIVE[f], parent)); role = "native"
+    else:
+        add(f, tm, role, parent)
     c = tm.bounds.mean(0)
     meta[f] = dict(label=label, role=role, explode=off, lid=f in LID, list=True,
-                   centre=[float(v) for v in c])
+                   centre=[float(v) for v in c], **extra_meta)
 
 # keycaps (silicone bodies) + one legend texture covering the whole keyboard
 caps = keycaps.build()[0]

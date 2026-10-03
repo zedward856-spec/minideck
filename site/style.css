@@ -257,3 +257,4 @@ main a, main button, .panel, .card, .bom, .hazard { pointer-events: auto; }
 .wm { margin-bottom: 14px; line-height: normal; }
 .wm > svg:first-child { aspect-ratio: 5000 / 709; height: auto; }
 .wm .g1, .wm .g2 { height: 100%; }
+.credits { display: inline-block; margin-top: 6px; font-size: 10px; color: #6a6a72; }

@@ -188,7 +188,12 @@ async function loadDeck() {
     if (!o.isMesh) return;
     let n = o.name, m = meta[n];
     for (let p = o; !m && p; p = p.parent) { n = p.name; m = meta[n]; }
-    o.material = mat(m ? m.role : "body");
+    if (m && m.role === "native") {                // real-colour component models: keep their colours
+      const hex = (m.colours && m.colours[o.name]) || "#808080", c = new THREE.Color(hex);
+      const grey = Math.abs(c.r - c.g) < 0.04 && Math.abs(c.g - c.b) < 0.06 && c.r > 0.55;
+      const gold = c.r > 0.7 && c.g > 0.45 && c.b < 0.45 && c.r - c.b > 0.3;
+      o.material = new THREE.MeshStandardMaterial({ color: c, roughness: grey || gold ? 0.32 : 0.55, metalness: grey || gold ? 0.75 : 0.08 });
+    } else o.material = mat(m ? m.role : "body");
     o.geometry = toCreasedNormals(o.geometry, THREE.MathUtils.degToRad(35));
     o.castShadow = o.receiveShadow = false;
   });
