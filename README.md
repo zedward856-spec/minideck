@@ -53,6 +53,7 @@ The logos, MINIDECK text and side stripes are engraved 0.3–0.6 mm deep. The re
 | `battery_lock_slider.stl` | Battery door C-clip lock | Cyber yellow `#F7D116` | Slides on a rail; no screw |
 | `hinge_cap.stl` | Torque hinge end cap | Cyber yellow `#F7D116` | Logo engraved |
 | `hinge_axle.stl` | Hollow hinge axle (cable bore) | Cyber yellow `#F7D116` | Logo on the flange |
+| `sd_guide.stl` | microSD guide sleeve | Charcoal `#2D2D2D` | Card-sized slot in the left wall to the socket; print floor down |
 | `battery_strip_test.stl` | Battery door / lock test strip | any | Optional fit test |
 
 Suggested filament: Bambu PLA Matte Charcoal, PLA Basic Dark Gray and PLA Basic Sunflower Yellow.

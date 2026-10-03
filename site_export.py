@@ -34,7 +34,8 @@ P = {
     "antenna_lora":  ("LoRa antenna", "flex", 1000, (0, 34, -6)),
     "antenna_wifi":  ("Wi-Fi/BT antenna", "flex", 1000, (0, 40, -10)),
     "antenna_sdr":   ("SDR antenna", "flex", 1000, (0, 46, -14)),
-    "sdcard":        ("microSD card", "sdcard", 0, (30, 0, 0)),
+    "sdcard":        ("microSD card", "sdcard", 0, (-30, 0, 0)),
+    "sd_guide":      ("microSD guide sleeve", "body", 4000, (0, 0, 24)),
     "m2_hardware":   ("M2 inserts", "brass", 3000, (0, 10, -40)),
     "screws_base":   ("M2 screws", "metal", 6000, None),
     "screen_back":   ("Lid shell", "body", 50000, (0, 0, 34)),
@@ -92,18 +93,19 @@ for f, (label, role, faces, off) in P.items():
         continue
     meshes[f] = load(f, faces) if f != "radxa" else None
 def sd_card():
-    """a microSD card (11 x 15 x 0.75, with its side step) seated in the Radxa's socket: slot in the right wall"""
+    """a microSD card (11 x 15 x 0.75, with its side step) seated in the Radxa's socket at the board's LEFT end,
+    reached through the left-wall slot and the guide sleeve; the Optic logo on the end that shows"""
     from shapely.geometry import Polygon
-    from shapely.ops import unary_union
-    L, W, T = 15.0, 11.0, 0.75
-    x1 = 90.5; x0 = x1 - L                        # its outer end sits just inside the wall slot
-    yc, z0 = 18.6, 20.0
-    y0 = yc - W / 2
-    outline = Polygon([(x0, y0), (x1, y0), (x1, y0 + W), (x0 + 6.4, y0 + W), (x0 + 6.4, y0 + W - 0.8),
-                       (x0 + 5.6, y0 + W - 1.6), (x0, y0 + W - 1.6)]).buffer(0.3).buffer(-0.3)
+    from params import SD_CARD
+    L, T = 15.0, 0.75
+    y0, y1 = SD_CARD["y"]; z0 = SD_CARD["z"][0]
+    x0 = SD_CARD["mouth_x"] - SD_CARD["protrude"]; x1 = x0 + L      # x0: outer end (toward the left wall), x1: contacts
+    outline = Polygon([(x0, y0), (x1, y0), (x1, y1), (x0, y1)]).difference(
+        Polygon([(x0 + 6.4, y1 - 0.8), (x0 + 5.6, y1 - 1.6), (x0 - 1, y1 - 1.6), (x0 - 1, y1 + 1), (x0 + 6.4, y1 + 1)]))
+    outline = outline.buffer(0.3).buffer(-0.3)
     tm = trimesh.creation.extrude_polygon(outline, T); tm.apply_translation((0, 0, z0))
     from logo import logo_poly
-    lp = logo_poly(6.6, x0 + 9.6, yc, 90.0)            # on the end that shows when the card is out
+    lp = logo_poly(5.6, x0 + 3.6, (y0 + y1) / 2 - 0.6, 90.0)         # on the outer end, the part you see
     ink = trimesh.creation.extrude_polygon(lp, 0.04) if lp.geom_type == "Polygon" else trimesh.util.concatenate(
         [trimesh.creation.extrude_polygon(g, 0.04) for g in lp.geoms])
     ink.apply_translation((0, 0, z0 + T + 0.005))

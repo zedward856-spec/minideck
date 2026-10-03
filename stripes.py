@@ -50,9 +50,9 @@ def keepouts(part, face):
         g.append(sbox(bt.HY - bt.KR - 1.1, B.FLOOR, bt.REC_Y1, bt.REC_Z1))          # battery door
         g.append(sbox(bt.REC_Y1, bt.LOCK_ZB - 0.2, bt.LOCK_REC_Y1,                  # lock slider
                       bt.LOCK_ZB + bt.LOCK_TRAVEL + bt.LOCK_BODY[1] + 0.2))
-    elif face == "right":
-        rb = L.bounds("radxa")
-        g.append(sbox(rb[1] + 9.0, rb[5] - 0.3, rb[1] + 25.0, rb[5] + RADXA_TOP_PARTS))  # microSD
+        import sd_guide                                                              # microSD slot
+        y0, z0, y1, z1 = sd_guide.OUTER
+        g.append(sbox(y0 - SD_GUIDE["wall_clr"], z0 - SD_GUIDE["wall_clr"], y1 + SD_GUIDE["wall_clr"], z1 + SD_GUIDE["wall_clr"]))
     return unary_union(g).buffer(SIDE_STRIPES["hole_gap"], 32) if g else None
 
 

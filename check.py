@@ -279,6 +279,48 @@ os.makedirs("out/parts_in_place", exist_ok=True)
 for n, m in scene.geometry.items():
     m.export(f"out/parts_in_place/{n}.stl")
 
+
+# ---------------- microSD: card-sized slot in the left wall + guide sleeve, card path clear ----------------
+import pyvista as _pv, glob as _glob, sd_guide as _sd
+def _inside(pts, mesh):
+    """points strictly inside a closed mesh (VTK test: light on memory)"""
+    m = _pv.PolyData(mesh.vertices, np.c_[np.full(len(mesh.faces), 3), mesh.faces].ravel())
+    import warnings
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        r = _pv.PolyData(np.asarray(pts, float)).select_enclosed_points(m, tolerance=1e-6, check_surface=False)
+    return np.asarray(r["SelectedPoints"]).astype(bool)
+_sleeve = tm(_sd.sleeve(), "sd_guide")
+_pts, _fi = trimesh.sample.sample_surface(_sleeve, 6000)
+_pts = _pts - _sleeve.face_normals[_fi] * 0.06                      # just inside the sleeve's skin
+_others = {"case": bot, "TP4056": P["tp4056"], "keyboard": P["keyboard"]} if "tp4056" in P else {"case": bot}
+if os.path.exists("models/radxa_zero3w_official_placed.stl"):
+    _others["Radxa"] = trimesh.load("models/radxa_zero3w_official_placed.stl")
+for _f in _glob.glob("out/parts_in_place/wires_base_*.stl"):
+    _others["wire " + _f.split("_")[-1][:-4]] = trimesh.load(_f)
+_hits = {k: int(_inside(_pts, v).sum()) for k, v in _others.items() if v.is_watertight or k == "case"}
+req("microSD guide sleeve clear of the case, TP4056, keyboard, Radxa and wires", not any(_hits.values()),
+    ", ".join(f"{k} {v}" for k, v in _hits.items() if v) or "none")
+cy0, cy1 = SD_CARD["y"]; cz0, cz1 = SD_CARD["z"]
+_x_in = SD_CARD["mouth_x"] - SD_CARD["protrude"]
+_card = trimesh.creation.box(bounds=[[0, cy0, cz0], [15.0, cy1, cz1]])
+_cp = _card.sample(1500) * [1, 1, 1]
+_cp = _cp + (np.sign(_card.bounds.mean(0) - _cp) * [0.05, 0.05, 0.05])
+_path_hits = {}
+for _x in np.arange(-16.0, _x_in + 0.01, 0.5):
+    _q = _cp + [_x, 0, 0]
+    _q = _q[_q[:, 0] < 23.6]                                         # past the sleeve it is in the socket
+    if not len(_q):
+        continue
+    for k, v in {"case": bot, "sleeve": _sleeve, **({"TP4056": P["tp4056"]} if "tp4056" in P else {})}.items():
+        n = int(_inside(_q, v).sum())
+        if n:
+            _path_hits[k] = _path_hits.get(k, 0) + n
+req("microSD card slides in from the left wall to the socket without touching anything", not _path_hits,
+    ", ".join(f"{k} {v}" for k, v in _path_hits.items()) or f"slot {cy1 - cy0 + 2 * SD_GUIDE['clr']:.1f} x {cz1 - cz0 + 2 * SD_GUIDE['clr']:.2f} mm, path clear")
+req("right wall closed (no hole in front of the camera connector)",
+    bool(_inside([[OUT_W - 1.0, 18.7, 20.6], [OUT_W - 1.0, 15.0, 20.0], [OUT_W - 1.0, 22.0, 21.2]], bot).all()))
+
 # ---------------- report ----------------
 lines = ["# Minideck fit + requirements check", ""]
 ok = sum(1 for _, k, _ in R if k)

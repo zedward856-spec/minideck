@@ -2,7 +2,9 @@
 
 Radxa ZERO 3W, mounted upside down: the 40 header pads (no header fitted) face UP under the
 keyboard - solder wires on that side and lay them flat (~3 mm of room above the board).
-Pin 1 is assumed at the microSD end, odd pins on the inner row (Pi-Zero layout) - check the
+Pin 1 is at the microSD end (Pi-Zero layout). Radxa's board drawing puts the microSD socket at the board's
+**left** end in this case (the camera FPC is at the right end), so pin 1 is at the left end. The 3D wire routes in
+the viewer were drawn with pin 1 at the right end: go by the pin numbers below, not the 3D routes, and check the
 square pad / '1' mark on your board before soldering.
 
 ## Radxa header use

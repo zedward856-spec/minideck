@@ -59,6 +59,7 @@ Files are in `out/`. PLA, 0.4 mm nozzle.
 | `battery_door.stl` | Cyber yellow `#F7D116` (e.g. PLA Basic Sunflower Yellow) | **Print upright, with a brim** (0.4 mm skin) |
 | `battery_lock_slider.stl` | Cyber yellow | 0.12 mm |
 | `hinge_cap.stl`, `hinge_axle.stl` | Cyber yellow | 0.12 mm |
+| `sd_guide.stl` | Charcoal | 0.12 mm, floor down (the channel roof bridges 11.5 mm) |
 
 **Optional paint fill.** The logos, MINIDECK text and side stripes are engraved 0.3–0.6 mm deep. Go over them with a paint marker (yellow on the dark parts, black on the yellow hinge caps) and wipe the surface with IPA.
 
@@ -99,31 +100,33 @@ The order follows the collision-checked teardown on the promo site, played forwa
 1. **PN532** into its floor pocket.
 2. **FPC antennas** onto the hinge-box walls: LoRa and SDR on the back wall, Wi-Fi/BT on the top.
 3. **LoRa module** and **DAC**, jack into its front hole.
-4. **Radxa**, upside down, USB-C ports into the front-wall openings; the microSD socket lines up with the right-wall slot.
+4. **Radxa**, upside down, USB-C ports into the front-wall openings. Its microSD socket is at the board's **left** end (the camera connector is at the right end).
 5. **GPS board** in the bay right of the battery; **MT3608** and **TP4056** (USB-C into its front opening).
-6. **SDR** into the hinge box; route its antenna coax.
+6. **microSD guide sleeve:** from inside, push its nose into the slot in the left wall until the flange sits against the wall. It rests over the TP4056 and stops just before the Radxa's edge.
+7. **SDR** into the hinge box; route its antenna coax.
 
 **Lid**
-7. **GPS patch** into its pocket in the lid shell, coax out through the hinge.
-8. **Driver board**, then the **panel**, FPC to the driver.
-9. **Bezel** on, 4 × M2 × 4 into the lid inserts.
+8. **GPS patch** into its pocket in the lid shell, coax out through the hinge.
+9. **Driver board**, then the **panel**, FPC to the driver.
+10. **Bezel** on, 4 × M2 × 4 into the lid inserts.
 
 **Hinge**
-10. **Torque hinge** body into the left cheek pocket, D-shaft into the lid barrel.
-11. Feed the HDMI ribbon, screen power and GPS coax through the **hollow axle**, then slide the axle in from the right until the flange sits flush.
-12. **Hinge cap** over the torque hinge on the left.
+11. **Torque hinge** body into the left cheek pocket, D-shaft into the lid barrel.
+12. Feed the HDMI ribbon, screen power and GPS coax through the **hollow axle**, then slide the axle in from the right until the flange sits flush.
+13. **Hinge cap** over the torque hinge on the left.
 
 **Keyboard**
-13. **CardKB** in, its Grove wires out through the groove to the PN532.
-14. **Keyboard plate** on, 4 × M2 × 4 into the pilots. Don't overtighten: they're printed threads.
-15. **Silicone cover** over the keys.
+14. **CardKB** in, its Grove wires out through the groove to the PN532.
+15. **Keyboard plate** on, 4 × M2 × 4 into the pilots. Don't overtighten: they're printed threads.
+16. **Silicone cover** over the keys.
 
 **Battery and finishing**
-16. **Door:** line up the knuckles and drop the 1.75 mm filament pin in from the top of the wall.
-17. **C-clip lock** onto its rail; it slides up to unlock and down to lock.
-18. **18650** in, button (+) first, then close the door and slide the lock down.
-19. **Hatch** on the hinge-box floor, 4 × M2 × 4.
-20. **microSD** into the right-wall slot until it clicks.
+17. **Door:** line up the knuckles and drop the 1.75 mm filament pin in from the top of the wall.
+18. **C-clip lock** onto its rail; it slides up to unlock and down to lock.
+19. **18650** in, button (+) first, then close the door and slide the lock down.
+20. **Hatch** on the hinge-box floor, 4 × M2 × 4.
+21. **microSD** in through the left-wall slot, contacts first and label up, then push it home with a thin plastic strip. The socket sits about 25 mm in.
+    **Tip:** stick a strip of Kapton tape on the card as a pull tab long enough to reach the slot. Then you can pull the card back out without tools.
 
 ---
 

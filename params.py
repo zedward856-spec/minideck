@@ -156,3 +156,10 @@ LOGO = dict(
 BEZEL_LOGO = dict(width=9.5, depth=0.5, enabled=True)        # under the screen, centred in the strip
 PLATE_LOGO = dict(width=13.0, depth=0.4, x=8.8, y=45.5, enabled=True)   # keyboard plate, top left
 HINGE_LOGO = dict(width=9.0, depth=0.3, enabled=True)        # both hinge end caps (always upright)
+
+# ---- microSD: the socket is at the board's LEFT end (Radxa drawing: TF on the bottom side, the 22-pin
+# camera FPC at the right end). Card goes in through a card-sized slot in the left wall and a separate
+# printed guide sleeve (sd_guide.py) over the TP4056, ending just before the board edge.
+SD_CARD = dict(y=(12.4, 23.4), z=(20.42, 21.17), mouth_x=26.5, protrude=2.0)   # inserted card, case frame
+SD_GUIDE = dict(clr=0.25, side=1.0, floor_z=19.5, top_z=22.55, x1=23.6, flange=1.0, flange_x=1.0,
+                wall_clr=0.15, flare=(0.5, 0.9))   # flare: extra width/height at the mouth, over this depth

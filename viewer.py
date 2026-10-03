@@ -28,7 +28,7 @@ PARTS = [  # file, label, colour, start visible
     ("antenna_lora", "LoRa FPC antenna", "#e6c828", True), ("antenna_wifi", "Wi-Fi/BT FPC antenna", "#3cc8e6", True),
     ("antenna_sdr", "SDR FPC antenna", "#e678c8", True), ("sdr_dongle", "NESDR Nano 2+", "#1e1e1e", True),
     ("m2_hardware", "M2 inserts (hatch)", "#c8a03c", True), ("lid_inserts", "lid M2 inserts", "#c8a03c", True), ("torque_hinge", "torque hinge", "#282828", True), ("hinge_cap", "torque hinge cap", "#9aa7b0", True),
-    ("hinge_axle", "hinge axle tube", "#c83c3c", True), ("door_lock", "battery door C-clip lock", "#f0c828", True), ("box_hatch", "box floor hatch", "#6e7882", True),
+    ("hinge_axle", "hinge axle tube", "#c83c3c", True), ("door_lock", "battery door C-clip lock", "#f0c828", True), ("sd_guide", "microSD guide sleeve", "#2d2d2d", True), ("box_hatch", "box floor hatch", "#6e7882", True),
 ]
 WIRES = [("pwr", "wires: 5V / battery +", "#d62828"), ("gnd", "wires: GND", "#2b2b2b"),
          ("v33", "wires: 3.3V", "#f77f00"), ("i2c", "wires: I2C (CardKB, PN532)", "#277da1"),
@@ -99,7 +99,7 @@ COLOR = {
 # (no reflection map here, so fully metallic surfaces render near-black: keep metals half-metallic)
 METAL = {"screws_base": (0.55, 0.3), "screws_lid": (0.55, 0.3), "torque_hinge": (0.5, 0.4), "m2_hardware": (0.55, 0.35), "lid_inserts": (0.55, 0.35), "lora": (0.5, 0.35)}
 PLASTIC_PRINT = {"bottom", "screen_back", "box_hatch", "keyboard_top", "screen_front", "battery_door",
-                 "door_lock", "hinge_cap", "hinge_axle",
+                 "door_lock", "hinge_cap", "hinge_axle", "sd_guide",
                  "fill_logos_base", "fill_logos_lid", "fill_caps_base", "fill_stripes_base", "fill_stripes_lid"}
 PARTS = [(f, l, COLOR.get(f, c), v) for f, l, c, v in PARTS]
 
@@ -261,7 +261,7 @@ def set_opacity(o):
 
 p.add_slider_widget(set_opacity, [0.05, 1.0], value=OPACITY, title="transparency (1 = solid)",
                     pointa=(0.6, 0.20), pointb=(0.95, 0.20), style="modern", interaction_event="end")
-ROLE = {"bottom": "body", "screen_back": "body", "box_hatch": "body", "keyboard_top": "kbplate",
+ROLE = {"bottom": "body", "screen_back": "body", "box_hatch": "body", "sd_guide": "body", "keyboard_top": "kbplate",
         "screen_front": "kbplate", "battery_door": "accent", "door_lock": "accent2", "hinge_cap": "accent2",
         "hinge_axle": "accent2", "fill_logos_base": "accent", "fill_logos_lid": "accent",
         "fill_stripes_base": "accent", "fill_stripes_lid": "accent", "fill_caps_base": "body"}

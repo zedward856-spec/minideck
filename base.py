@@ -324,8 +324,10 @@ def bottom():
     # micro-HDMI stays inside: no hole, but the wall is thinned in front of it for the most room
     hx0, hx1 = rp["hdmi"]
     b -= box(hx0 - 1.0, HDMI_SKIN, rp["z"][0] - 1.0, hx1 + 1.0, IN_Y0 + 0.1, rp["z"][1] + 1.0)
-    # right wall: the Radxa's microSD (upside down, so its socket is on top at the right end)
-    b -= box(IN_X1 - 0.1, rb[1] + 9.0, rb[5] - 0.3, OUT_W + 1, rb[1] + 25.0, rb[5] + RADXA_TOP_PARTS)
+    # left wall: card-sized slot for the microSD guide sleeve (the socket is at the board's LEFT end;
+    # the right end has the camera FPC, so the right wall stays closed)
+    import sd_guide
+    b -= sd_guide.wall_cut()
 
 
     b &= outline_prism(-1, TOP_Z + 10)                   # nothing sticks outside the cover's outline
