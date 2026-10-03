@@ -39,7 +39,10 @@ def _rgb(h):
     h = h.lstrip("#"); return tuple(int(h[i:i + 2], 16) for i in (0, 2, 4))
 
 def legend(main, sec, w, h, px=24, key="#161618", ink="#f0f0f0"):
-    """Texture for one key top: silicone colour `key`, legends in `ink` (inverted labels swap them)."""
+    return pv.Texture(np.asarray(legend_image(main, sec, w, h, px, key, ink)))
+
+def legend_image(main, sec, w, h, px=24, key="#161618", ink="#f0f0f0"):
+    """Image for one key top: silicone colour `key`, legends in `ink` (inverted labels swap them)."""
     W, H = int(w * px), int(h * px)
     kc, ic = _rgb(key), _rgb(ink)
     im = Image.new("RGB", (W, H), kc); d = ImageDraw.Draw(im)
@@ -59,7 +62,7 @@ def legend(main, sec, w, h, px=24, key="#161618", ink="#f0f0f0"):
         if sec:
             f2 = ImageFont.truetype(FONT, int(H * 0.26))
             d.text((W * 0.66, H * 0.06), sec, font=f2, fill=ic)
-    return pv.Texture(np.asarray(im))
+    return im
 
 def build():
     """[(keycap mesh, None), (legend plane, texture), ...] in the case frame."""

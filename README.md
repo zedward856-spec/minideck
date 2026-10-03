@@ -104,6 +104,10 @@ Every wire, pin and splice is in **[WIRING.md](WIRING.md)**.
 | `models/` | Source models, Corpta font, logo SVG, Radxa downloads and schematic |
 | `docs/img/` | README renders |
 
+## Promo site
+
+Live at https://zedward856-spec.github.io/minideck-site/ (repo `minideck-site`). Re-export the web model with `python3 site_export.py` (writes into `../minideck-site/assets/`).
+
 ## Build and view
 
 ```bash
