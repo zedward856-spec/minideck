@@ -34,6 +34,7 @@ P = {
     "antenna_lora":  ("LoRa antenna", "flex", 1000, (0, 34, -6)),
     "antenna_wifi":  ("Wi-Fi/BT antenna", "flex", 1000, (0, 40, -10)),
     "antenna_sdr":   ("SDR antenna", "flex", 1000, (0, 46, -14)),
+    "sdcard":        ("microSD card", "sdcard", 0, (30, 0, 0)),
     "m2_hardware":   ("M2 inserts", "brass", 3000, (0, 10, -40)),
     "screws_base":   ("M2 screws", "metal", 6000, None),
     "screen_back":   ("Lid shell", "body", 50000, (0, 0, 34)),
@@ -90,7 +91,20 @@ for f, (label, role, faces, off) in P.items():
     if not os.path.exists(f"{SRC}/{f}.stl"):
         continue
     meshes[f] = load(f, faces) if f != "radxa" else None
+def sd_card():
+    """a microSD card (11 x 15 x 0.75, with its side step) seated in the Radxa's socket: slot in the right wall"""
+    from shapely.geometry import Polygon
+    from shapely.ops import unary_union
+    L, W, T = 15.0, 11.0, 0.75
+    x1 = 90.5; x0 = x1 - L                        # its outer end sits just inside the wall slot
+    yc, z0 = 18.6, 20.0
+    y0 = yc - W / 2
+    outline = Polygon([(x0, y0), (x1, y0), (x1, y0 + W), (x0 + 6.4, y0 + W), (x0 + 6.4, y0 + W - 0.8),
+                       (x0 + 5.6, y0 + W - 1.6), (x0, y0 + W - 1.6)]).buffer(0.3).buffer(-0.3)
+    tm = trimesh.creation.extrude_polygon(outline, T); tm.apply_translation((0, 0, z0))
+    return tm
 extra = []                                          # (name, mesh, role, host)
+meshes["sdcard"] = sd_card()
 board, shells = radxa_box(); meshes["radxa"] = board; extra.append(("radxa_ports", shells, "metal", "radxa"))
 for f, role in (("tp4056", "metal"), ("dac", "dark")):
     meshes[f], port = port_split(f, meshes[f]); extra.append((f + "_port", port, role, f))
@@ -161,6 +175,8 @@ meta["legends"] = dict(rect=[x0, y0, x1, y1], z=z, explode=(0, 0, 66), lid=False
 # the screen's active area (video goes here), in the lid frame
 meta["_screen"] = dict(cx=Ld.ACT_X0 + ACTIVE_W / 2, cy=Ld.ACT_Y0 + ACTIVE_H / 2 - HY, z=Ld.PANEL_Z - 0.06 - HZ,
                        w=ACTIVE_W, h=ACTIVE_H, explode=(0, 0, -12))
+import battery_test as BT
+meta["_battery"] = dict(hx=BT.HX, hy=BT.HY, travel=BT.LOCK_TRAVEL, cell_out=BT.CELL_L + 12.0, door_open=100.0)
 meta["_hinge"] = dict(y=HY, z=HZ, max_open=B.MAX_OPEN)
 scene.export(f"{OUT}/minideck.glb")
 json.dump(meta, open(f"{OUT}/parts.json", "w"), indent=1, default=float)

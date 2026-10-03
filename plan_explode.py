@@ -103,13 +103,20 @@ class Grid:
             lab = lab[lab != i]
         return np.unique(lab)
     def counts(self, n, shift):
-        """{other body: overlapping voxels} for body n moved by shift"""
+        """{other body: overlapping voxels} for body n moved by shift (voxels shared by several bodies
+        count for each of them)"""
         self._build()
         if not len(self._k):
             return {}
         q = keys(V[n] + np.round(np.asarray(shift)).astype(int))
-        p = np.searchsorted(self._k, q); p[p >= len(self._k)] = 0
-        lab = self._l[p[self._k[p] == q]]
+        lo = np.searchsorted(self._k, q, "left"); hi = np.searchsorted(self._k, q, "right")
+        m = hi > lo
+        lo, hi = lo[m], hi[m]
+        if not len(lo):
+            return {}
+        cnt = hi - lo
+        pos = np.repeat(lo - np.cumsum(np.r_[0, cnt[:-1]]), cnt) + np.arange(cnt.sum())
+        lab = self._l[pos]
         lab = lab[lab != idx[n]]
         u, c = np.unique(lab, return_counts=True)
         return dict(zip(u.tolist(), c.tolist()))
@@ -140,7 +147,7 @@ def blocked(g, n, shift, prev):
 while len(remaining) > 1:
     rlo, rhi = bbox(remaining)
     best = None
-    for n in sorted(remaining - {FIXED}, key=lambda n: (not n.startswith("screws"), -V[n][:, 2].max())):
+    for n in sorted(remaining - {FIXED}, key=lambda n: (not (n.startswith("screws") or n == "sdcard"), -V[n][:, 2].max())):
         lo, hi = V[n].min(0), V[n].max(0)
         for d in (DIRS + LID_DIRS if meta[n]["lid"] else DIRS):
             d = np.array(d, float)
@@ -157,7 +164,7 @@ while len(remaining) > 1:
                     break
             if free:
                 clear = k * np.linalg.norm(d) * PITCH
-                score = clear + (0 if d[2] > 0.3 else 6) - (30 if n.startswith("screws") else 0)   # screws first, short pulls, upwards
+                score = clear + (0 if d[2] > 0.3 else 6) - (30 if n.startswith("screws") or n == "sdcard" else 0)   # screws first, short pulls, upwards
                 if best is None or score < best[0]:
                     best = (score, n, d, clear)
         if best and best[0] < 12:                            # good enough: take it now
@@ -209,9 +216,22 @@ for n in reversed(order):
 # ---------------------------------------------------------------- 3. timeline (same formulas as main.js) + replay check
 N = len(order)
 dur = DUR_K / N
+def clear_time(n):
+    """when part n is out of the assembly (its smoothstep reaches clear/dist)"""
+    p = plan[n]; target = min(1.0, p["clear"] / p["dist"])
+    u = 0.5 - np.sin(np.arcsin(1 - 2 * target) / 3)           # inverse smoothstep
+    return p["t0"] + u * (p["t1"] - p["t0"])
+start = 0.0
 for i, n in enumerate(order):
-    t0 = i / max(N - 1, 1) * SPAN
-    plan[n].update(t0=float(t0), t1=float(min(1.0, t0 + dur)), order=i, tumble=TUMBLE[n])
+    t0 = max(i / max(N - 1, 1) * SPAN, start)
+    for j in order[:i]:                    # wait for anything it touches to be clear first
+        if INIT[n].get(idx[j], 0) > 0 or INIT[j].get(idx[n], 0) > 0:
+            t0 = max(t0, clear_time(j) + 0.002)
+    plan[n].update(t0=float(t0), t1=float(t0 + dur), order=i, tumble=TUMBLE[n])
+    start = t0
+end = max(p["t1"] for p in plan.values())
+for n in order:                              # squeeze the whole teardown into E 0..1
+    plan[n]["t0"] /= end; plan[n]["t1"] /= end
 
 def offset(n, E):
     p = plan[n]; u = np.clip((E - p["t0"]) / (p["t1"] - p["t0"]), 0, 1)
@@ -251,3 +271,12 @@ for n, h in FOLLOW.items():
 meta["_plan"] = dict(lid_deg=LID_DEG, n=N, pairs=len(bad))
 json.dump(meta, open(f"{SITE}/parts.json", "w"), indent=1)
 print("wrote plan for", N, "parts")
+
+if os.environ.get("DEBUG_PAIR"):
+    a, b2 = os.environ["DEBUG_PAIR"].split(",")
+    print(a, plan[a]); print(b2, plan[b2])
+    for E in np.linspace(0, 1, 41):
+        g = Grid(); g.put(b2, np.round(offset(b2, E) / PITCH).astype(int))
+        c = g.counts(a, np.round(offset(a, E) / PITCH).astype(int)).get(idx[b2], 0)
+        if c > INIT[a].get(idx[b2], 0) + TOL:
+            print(f"   E={E:.3f} overlap {c} (init {INIT[a].get(idx[b2], 0)})")

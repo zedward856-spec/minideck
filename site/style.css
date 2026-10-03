@@ -242,3 +242,11 @@ main a, main button, .panel, .card, .bom, .hazard { pointer-events: auto; }
 .wm .g1 { fill: var(--c); transform: translate(-3px, 0); animation: g1 3.2s infinite steps(1); }
 .wm .g2 { fill: var(--m); transform: translate(3px, 0); animation: g2 2.7s infinite steps(1); }
 .wm-small { height: 13px; width: auto; fill: var(--ink); }
+
+.steps { list-style: none; padding: 0; margin: 18px 0; font-size: 13px; }
+.steps li { padding: 10px 12px; border-left: 2px solid rgba(255,255,255,.12); color: var(--dim); transition: all .3s; }
+.steps li b { color: var(--dim); margin-right: 10px; }
+.steps li.on { border-color: var(--y); color: var(--ink); background: rgba(247,209,22,.08); }
+.steps li.on b { color: var(--y); }
+.steps li.done { color: #777; text-decoration: line-through; text-decoration-color: rgba(247,209,22,.5); }
+.scene.tall3 { height: 200vh; display: block; padding-top: 0; padding-bottom: 0; }

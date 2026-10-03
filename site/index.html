@@ -51,7 +51,7 @@
     <svg class="wm-small" viewBox="36 -705 5000 709" aria-label="MINIDECK"><use href="#wm"/></svg>
   </a>
   <nav class="mono">
-    <a href="#apart">teardown</a><a href="#hinge">hinge</a><a href="#specs">specs</a><a href="#palettes">colours</a><a href="#parts">parts</a><a href="#contact" class="hot">contact</a>
+    <a href="#apart">teardown</a><a href="#hinge">hinge</a><a href="#power">power</a><a href="#specs">specs</a><a href="#palettes">colours</a><a href="#parts">parts</a><a href="#contact" class="hot">contact</a>
   </nav>
 </header>
 
@@ -106,10 +106,38 @@
     </div>
   </section>
 
+  <!-- POWER: how the 18650 comes out -->
+  <section id="power" class="scene tall2" data-scene="power">
+    <div class="sticky">
+      <div class="panel left reveal">
+        <p class="kicker mono">03 — power</p>
+        <h2>Swap the cell.<br><em>No tools.</em></h2>
+        <ol class="steps mono" id="steps">
+          <li><b>01</b> Slide the C-clip lock up</li>
+          <li><b>02</b> Swing the door open on its pin</li>
+          <li><b>03</b> Slide the 18650 out</li>
+        </ol>
+        <p class="small">Spare cell in, door shut, lock down. USB-C charging inside if you don't carry a spare.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STORAGE: microSD in the side slot -->
+  <section id="storage" class="scene tall3" data-scene="storage">
+    <div class="sticky">
+      <div class="panel right reveal">
+        <p class="kicker mono">03b — storage</p>
+        <h2>New OS?<br><em>Push. Click.</em></h2>
+        <p>The microSD slides into a slot in the right wall, straight into the Radxa's socket. No screws, no opening the case.</p>
+        <div class="meter mono"><span>card</span><b id="sdPct">out</b></div>
+      </div>
+    </div>
+  </section>
+
   <!-- SPECS -->
   <section id="specs" class="scene" data-scene="specs">
     <div class="panel wide">
-      <p class="kicker mono reveal">03 — spec sheet</p>
+      <p class="kicker mono reveal">04 — spec sheet</p>
       <h2 class="reveal">Small box. <em>Big radio.</em></h2>
       <div class="grid">
         <div class="card reveal"><b class="num" data-to="93.7" data-dec="1">0</b><span>mm wide</span></div>
@@ -123,7 +151,8 @@
         <div class="card reveal"><b>NFC</b><span>PN532 under the palm rest</span></div>
         <div class="card reveal"><b>SDR</b><span>NESDR Nano 2+ on the header pins</span></div>
         <div class="card reveal"><b>Hi-Fi</b><span>PCM5102 I²S DAC · 3.5 mm</span></div>
-        <div class="card reveal"><b>18650</b><span>USB-C charging · 5.1 V boost</span></div>
+        <div class="card reveal"><b>18650</b><span>tool-free swap · USB-C charging</span></div>
+        <div class="card reveal"><b>µSD</b><span>side slot · swap the OS in seconds</span></div>
       </div>
     </div>
   </section>
@@ -133,7 +162,7 @@
   <!-- PALETTES -->
   <section id="palettes" class="scene" data-scene="palettes">
     <div class="panel left reveal">
-      <p class="kicker mono">04 — finishes</p>
+      <p class="kicker mono">05 — finishes</p>
       <h2>Pick your<br><em>faction.</em></h2>
       <p>Single-filament prints with paint-filled engravings. No AMS needed.</p>
       <div id="swatches"></div>
@@ -144,7 +173,7 @@
   <!-- PARTS -->
   <section id="parts" class="scene" data-scene="parts">
     <div class="panel wide solid">
-      <p class="kicker mono reveal">05 — bill of materials</p>
+      <p class="kicker mono reveal">06 — bill of materials</p>
       <h2 class="reveal">What's <em>inside.</em></h2>
       <div class="bom">
         <div class="reveal"><h3>Printed</h3><table id="bom-printed"></table></div>

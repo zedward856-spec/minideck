@@ -16,9 +16,9 @@ const FIXED = {          // electronics: colour, roughness, metalness
   pcb_green: ["#1f7a45", 0.5, 0.1], pcb_red: ["#a3232a", 0.5, 0.1], pcb_purple: ["#4b2a8a", 0.5, 0.1],
   pcb_blue: ["#1e4fc0", 0.5, 0.1], metal: ["#c9cacc", 0.32, 0.9], brass: ["#c8a03c", 0.35, 0.9],
   cell: ["#2f5fd0", 0.35, 0.2], flex: ["#d39a1c", 0.45, 0.1], dark: ["#1d1d1f", 0.45, 0.2],
-  glass: ["#04060a", 0.08, 0.3], ceramic: ["#e6e6dc", 0.7, 0.0],
+  glass: ["#04060a", 0.08, 0.3], ceramic: ["#e6e6dc", 0.7, 0.0], sdcard: ["#dfe2e8", 0.3, 0.15],
 };
-const TAGGED = ["radxa", "18650", "lora", "pn532", "dac", "keyboard", "driver_board", "battery_door", "hinge_axle",
+const TAGGED = ["sdcard", "radxa", "18650", "lora", "pn532", "dac", "keyboard", "driver_board", "battery_door", "hinge_axle",
   "gps_module", "sdr_dongle", "mt3608", "tp4056", "screen_panel", "torque_hinge"];
 const BOM = {
   printed: [["Case bottom", "body"], ["Keyboard plate", "kbplate"], ["Lid shell", "body"], ["Screen bezel", "kbplate"],
@@ -27,7 +27,7 @@ const BOM = {
   elec: [["Radxa ZERO 3W", "computer"], ["EP28060S 2.8″ IPS", "display"], ["EHD-40P-V3", "HDMI driver"],
     ["M5Stack CardKB", "keyboard · I²C"], ["PN532", "NFC · I²C"], ["PCM5102", "I²S DAC"], ["Ebyte E22-900T22S", "LoRa · UART"],
     ["ATGM336H + patch", "GPS · UART"], ["NESDR Nano 2+", "SDR · USB pins"], ["3 × Molex FPC", "antennas"],
-    ["TP4056 USB-C", "charger"], ["MT3608", "5.1 V boost"], ["18650", "battery"]],
+    ["TP4056 USB-C", "charger"], ["MT3608", "5.1 V boost"], ["18650", "battery"], ["microSD", "OS · side slot"]],
   hw: [["M2 × 4 screws", "12"], ["M2 heat-set inserts", "12"], ["Friction torque hinge", "1"], ["Silicone keycaps", "1 set"],
     ["Silicone wire + u.FL", "—"]],
 };
@@ -193,7 +193,7 @@ async function loadDeck() {
 
   // pivots for every movable part
   const R = rnd(7);
-  const byName = {};
+  byName = {};
   const names = Object.keys(meta).filter((n) => !n.startsWith("_") && meta[n].explode && n !== "legends");
   for (const n of names) {
     const obj = root.getObjectByName(n);
@@ -244,7 +244,7 @@ async function loadDeck() {
   setPalette(0);
   for (const r of Object.keys(palTarget)) if (mats[r]) mats[r].color.set(palTarget[r]);
 }
-let legendPlane = null;
+let legendPlane = null, byName = {};
 
 // ------------------------------------------------------------------ UI: swatches + BOM
 PALETTES.forEach((P, i) => {
@@ -297,7 +297,7 @@ function sceneTargets(t) {
     const r = s.getBoundingClientRect();
     if (r.top <= vh * 0.5 && r.bottom > vh * 0.5) { active = s; p = clamp(-r.top / Math.max(1, r.height - vh)); break; }
   }
-  const T = { explode: 0, lid: 110, spin: Math.sin(t * 0.25) * 0.8, tilt: 0.32, x: m ? 0 : 55, y: m ? 28 : 8, z: 0, scale: 1, tags: 0, floor: 0 };
+  const T = { sd: 0, battery: 0, explode: 0, lid: 110, spin: Math.sin(t * 0.25) * 0.8, tilt: 0.32, x: m ? 0 : 55, y: m ? 28 : 8, z: 0, scale: 1, tags: 0, floor: 0 };
   switch (active.dataset.scene) {
     case "hero":
       T.x = m ? 0 : 115; T.y = m ? 34 : 30; T.spin = -0.6 + Math.sin(t * 0.25) * 0.9; break;
@@ -312,6 +312,16 @@ function sceneTargets(t) {
       const d = ease(clamp(p / 0.85)) * 180;
       T.lid = d; T.spin = -Math.PI / 2 + 0.35 + Math.sin(p * Math.PI) * 0.5; T.tilt = 0.12; T.x = m ? 0 : -60; T.scale = 1.15;
       $("#lidDeg").textContent = Math.round(d) + "°";
+      break;
+    }
+    case "power":
+      T.battery = clamp(p / 0.9); T.lid = 0; T.spin = 1.05 + Math.sin(p * Math.PI) * 0.15; T.tilt = 0.28;
+      T.x = m ? 0 : 75; T.y = m ? 40 : 0; T.scale = 1.35; break;
+    case "storage": {
+      const k = ease(clamp((p - 0.1) / 0.7));
+      T.sd = 1 - k; T.spin = -1.0 - Math.sin(p * Math.PI) * 0.12; T.tilt = 0.22; T.lid = 105;
+      T.x = m ? -40 : -20; T.y = m ? 40 : 10; T.scale = m ? 3.2 : 2.3;
+      $("#sdPct").textContent = k > 0.99 ? "click" : Math.round(k * 100) + "%";
       break;
     }
     case "specs":
@@ -329,9 +339,9 @@ function sceneTargets(t) {
 }
 
 // ------------------------------------------------------------------ animate
-const S = { explode: 1, lid: 0, spin: -1.2, tilt: 0.32, x: 115, y: 30, z: 0, scale: 1 };   // starts blown apart: flies together
+const S = { sd: 0, battery: 0, explode: 1, lid: 0, spin: -1.2, tilt: 0.32, x: 115, y: 30, z: 0, scale: 1 };   // starts blown apart: flies together
 let t0 = null, last = performance.now(), introDone = false, palTimer = 0;
-const q = new THREE.Quaternion(), qI = new THREE.Quaternion(), v = new THREE.Vector3();
+const q = new THREE.Quaternion(), qI = new THREE.Quaternion(), v = new THREE.Vector3(), zAxis = new THREE.Vector3(0, 0, 1);
 
 function frame(now) {
   requestAnimationFrame(frame);
@@ -362,6 +372,8 @@ function frame(now) {
   const dA = Math.atan2(Math.sin(T.spin - S.spin), Math.cos(T.spin - S.spin));
   S.spin += dA * (1 - Math.exp(-(it < 3 ? 1.8 : 2.4) * dt));
   for (const f of ["tilt", "x", "y", "z", "scale"]) S[f] = damp(S[f], T[f], 3, dt);
+  S.battery = damp(S.battery, T.battery, 5, dt);
+  S.sd = damp(S.sd, T.sd, 6, dt);
 
   deck.position.set(S.x, S.y, S.z);
   deck.rotation.set(S.tilt, S.spin + dragSpin, 0, "XYZ");
@@ -386,6 +398,35 @@ function frame(now) {
         P.pivot.getWorldPosition(v); v.project(camera);
         P.tag.style.transform = `translate(${(v.x * .5 + .5) * innerWidth + 14}px, ${(-v.y * .5 + .5) * innerHeight - 10}px)`;
       }
+    }
+  }
+
+  // battery swap: lock slides up its travel, the door swings on its pin, the cell slides out
+  if (S.battery > 0.002 && byName.door_lock) {
+    const Bt = meta._battery, b = S.battery;
+    const lp = ease(clamp(b / 0.22)), dp = ease(clamp((b - 0.26) / 0.3)), cp = ease(clamp((b - 0.6) / 0.38));
+    const L = byName.door_lock, D = byName.battery_door, C = byName["18650"];
+    L.pivot.position.copy(L.centre); L.pivot.position.z += Bt.travel * lp; L.pivot.quaternion.identity();
+    const a = THREE.MathUtils.degToRad(Bt.door_open) * dp, hinge = v.set(Bt.hx, Bt.hy, 0);
+    q.setFromAxisAngle(zAxis, a);
+    D.pivot.position.copy(D.centre).sub(hinge).applyQuaternion(q).add(hinge); D.pivot.position.z = D.centre.z;
+    D.pivot.quaternion.copy(q);
+    C.pivot.position.copy(C.centre); C.pivot.position.x -= Bt.cell_out * cp; C.pivot.quaternion.identity();
+    const st = b < 0.24 ? 0 : b < 0.58 ? 1 : 2;
+    document.querySelectorAll("#steps li").forEach((li, k) => { li.classList.toggle("on", k === st); li.classList.toggle("done", k < st); });
+  }
+
+  // microSD: slides in through the right-wall slot
+  if (S.sd > 0.002 && byName.sdcard) {
+    const P = byName.sdcard;
+    P.pivot.position.copy(P.centre); P.pivot.position.x += 30 * S.sd; P.pivot.quaternion.identity();
+  }
+  if (byName.sdcard && byName.sdcard.tag) {
+    const show = T.scene === "storage" && !mobile(), P = byName.sdcard;
+    if (show) {
+      P.tag.style.opacity = 1;
+      P.pivot.getWorldPosition(v); v.project(camera);
+      P.tag.style.transform = `translate(${(v.x * .5 + .5) * innerWidth + 14}px, ${(-v.y * .5 + .5) * innerHeight - 10}px)`;
     }
   }
 
