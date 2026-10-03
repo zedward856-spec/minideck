@@ -35,7 +35,6 @@ P = {
     "antenna_wifi":  ("Wi-Fi/BT antenna", "flex", 1000, (0, 40, -10)),
     "antenna_sdr":   ("SDR antenna", "flex", 1000, (0, 46, -14)),
     "sdcard":        ("microSD card", "sdcard", 0, (-30, 0, 0)),
-    "sd_guide":      ("microSD guide sleeve", "body", 4000, (0, 0, 24)),
     "m2_hardware":   ("M2 inserts", "brass", 3000, (0, 10, -40)),
     "screws_base":   ("M2 screws", "metal", 6000, None),
     "screen_back":   ("Lid shell", "body", 50000, (0, 0, 34)),

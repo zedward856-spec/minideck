@@ -324,10 +324,8 @@ def bottom():
     # micro-HDMI stays inside: no hole, but the wall is thinned in front of it for the most room
     hx0, hx1 = rp["hdmi"]
     b -= box(hx0 - 1.0, HDMI_SKIN, rp["z"][0] - 1.0, hx1 + 1.0, IN_Y0 + 0.1, rp["z"][1] + 1.0)
-    # left wall: card-sized slot for the microSD guide sleeve (the socket is at the board's LEFT end;
-    # the right end has the camera FPC, so the right wall stays closed)
-    import sd_guide
-    b -= sd_guide.wall_cut()
+    # no microSD opening: the socket is at the board's LEFT end, deep inside; swap the card with the
+    # keyboard plate off (the right end has the camera FPC, so both side walls stay closed)
 
 
     b &= outline_prism(-1, TOP_Z + 10)                   # nothing sticks outside the cover's outline
