@@ -7,3 +7,4 @@ versions/
 # unpacked Radxa downloads (the original zips are kept in models/)
 models/radxa3w_stp/
 models/radxa3w_dxf/
+site/

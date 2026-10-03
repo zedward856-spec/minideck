@@ -4,7 +4,7 @@ A pocket clamshell cyberdeck. It's fully parametric (Python + [build123d](https:
 
 ![Minideck, Cyber yellow](docs/img/palette1_front.png)
 
-Promo site: https://zedward856-spec.github.io/minideck-site/ (source in [`site/`](site/))
+**[Build guide →](BUILD.md)** · [Wiring](WIRING.md) · Promo site: https://zedward856-spec.github.io/minideck-site/ (its own repo: [minideck-site](https://github.com/zedward856-spec/minideck-site))
 
 - **Size:** 93.7 × 81.5 × 39.5 mm (closed).
 - **Lid:** opens to 180° on a hidden torque hinge with a hollow axle for the cables.
@@ -81,7 +81,7 @@ Suggested filament: Bambu PLA Matte Charcoal, PLA Basic Dark Gray and PLA Basic 
 | Qty | Part |
 |---|---|
 | 12 | M2 × 4 countersunk screws (plate 4, hatch 4, bezel 4) |
-| 12 | M2 heat-set inserts, Ø3.5 × 3 mm (hole Ø3.2) |
+| 8 | M2 heat-set inserts, Ø3.5 × 3 mm (hole Ø3.2): 4 hatch, 4 bezel (the plate screws go into printed pilots) |
 | 1 | Friction torque hinge (pocket in the left hinge cheek) |
 | – | Silicone wire: 22/24 AWG for power, 28–30 AWG for signals; 1.13 mm u.FL coax for the antennas |
 
@@ -103,7 +103,7 @@ Every wire, pin and splice is in **[WIRING.md](WIRING.md)**.
 | `printability.py` | Print audit → `printability_report.md` |
 | `viewer.py` | Interactive 3D viewer |
 | `out/` | Print STLs, STEP assemblies, `parts_in_place/` meshes for the viewer |
-| `models/` | Source models, Corpta font, logo SVG, Radxa downloads and schematic |
+| `models/` | Source models, Corpta font, logo SVG, Radxa downloads and schematic; `models/components/` real part models (sources in [BUILD.md](BUILD.md#component-models)), `models/coloured/` their real-colour versions |
 | `docs/img/` | README renders |
 
 ## Promo site

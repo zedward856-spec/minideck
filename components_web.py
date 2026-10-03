@@ -163,13 +163,12 @@ def own():
     # 18650: blue wrap, steel ends, + button at the right end (the chamber's + contact)
     b = placeholder("18650").bounds; lo, hi = b; r = (hi[1] - lo[1]) / 2; yc, zc = (lo[1] + hi[1]) / 2, (lo[2] + hi[2]) / 2
     L = hi[0] - lo[0]
-    wrap = cyl(r, L - 1.2, 0, ((lo[0] + hi[0]) / 2 - 0.2, yc, zc))
+    wrap = cyl(r, L - 0.4, 0, ((lo[0] + hi[0]) / 2, yc, zc))        # blue wrap the full length
     neg = cyl(r - 0.35, 0.6, 0, (lo[0] + 0.3, yc, zc))
     pos = cyl(r - 1.2, 0.6, 0, (hi[0] - 1.1, yc, zc))
     btn = cyl(3.2, 0.9, 0, (hi[0] - 0.45, yc, zc))
     ring = cyl(r - 0.6, 0.15, 0, (hi[0] - 0.75, yc, zc))
-    band = cyl(r + 0.02, 6.0, 0, (lo[0] + L * 0.62, yc, zc))
-    save("18650", [(wrap, hexc("#2c64c8")), (band, hexc("#e9edf2")), (trimesh.util.concatenate([neg, pos, btn]), hexc("#c7c9cc")),
+    save("18650", [(wrap, hexc("#2c64c8")), (trimesh.util.concatenate([neg, pos, btn]), hexc("#c7c9cc")),
                    (ring, hexc("#f2f2f0"))])
 
     # ATGM336H mini board: green PCB, silver module can, gold IPEX, two small chips
