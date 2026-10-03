@@ -1,0 +1,703 @@
+{
+ "screws_base_0": {
+  "label": "M2 screws",
+  "role": "metal",
+  "explode": [
+   0,
+   0,
+   70
+  ],
+  "lid": false,
+  "list": false
+ },
+ "screws_base_1": {
+  "label": "M2 screws",
+  "role": "metal",
+  "explode": [
+   0,
+   0,
+   70
+  ],
+  "lid": false,
+  "list": false
+ },
+ "screws_base_2": {
+  "label": "M2 screws",
+  "role": "metal",
+  "explode": [
+   0,
+   0,
+   70
+  ],
+  "lid": false,
+  "list": false
+ },
+ "screws_base_3": {
+  "label": "M2 screws",
+  "role": "metal",
+  "explode": [
+   0,
+   0,
+   70
+  ],
+  "lid": false,
+  "list": false
+ },
+ "screws_base_4": {
+  "label": "M2 screws",
+  "role": "metal",
+  "explode": [
+   0,
+   0,
+   -60
+  ],
+  "lid": false,
+  "list": false
+ },
+ "screws_base_5": {
+  "label": "M2 screws",
+  "role": "metal",
+  "explode": [
+   0,
+   0,
+   -60
+  ],
+  "lid": false,
+  "list": false
+ },
+ "screws_base_6": {
+  "label": "M2 screws",
+  "role": "metal",
+  "explode": [
+   0,
+   0,
+   -60
+  ],
+  "lid": false,
+  "list": false
+ },
+ "screws_base_7": {
+  "label": "M2 screws",
+  "role": "metal",
+  "explode": [
+   0,
+   0,
+   -60
+  ],
+  "lid": false,
+  "list": false
+ },
+ "screws_lid_0": {
+  "label": "Bezel screws",
+  "role": "metal",
+  "explode": [
+   0,
+   0,
+   -48
+  ],
+  "lid": true,
+  "list": false
+ },
+ "screws_lid_1": {
+  "label": "Bezel screws",
+  "role": "metal",
+  "explode": [
+   0,
+   0,
+   -48
+  ],
+  "lid": true,
+  "list": false
+ },
+ "screws_lid_2": {
+  "label": "Bezel screws",
+  "role": "metal",
+  "explode": [
+   0,
+   0,
+   -48
+  ],
+  "lid": true,
+  "list": false
+ },
+ "screws_lid_3": {
+  "label": "Bezel screws",
+  "role": "metal",
+  "explode": [
+   0,
+   0,
+   -48
+  ],
+  "lid": true,
+  "list": false
+ },
+ "fill_logos_base__keyboard_top": {
+  "label": "paint fill",
+  "role": "accent",
+  "host": "keyboard_top",
+  "lid": false,
+  "list": false,
+  "stripes": false
+ },
+ "fill_caps_base__hinge_cap": {
+  "label": "paint fill",
+  "role": "fill_dark",
+  "host": "hinge_cap",
+  "lid": false,
+  "list": false,
+  "stripes": false
+ },
+ "fill_caps_base__hinge_axle": {
+  "label": "paint fill",
+  "role": "fill_dark",
+  "host": "hinge_axle",
+  "lid": false,
+  "list": false,
+  "stripes": false
+ },
+ "fill_stripes_base__bottom": {
+  "label": "paint fill",
+  "role": "accent",
+  "host": "bottom",
+  "lid": false,
+  "list": false,
+  "stripes": true
+ },
+ "fill_logos_lid__screen_back": {
+  "label": "paint fill",
+  "role": "accent",
+  "host": "screen_back",
+  "lid": true,
+  "list": false,
+  "stripes": false
+ },
+ "fill_logos_lid__screen_front": {
+  "label": "paint fill",
+  "role": "accent",
+  "host": "screen_front",
+  "lid": true,
+  "list": false,
+  "stripes": false
+ },
+ "fill_stripes_lid__screen_back": {
+  "label": "paint fill",
+  "role": "accent",
+  "host": "screen_back",
+  "lid": true,
+  "list": false,
+  "stripes": true
+ },
+ "radxa_ports": {
+  "label": "",
+  "role": "metal",
+  "host": "radxa",
+  "lid": false,
+  "list": false
+ },
+ "tp4056_port": {
+  "label": "",
+  "role": "metal",
+  "host": "tp4056",
+  "lid": false,
+  "list": false
+ },
+ "dac_port": {
+  "label": "",
+  "role": "dark",
+  "host": "dac",
+  "lid": false,
+  "list": false
+ },
+ "bottom": {
+  "label": "Case bottom",
+  "role": "body",
+  "explode": [
+   0,
+   0,
+   -32
+  ],
+  "lid": false,
+  "list": true,
+  "centre": [
+   46.8650016784668,
+   40.74499885559082,
+   19.76471710205078
+  ]
+ },
+ "box_hatch": {
+  "label": "Hinge-box hatch",
+  "role": "body",
+  "explode": [
+   0,
+   18,
+   -58
+  ],
+  "lid": false,
+  "list": true,
+  "centre": [
+   46.864999294281006,
+   71.88999938964844,
+   0.6000000238418579
+  ]
+ },
+ "keyboard_top": {
+  "label": "Keyboard plate",
+  "role": "kbplate",
+  "explode": [
+   0,
+   0,
+   44
+  ],
+  "lid": false,
+  "list": true,
+  "centre": [
+   46.86500190734863,
+   32.04499809265137,
+   26.59500026702881
+  ]
+ },
+ "battery_door": {
+  "label": "Battery door",
+  "role": "accent",
+  "explode": [
+   -48,
+   0,
+   4
+  ],
+  "lid": false,
+  "list": true,
+  "centre": [
+   1.699890661984682,
+   47.685110092163086,
+   11.915000140666962
+  ]
+ },
+ "door_lock": {
+  "label": "C-clip lock",
+  "role": "accent2",
+  "explode": [
+   -72,
+   0,
+   10
+  ],
+  "lid": false,
+  "list": true,
+  "centre": [
+   2.324999952688813,
+   62.96000099182129,
+   9.700000166893005
+  ]
+ },
+ "hinge_cap": {
+  "label": "Torque hinge cap",
+  "role": "accent2",
+  "explode": [
+   -46,
+   6,
+   6
+  ],
+  "lid": false,
+  "list": true,
+  "centre": [
+   0.6250000242143869,
+   71.9900016784668,
+   32.03000068664551
+  ]
+ },
+ "hinge_axle": {
+  "label": "Hollow hinge axle",
+  "role": "accent2",
+  "explode": [
+   52,
+   6,
+   6
+  ],
+  "lid": false,
+  "list": true,
+  "centre": [
+   86.13000106811523,
+   71.98999786376953,
+   31.480000495910645
+  ]
+ },
+ "torque_hinge": {
+  "label": "Torque hinge",
+  "role": "metal",
+  "explode": [
+   -28,
+   6,
+   6
+  ],
+  "lid": false,
+  "list": true,
+  "centre": [
+   13.25,
+   71.98999786376953,
+   32.02999973297119
+  ]
+ },
+ "keyboard": {
+  "label": "M5Stack CardKB",
+  "role": "dark",
+  "explode": [
+   0,
+   0,
+   26
+  ],
+  "lid": false,
+  "list": true,
+  "centre": [
+   46.86999601125717,
+   32.06000065803528,
+   25.231603622436523
+  ]
+ },
+ "radxa": {
+  "label": "Radxa ZERO 3W",
+  "role": "pcb_green",
+  "explode": [
+   0,
+   0,
+   14
+  ],
+  "lid": false,
+  "list": true,
+  "centre": [
+   56.275901794433594,
+   17.45276415348053,
+   18.946214447021486
+  ]
+ },
+ "18650": {
+  "label": "18650 cell",
+  "role": "cell",
+  "explode": [
+   -26,
+   -8,
+   8
+  ],
+  "lid": false,
+  "list": true,
+  "centre": [
+   39.80000066757202,
+   48.36000061035156,
+   10.970000445842743
+  ]
+ },
+ "pn532": {
+  "label": "PN532 NFC",
+  "role": "pcb_red",
+  "explode": [
+   14,
+   -14,
+   10
+  ],
+  "lid": false,
+  "list": true,
+  "centre": [
+   49.23769474029541,
+   22.75750184059143,
+   4.02499994635582
+  ]
+ },
+ "dac": {
+  "label": "PCM5102 DAC",
+  "role": "pcb_purple",
+  "explode": [
+   10,
+   -22,
+   6
+  ],
+  "lid": false,
+  "list": true,
+  "centre": [
+   52.51900291442871,
+   12.149999737739563,
+   13.943219661712646
+  ]
+ },
+ "mt3608": {
+  "label": "MT3608 boost",
+  "role": "pcb_blue",
+  "explode": [
+   18,
+   0,
+   10
+  ],
+  "lid": false,
+  "list": true,
+  "centre": [
+   12.915695190429688,
+   20.58500599861145,
+   12.616727828979492
+  ]
+ },
+ "tp4056": {
+  "label": "TP4056 charger",
+  "role": "pcb_blue",
+  "explode": [
+   -6,
+   -24,
+   6
+  ],
+  "lid": false,
+  "list": true,
+  "centre": [
+   13.801843643188477,
+   16.574999451637268,
+   17.895995140075684
+  ]
+ },
+ "lora": {
+  "label": "E22 LoRa radio",
+  "role": "metal",
+  "explode": [
+   24,
+   10,
+   16
+  ],
+  "lid": false,
+  "list": true,
+  "centre": [
+   51.895694732666016,
+   14.280004739761353,
+   9.003999710083008
+  ]
+ },
+ "gps_module": {
+  "label": "GPS module",
+  "role": "pcb_green",
+  "explode": [
+   22,
+   -6,
+   18
+  ],
+  "lid": false,
+  "list": true,
+  "centre": [
+   83.41499710083008,
+   46.79999923706055,
+   3.8499999046325684
+  ]
+ },
+ "sdr_dongle": {
+  "label": "NESDR Nano 2+",
+  "role": "dark",
+  "explode": [
+   8,
+   20,
+   -20
+  ],
+  "lid": false,
+  "list": true,
+  "centre": [
+   26.0,
+   70.0,
+   11.799999594688416
+  ]
+ },
+ "antenna_lora": {
+  "label": "LoRa antenna",
+  "role": "flex",
+  "explode": [
+   0,
+   34,
+   -6
+  ],
+  "lid": false,
+  "list": true,
+  "centre": [
+   31.0,
+   79.84000015258789,
+   17.0
+  ]
+ },
+ "antenna_wifi": {
+  "label": "Wi-Fi/BT antenna",
+  "role": "flex",
+  "explode": [
+   0,
+   40,
+   -10
+  ],
+  "lid": false,
+  "list": true,
+  "centre": [
+   65.45000076293945,
+   75.0,
+   22.829999923706055
+  ]
+ },
+ "antenna_sdr": {
+  "label": "SDR antenna",
+  "role": "flex",
+  "explode": [
+   0,
+   46,
+   -14
+  ],
+  "lid": false,
+  "list": true,
+  "centre": [
+   46.0,
+   79.73999786376953,
+   6.600000202655792
+  ]
+ },
+ "m2_hardware": {
+  "label": "M2 inserts",
+  "role": "brass",
+  "explode": [
+   0,
+   10,
+   -40
+  ],
+  "lid": false,
+  "list": true,
+  "centre": [
+   46.8650016784668,
+   71.88999938964844,
+   2.6999999284744263
+  ]
+ },
+ "screen_back": {
+  "label": "Lid shell",
+  "role": "body",
+  "explode": [
+   0,
+   0,
+   34
+  ],
+  "lid": true,
+  "list": true,
+  "centre": [
+   46.8650016784668,
+   39.74499885559082,
+   32.02999973297119
+  ]
+ },
+ "screen_front": {
+  "label": "Screen bezel",
+  "role": "kbplate",
+  "explode": [
+   0,
+   0,
+   -26
+  ],
+  "lid": true,
+  "list": true,
+  "centre": [
+   46.86500036716461,
+   32.04500037431717,
+   29.829999923706055
+  ]
+ },
+ "screen_panel": {
+  "label": "2.8\" IPS panel",
+  "role": "glass",
+  "explode": [
+   0,
+   0,
+   -12
+  ],
+  "lid": true,
+  "list": true,
+  "centre": [
+   49.109999656677246,
+   32.045000076293945,
+   30.579999923706055
+  ]
+ },
+ "driver_board": {
+  "label": "EHD-40P-V3 HDMI driver",
+  "role": "pcb_blue",
+  "explode": [
+   0,
+   0,
+   18
+  ],
+  "lid": true,
+  "list": true,
+  "centre": [
+   46.86500072479248,
+   32.375,
+   35.22999954223633
+  ]
+ },
+ "gps_patch_antenna": {
+  "label": "GPS patch antenna",
+  "role": "ceramic",
+  "explode": [
+   0,
+   0,
+   26
+  ],
+  "lid": true,
+  "list": true,
+  "centre": [
+   12.5,
+   39.20000076293945,
+   35.779998779296875
+  ]
+ },
+ "lid_inserts": {
+  "label": "Lid M2 inserts",
+  "role": "brass",
+  "explode": [
+   0,
+   0,
+   8
+  ],
+  "lid": true,
+  "list": true,
+  "centre": [
+   46.86608934402466,
+   32.29499924182892,
+   32.08000087738037
+  ]
+ },
+ "keycaps": {
+  "label": "Silicone keycaps",
+  "role": "keys",
+  "explode": [
+   0,
+   0,
+   66
+  ],
+  "lid": false,
+  "list": true
+ },
+ "legends": {
+  "rect": [
+   6.546998500823975,
+   8.49799919128418,
+   88.6679916381836,
+   51.590999603271484
+  ],
+  "z": 28.049999237060547,
+  "explode": [
+   0,
+   0,
+   66
+  ],
+  "lid": false,
+  "list": false
+ },
+ "_screen": {
+  "cx": 46.865,
+  "cy": -39.94500000000001,
+  "z": -2.5599999999999987,
+  "w": 57.6,
+  "h": 43.2,
+  "explode": [
+   0,
+   0,
+   -12
+  ]
+ },
+ "_hinge": {
+  "y": 71.99000000000001,
+  "z": 32.03,
+  "max_open": 180
+ }
+}

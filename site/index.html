@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MINIDECK — pocket cyberdeck by zedward</title>
+<meta name="description" content="Minideck: a pocket clamshell cyberdeck. Radxa ZERO 3W, 2.8&quot; IPS, LoRa, GPS, NFC, SDR, 18650 — in 93.7 × 81.5 × 39.5 mm.">
+<meta property="og:title" content="MINIDECK — pocket cyberdeck">
+<meta property="og:description" content="LoRa · GPS · NFC · SDR · Wi-Fi/BT in a 94 mm clamshell.">
+<meta property="og:image" content="https://zedward856-spec.github.io/minideck-site/assets/og.png">
+<meta name="theme-color" content="#0a0a0c">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+
+<!-- ============ loader: the Optic logo draws itself ============ -->
+<div id="loader">
+  <svg class="optic draw" viewBox="-8 -8 136 136" aria-hidden="true">
+    <path pathLength="1" d="M7.5,57.5 L35,30 L85,30 L112.5,57.5 L102.5,57.5 L82.5,37.5 L37.5,37.5 L17.5,57.5 Z"/>
+    <path pathLength="1" d="M17.5,62.5 L37.5,82.5 L82.5,82.5 L102.5,62.5 L112.5,62.5 L85,90 L35,90 L7.5,62.5 Z"/>
+    <path pathLength="1" d="M40,57.5 L60,37.5 L80,57.5 L67.5,57.5 L60,50 L52.5,57.5 Z"/>
+    <path pathLength="1" d="M52.5,62.5 L60,70 L67.5,62.5 L80,62.5 L60,82.5 L40,62.5 Z"/>
+  </svg>
+  <div class="boot mono">
+    <div id="bootlog"></div>
+    <div class="bar"><i id="loadbar"></i></div>
+    <div id="loadpct">0%</div>
+  </div>
+  <div class="wipe top"></div><div class="wipe bot"></div>
+</div>
+
+<canvas id="stage"></canvas>
+<div id="labels"></div>
+<div class="scan"></div>
+<div class="grain"></div>
+
+<!-- ============ nav ============ -->
+<header id="nav">
+  <a href="#top" class="brand">
+    <svg class="optic" viewBox="-8 -8 136 136" aria-hidden="true"><use href="#optic-sym"/></svg>
+    <span>MINIDECK</span>
+  </a>
+  <nav class="mono">
+    <a href="#apart">teardown</a><a href="#hinge">hinge</a><a href="#specs">specs</a><a href="#palettes">colours</a><a href="#parts">parts</a><a href="#contact" class="hot">contact</a>
+  </nav>
+</header>
+
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="optic-sym" viewBox="-8 -8 136 136">
+    <path d="M7.5,57.5 L35,30 L85,30 L112.5,57.5 L102.5,57.5 L82.5,37.5 L37.5,37.5 L17.5,57.5 Z"/>
+    <path d="M17.5,62.5 L37.5,82.5 L82.5,82.5 L102.5,62.5 L112.5,62.5 L85,90 L35,90 L7.5,62.5 Z"/>
+    <path d="M40,57.5 L60,37.5 L80,57.5 L67.5,57.5 L60,50 L52.5,57.5 Z"/>
+    <path d="M52.5,62.5 L60,70 L67.5,62.5 L80,62.5 L60,82.5 L40,62.5 Z"/>
+  </symbol>
+</svg>
+
+<main>
+  <!-- HERO -->
+  <section id="top" class="scene hero" data-scene="hero">
+    <div class="hero-copy">
+      <p class="kicker mono reveal">// zedward · build 001 · 2026</p>
+      <h1 class="glitch reveal" data-text="MINIDECK">MINIDECK</h1>
+      <p class="lead reveal">A cyberdeck that fits in your palm.<br>LoRa · GPS · NFC · SDR · Wi-Fi — folded into <b>94&nbsp;mm</b>.</p>
+      <div class="cta reveal">
+        <a href="#apart" class="btn">Tear it down ↓</a>
+        <a href="#contact" class="btn ghost">Get in touch</a>
+      </div>
+    </div>
+    <div class="scroll-hint mono">scroll</div>
+  </section>
+
+  <div class="hazard"><span>/// CLASSIFIED HARDWARE /// HANDLE WITH CURIOSITY /// MINIDECK /// CLASSIFIED HARDWARE /// HANDLE WITH CURIOSITY /// MINIDECK ///</span></div>
+
+  <!-- TEARDOWN (pinned, scroll-scrubbed) -->
+  <section id="apart" class="scene tall" data-scene="apart">
+    <div class="sticky">
+      <div class="panel left reveal">
+        <p class="kicker mono">01 — teardown</p>
+        <h2>Every part,<br><em>in its place.</em></h2>
+        <p>Nine printed pieces, one 18650, a Radxa ZERO 3W soldered straight to the pads. No hub and no wasted cubic millimetre.</p>
+        <div class="meter mono"><span>assembly</span><b id="apartPct">100%</b></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HINGE -->
+  <section id="hinge" class="scene tall2" data-scene="hinge">
+    <div class="sticky">
+      <div class="panel right reveal">
+        <p class="kicker mono">02 — hinge</p>
+        <h2>Opens flat.<br><em>Holds any angle.</em></h2>
+        <p>A hidden friction torque hinge and a hollow axle carry the HDMI and power through to the lid. 0° to 180° and it stays where you leave it.</p>
+        <div class="meter mono"><span>lid</span><b id="lidDeg">0°</b></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPECS -->
+  <section id="specs" class="scene" data-scene="specs">
+    <div class="panel wide">
+      <p class="kicker mono reveal">03 — spec sheet</p>
+      <h2 class="reveal">Small box. <em>Big radio.</em></h2>
+      <div class="grid">
+        <div class="card reveal"><b class="num" data-to="93.7" data-dec="1">0</b><span>mm wide</span></div>
+        <div class="card reveal"><b class="num" data-to="81.5" data-dec="1">0</b><span>mm deep</span></div>
+        <div class="card reveal"><b class="num" data-to="39.5" data-dec="1">0</b><span>mm closed</span></div>
+        <div class="card reveal"><b class="num" data-to="180" data-dec="0">0</b><span>° lid travel</span></div>
+        <div class="card reveal"><b>RK3566</b><span>Radxa ZERO 3W · Wi-Fi + BT</span></div>
+        <div class="card reveal"><b>2.8″</b><span>IPS panel over HDMI</span></div>
+        <div class="card reveal"><b>LoRa</b><span>Ebyte E22-900T22S · 22 dBm</span></div>
+        <div class="card reveal"><b>GPS</b><span>ATGM336H + ceramic patch</span></div>
+        <div class="card reveal"><b>NFC</b><span>PN532 under the palm rest</span></div>
+        <div class="card reveal"><b>SDR</b><span>NESDR Nano 2+ on the header pins</span></div>
+        <div class="card reveal"><b>Hi-Fi</b><span>PCM5102 I²S DAC · 3.5 mm</span></div>
+        <div class="card reveal"><b>18650</b><span>USB-C charging · 5.1 V boost</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="hazard rev"><span>/// SIX FINISHES /// ONE SILHOUETTE /// PRINT YOUR OWN /// SIX FINISHES /// ONE SILHOUETTE /// PRINT YOUR OWN ///</span></div>
+
+  <!-- PALETTES -->
+  <section id="palettes" class="scene" data-scene="palettes">
+    <div class="panel left reveal">
+      <p class="kicker mono">04 — finishes</p>
+      <h2>Pick your<br><em>faction.</em></h2>
+      <p>Single-filament prints with paint-filled engravings. No AMS needed.</p>
+      <div id="swatches"></div>
+      <p class="mono small" id="palName">Cyber yellow</p>
+    </div>
+  </section>
+
+  <!-- PARTS -->
+  <section id="parts" class="scene" data-scene="parts">
+    <div class="panel wide solid">
+      <p class="kicker mono reveal">05 — bill of materials</p>
+      <h2 class="reveal">What's <em>inside.</em></h2>
+      <div class="bom">
+        <div class="reveal"><h3>Printed</h3><table id="bom-printed"></table></div>
+        <div class="reveal"><h3>Electronics</h3><table id="bom-elec"></table></div>
+        <div class="reveal"><h3>Hardware</h3><table id="bom-hw"></table></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="scene contact" data-scene="contact">
+    <div class="panel center reveal">
+      <svg class="optic big pulse" viewBox="-8 -8 136 136" aria-hidden="true"><use href="#optic-sym"/></svg>
+      <h2 class="glitch" data-text="WANT ONE?">WANT ONE?</h2>
+      <p>Commissions, collabs, sponsorships, kits, or you just want to talk hardware.</p>
+      <a id="mail" class="btn mailbtn" href="#">zedward856 [at] gmail.com</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="mono">© 2026 zedward · designed in build123d · rendered in three.js</div>
+  <div class="mono"><a id="mail2" href="#">email</a> · <a href="#top">back to top ↑</a></div>
+</footer>
+
+<script type="module" src="main.js"></script>
+</body>
+</html>

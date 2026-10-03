@@ -1,5 +1,10 @@
 # Minideck
 
+### 🌐 Promo site: **[zedward856-spec.github.io/minideck-site](https://zedward856-spec.github.io/minideck-site/)**
+The site's source is in [`site/`](site/). It's published from the public repo [minideck-site](https://github.com/zedward856-spec/minideck-site), because free GitHub Pages can't serve from this private repo.
+
+[![Minideck promo site](site/assets/og.png)](https://zedward856-spec.github.io/minideck-site/)
+
 A pocket clamshell cyberdeck. It's fully parametric (Python + [build123d](https://github.com/gumyr/build123d)) and printed on a Bambu printer.
 
 ![Minideck, Cyber yellow](docs/img/palette1_front.png)
