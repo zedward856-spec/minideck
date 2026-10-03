@@ -234,3 +234,11 @@ main a, main button, .panel, .card, .bom, .hazard { pointer-events: auto; }
 .contact { align-items: flex-end; padding-bottom: 14vh; }
 .optic { fill: var(--y); }                 /* reaches the <use>d logo symbol */
 @media (max-width: 860px) { .scroll-hint { display: none; } }
+
+/* MINIDECK wordmark in Corpta (outlined: the font file itself isn't shipped) */
+.wm { position: relative; width: min(100%, 860px); margin: 0 0 .5em; }
+.wm svg { display: block; width: 100%; height: auto; fill: var(--ink); overflow: visible; }
+.wm .g1, .wm .g2 { position: absolute; inset: 0; mix-blend-mode: screen; opacity: .85; pointer-events: none; }
+.wm .g1 { fill: var(--c); transform: translate(-3px, 0); animation: g1 3.2s infinite steps(1); }
+.wm .g2 { fill: var(--m); transform: translate(3px, 0); animation: g2 2.7s infinite steps(1); }
+.wm-small { height: 13px; width: auto; fill: var(--ink); }

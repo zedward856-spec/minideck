@@ -111,7 +111,7 @@ Every wire, pin and splice is in **[WIRING.md](WIRING.md)**.
 
 ## Promo site
 
-Live at https://zedward856-spec.github.io/minideck-site/ (repo `minideck-site`). Re-export the web model with `python3 site_export.py` (writes into `../minideck-site/assets/`).
+Live at https://zedward856-spec.github.io/minideck-site/ (repo `minideck-site`). Re-export the web model with `python3 site_export.py && python3 plan_explode.py` (writes into `../minideck-site/assets/`; the second plans the collision-free teardown).
 
 ## Build and view
 

@@ -199,10 +199,10 @@ async function loadDeck() {
     const obj = root.getObjectByName(n);
     if (!obj) continue;
     const { pivot, centre } = pivotize(obj, obj.parent);
-    const axis = new THREE.Vector3(R() - .5, R() - .5, R() - .5).normalize();
-    const big = ["bottom", "screen_back", "keyboard_top"].includes(n);
-    const e = { name: n, pivot, centre, off: new THREE.Vector3(...meta[n].explode), axis,
-      ang: (big ? 0.35 : 1.2 + R() * 2.2) * (R() > .5 ? 1 : -1), delay: R() * 0.35, lid: meta[n].lid };
+    const pl = meta[n].plan;                       // collision-free teardown from plan_explode.py
+    const e = { name: n, pivot, centre, lid: meta[n].lid, plan: pl, phase: R() * 20,
+      dir: pl ? new THREE.Vector3(...pl.dir) : null,
+      axis: pl ? new THREE.Vector3(...pl.tumble.axis).normalize() : new THREE.Vector3(0, 0, 1) };
     parts.push(e); byName[n] = e;
   }
   // fills ride inside their host
@@ -214,7 +214,7 @@ async function loadDeck() {
     obj.userData.stripes = meta[n].stripes;
   }
   // keycap legends: one textured plane over the keyboard
-  const L = meta.legends, kc = byName["keycaps"];
+  const L = meta.legends, kc = byName["keycaps"] || byName[meta.keycaps.host];
   if (L && kc) {
     const tex = await new THREE.TextureLoader().loadAsync("assets/legends.png");
     tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 8;
@@ -286,7 +286,7 @@ addEventListener("pointerup", (e) => {
   dragging = false;
 });
 let burstT = -10, burstAmp = 1;
-function burst(a) { if (performance.now() / 1000 - burstT > 1.2) { burstT = performance.now() / 1000; burstAmp = a; } }
+function burst(a) { if (performance.now() / 1000 - burstT > 3.2) { burstT = performance.now() / 1000; burstAmp = a; } }
 
 // ------------------------------------------------------------------ scroll -> scene targets
 const sections = [...document.querySelectorAll("[data-scene]")];
@@ -297,14 +297,14 @@ function sceneTargets(t) {
     const r = s.getBoundingClientRect();
     if (r.top <= vh * 0.5 && r.bottom > vh * 0.5) { active = s; p = clamp(-r.top / Math.max(1, r.height - vh)); break; }
   }
-  const T = { explode: 0, lid: 110, spin: t * 0.25, tilt: 0.32, x: m ? 0 : 55, y: m ? 28 : 8, z: 0, scale: 1, tags: 0, floor: 0 };
+  const T = { explode: 0, lid: 110, spin: Math.sin(t * 0.25) * 0.8, tilt: 0.32, x: m ? 0 : 55, y: m ? 28 : 8, z: 0, scale: 1, tags: 0, floor: 0 };
   switch (active.dataset.scene) {
     case "hero":
-      T.x = m ? 0 : 115; T.y = m ? 34 : 30; T.spin = -0.6 + t * 0.22; break;
+      T.x = m ? 0 : 115; T.y = m ? 34 : 30; T.spin = -0.6 + Math.sin(t * 0.25) * 0.9; break;
     case "apart": {
       const e = p < 0.38 ? ease(p / 0.38) : p < 0.66 ? 1 : 1 - ease((p - 0.66) / 0.34);
-      T.explode = e; T.spin = -0.5 + p * Math.PI * 2; T.tilt = 0.32 + Math.sin(p * Math.PI) * 0.25;
-      T.x = m ? 0 : 70; T.scale = 1 - e * 0.18; T.tags = e > 0.8 ? 1 : 0;
+      T.explode = e; T.spin = -0.5 + p * Math.PI * 0.9; T.tilt = 0.32 + Math.sin(p * Math.PI) * 0.25;
+      T.x = m ? 0 : 70; T.scale = 1 - e * 0.18; T.tags = e > 0.95 ? 1 : 0;
       $("#apartPct").textContent = Math.round((1 - e) * 100) + "%";
       break;
     }
@@ -315,13 +315,13 @@ function sceneTargets(t) {
       break;
     }
     case "specs":
-      T.explode = 0.22 + 0.08 * Math.sin(t * 1.4); T.spin = t * 0.35; T.z = -200; T.y = m ? 120 : 96; T.x = m ? 0 : 175; T.scale = 0.9; break;
+      T.explode = 0.3; T.spin = 0.6 + Math.sin(t * 0.3) * 0.5; T.z = -200; T.y = m ? 120 : 96; T.x = m ? 0 : 175; T.scale = 0.9; break;
     case "palettes":
       T.spin = 0.5 + Math.sin(t * 0.4) * 0.6; T.x = m ? 0 : 60; T.scale = 1.1; break;
     case "parts":
-      T.explode = 0.75; T.spin = t * 0.3; T.z = -220; T.x = 0; T.y = 50; break;
+      T.explode = 0.75; T.spin = 0.4 + Math.sin(t * 0.25) * 0.5; T.z = -220; T.x = 0; T.y = 50; break;
     case "contact":
-      T.lid = 0; T.spin = t * 0.9; T.tilt = 0.45; T.x = 0; T.y = m ? 95 : 84; T.scale = 0.72; break;
+      T.lid = 0; T.spin = t * 0.35; T.tilt = 0.45; T.x = 0; T.y = m ? 95 : 84; T.scale = 0.72; break;
   }
   if (m) T.scale *= 0.62;                          // phones: smaller deck, text gets the bottom half
   T.scene = active.dataset.scene;
@@ -329,7 +329,7 @@ function sceneTargets(t) {
 }
 
 // ------------------------------------------------------------------ animate
-const S = { explode: 2.2, lid: 0, spin: -2.2, tilt: 0.32, x: 115, y: 30, z: 0, scale: 1 };   // starts blown apart: flies together
+const S = { explode: 1, lid: 0, spin: -1.2, tilt: 0.32, x: 115, y: 30, z: 0, scale: 1 };   // starts blown apart: flies together
 let t0 = null, last = performance.now(), introDone = false, palTimer = 0;
 const q = new THREE.Quaternion(), qI = new THREE.Quaternion(), v = new THREE.Vector3();
 
@@ -344,21 +344,23 @@ function frame(now) {
 
   // intro: parts fly in and lock together, then the lid swings open
   let introE = 0, introLid = null;
-  if (it < 4.2) {
-    introE = 2.2 * (1 - ease(clamp(it / 2.4)));
-    introLid = 110 * ease(clamp((it - 2.4) / 1.6));
+  if (it < 4.0) {
+    introE = 1 - clamp(it / 2.6);                // the teardown played backwards: it builds itself
+    introLid = 110 * ease(clamp((it - 2.6) / 1.4));
     if (T.scene !== "hero") introE = 0, introLid = null;
   }
   // tap burst: quick blow-apart and snap back
   const bt = t - burstT;
-  const burstE = bt < 1.1 ? Math.sin(clamp(bt / 1.1) * Math.PI) * burstAmp : 0;
+  const burstE = bt < 3.2 ? Math.sin(clamp(bt / 3.2) * Math.PI) * burstAmp : 0;
 
   const k = 4.5;
-  const targetE = Math.max(T.explode, introE) + burstE;
-  S.explode = it < 2.4 ? targetE : damp(S.explode, targetE, burstE > 0 ? 14 : k, dt);
+  const targetE = clamp(Math.max(T.explode, introE, burstE));
+  S.explode = it < 2.6 ? targetE : damp(S.explode, targetE, burstE > 0 ? 10 : k, dt);
   S.lid = introLid !== null ? introLid : damp(S.lid, T.lid, 3.2, dt);
   dragSpin *= Math.exp(-dt * 0.6); dragV *= 0.92;
-  S.spin = damp(S.spin, T.spin, it < 3 ? 1.8 : 3, dt);
+  // turn the short way round to the next section's angle (no unwinding whole turns)
+  const dA = Math.atan2(Math.sin(T.spin - S.spin), Math.cos(T.spin - S.spin));
+  S.spin += dA * (1 - Math.exp(-(it < 3 ? 1.8 : 2.4) * dt));
   for (const f of ["tilt", "x", "y", "z", "scale"]) S[f] = damp(S[f], T[f], 3, dt);
 
   deck.position.set(S.x, S.y, S.z);
@@ -367,15 +369,16 @@ function frame(now) {
 
   // lid
   lidNode.rotation.x = -THREE.MathUtils.degToRad(S.lid);
-  lidNode.position.copy(lidBase).add(v.set(0, 26, 22).multiplyScalar(Math.min(S.explode, 1.4)));
 
-  // parts: staggered fly-out with tumble and float
+  // parts: one at a time, each slides straight out along its free direction (nothing passes
+  // through anything); it only starts to turn once it is clear, then eases into its resting spot
   for (const P of parts) {
-    const e = clamp((S.explode - P.delay * Math.min(S.explode, 1)) / (1 - P.delay * 0.5), 0, 3);
-    P.pivot.position.copy(P.centre).addScaledVector(P.off, e * 1.15);
-    if (e > 0.001) P.pivot.position.z += Math.sin(t * 1.3 + P.delay * 20) * 1.6 * Math.min(e, 1);
-    const ang = P.ang * Math.min(e, 1.6) + (e > 0.6 ? Math.sin(t * 0.7 + P.delay * 9) * 0.12 * e : 0);
-    P.pivot.quaternion.copy(qI).multiply(q.setFromAxisAngle(P.axis, ang));
+    if (!P.plan) continue;
+    const p = P.plan, u = clamp((S.explode - p.t0) / (p.t1 - p.t0));
+    const f = u * u * (3 - 2 * u), d = f * p.dist;
+    P.pivot.position.copy(P.centre).addScaledVector(P.dir, d);
+    const out = clamp((d - p.clear) / Math.max(1, p.dist - p.clear));
+    P.pivot.quaternion.copy(qI).multiply(q.setFromAxisAngle(P.axis, p.tumble.ang * out * out * (3 - 2 * out)));
     if (P.tag) {
       const show = T.tags && !mobile();
       P.tag.style.opacity = show ? 1 : 0;
