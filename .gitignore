@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+# scratch meshes from the build/check scripts
+out/_*.stl
+# old local snapshot folder (this repo + its tags are the versions now)
+versions/
+# unpacked Radxa downloads (the original zips are kept in models/)
+models/radxa3w_stp/
+models/radxa3w_dxf/

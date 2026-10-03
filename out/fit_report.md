@@ -1,0 +1,51 @@
+# Minideck fit + requirements check
+
+**47 / 47 pass**
+
+- PASS  keyboard fits in the case (no part of it inside the plastic)  — deepest contact 0.13 mm
+- PASS  radxa fits in the case (no part of it inside the plastic)  — deepest contact 0.00 mm
+- PASS  pn532 fits in the case (no part of it inside the plastic)  — deepest contact 0.00 mm
+- PASS  dac fits in the case (no part of it inside the plastic)  — deepest contact 0.00 mm
+- PASS  mt3608 fits in the case (no part of it inside the plastic)  — deepest contact 0.00 mm
+- PASS  tp4056 fits in the case (no part of it inside the plastic)  — deepest contact 0.00 mm
+- PASS  lora fits in the case (no part of it inside the plastic)  — deepest contact 0.00 mm
+- PASS  18650 cell fits the chamber
+- PASS  screen panel fits the lid
+- PASS  driver board space (47.93 x 48.46, 5.6 mm tall) clear, behind the screen
+- PASS  no two parts collide with each other  — none
+- PASS  PN532 exactly where you placed it (only lowered 0.4 mm into the floor pocket, as agreed)  — x/y unchanged, z -0.40 mm
+- PASS  battery chamber at your battery's height and front-back position  — slid 12.1 mm left so the door spring reaches it
+- PASS  other boards where you placed them (only the noted shifts, x/y/z mm)  — radxa [0.0, -2.86, -0.82]; tp4056 [0.0, -3.21, -0.66]; dac [0.0, -1.76, -1.62]; lora [0.0, 0.0, -0.02]; mt3608 [0.0, 0.0, -0.5]
+- PASS  round battery chamber  — bore 18.9 mm
+- PASS  hinged battery door opens to 90 deg (held shut by the lock, no click latch)  — overlap by angle [0, 0, 0, 0, 0, 0]
+- PASS  battery door up/down lock: blocks the door when down, free when up  — door tab 1.6 mm into the case, 1.3 thick x 4.0 tall, held by a 0.8 mm flange; M2 screw + washer keeps the slider captive; slide 4.4 mm up to open
+- PASS  one-way battery: + blocker thinner than the button, hole only fits the button  — blocker 0.8 mm, hole 7.0 mm
+- PASS  charger USB-C level with the Radxa's  — charger 16.57 / Radxa 16.57 mm
+- PASS  front wall hugs the ports (ports touch the wall)
+- PASS  micro-HDMI closed (no hole), wall thinned for room (still solid under the stripe grooves)  — skin 1.2 mm, grooves 0.6 mm
+- PASS  front, left to right: charger | Radxa USB-C x2 | jack  — charger x13.8 | usb-c x34.7 | usb-c x47.2 | jack x63.0
+- PASS  charger/boost bay is a plain compartment  — 0.0 mm3 of plastic inside (only the door hinge housing sits at its back corner)
+- PASS  keyboard sits inside the case, all keys through your cover's openings  — 51 keys
+- PASS  keys stand above the plate (and stay at/above it when pressed); closed lid clears them  — keys +0.75 mm vs plate, 0.30 mm under the closed screen
+- PASS  cover plate screwed on (4 corner screws)
+- PASS  screen cables + GPS u.FL coax run through the hidden hinge (base -> box -> cheek B -> axle tube -> barrel -> lid)
+- PASS  deck is a box: nothing sticks out behind (hinge hidden between the end cheeks)  — 93.7 x 81.5 x 39.5 mm closed (was 64.1 deep + hinge knuckles)
+- PASS  antenna compartment in the box (floor hatch, 4 x M2)  — 90.5 x 14.6 x 21.7 mm inside (the barrel's trough sits above it)
+- PASS  axle tube fits (no clash with base or lid)  — 0 vertices inside
+- PASS  hatch fits (no clash with base or lid)  — 0 vertices inside
+- PASS  torque hinge (body 8.0x16.0, D-shaft 5.0/4.0x8.0) fits (no clash with base or lid)  — 0 vertices inside
+- PASS  torque hinge cap (flush) fits (no clash with base or lid)  — 0 vertices inside
+- PASS  screen viewing area centred on the lid  — centre 46.87, 32.05 vs lid 46.87, 32.05
+- PASS  no holes in the back (box walls closed)  — back is closed
+- PASS  screen lid opens 0-180 deg without hitting anything  — clash mm3 at 0..180 step 15: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; stops at ~185 deg (lid back meets the box)
+- PASS  rounded corners (outline = your cover, R4)
+- PASS  closed thickness  — 39.5 mm
+- PASS  LoRa antenna: internal FPC on the box's back wall (u.FL coax to the E22), no hole in the case
+- PASS  M2 heat-set inserts: 4 hatch rails, 4 screen bezel (plate corners: self-tapping, no room)  — 8 x M2x3x3.5; holes 3.2 mm
+- PASS  screen bezel screwed on (4 x M2 into inserts), bosses clear of the panel, driver board and GPS patch
+- PASS  every heat-set insert sits in an open hole (not buried in plastic)  — [True, True, True, True, True, True, True, True]
+- PASS  battery-door lock is a one-piece C-clip on a rail: slides only up/down, can't fall off  — blocked pull out, push in, forward, back; lips hook 0.4 mm behind the rail; detent press along the travel [0, 0.08, 0.08, 0.08, 0] mm3 (clicks at both ends)
+- PASS  radios fit in the box under the hinge: LoRa + Wi-Fi/BT + SDR FPC antennas, NESDR Nano 2+ with USB adapter  — inside the plastic: {'antenna_lora': 0, 'antenna_sdr': 0, 'antenna_wifi': 0, 'sdr_dongle': 0, 'sdr_usb': 0, 'sdr_adapter': 0}; touching each other: none
+- PASS  coax + SDR USB reach the boards (bay opening into the box)  — 13.4 x 18.5 mm opening, shared with the screen cables
+- PASS  GPS module fits its cradle in the bay right of the battery  — modules up to 15.6 x 16.4 mm
+- PASS  GPS patch antenna fits the lid frame, clear of the screen and driver board  — 18.0 x 18.0 patch, faces the lid back (sky)

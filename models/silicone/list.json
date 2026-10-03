@@ -1,0 +1,66 @@
+[
+  {
+    "name": ".gitignore",
+    "path": ".gitignore",
+    "sha": "7fa89fa2ad54199f13fef908f22851a3239f5853",
+    "size": 42,
+    "url": "https://api.github.com/repos/volbil/cardkb-silicone-mold/contents/.gitignore?ref=main",
+    "html_url": "https://github.com/volbil/cardkb-silicone-mold/blob/main/.gitignore",
+    "git_url": "https://api.github.com/repos/volbil/cardkb-silicone-mold/git/blobs/7fa89fa2ad54199f13fef908f22851a3239f5853",
+    "download_url": "https://raw.githubusercontent.com/volbil/cardkb-silicone-mold/main/.gitignore",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/volbil/cardkb-silicone-mold/contents/.gitignore?ref=main",
+      "git": "https://api.github.com/repos/volbil/cardkb-silicone-mold/git/blobs/7fa89fa2ad54199f13fef908f22851a3239f5853",
+      "html": "https://github.com/volbil/cardkb-silicone-mold/blob/main/.gitignore"
+    }
+  },
+  {
+    "name": "LICENSE.md",
+    "path": "LICENSE.md",
+    "sha": "0e259d42c996742e9e3cba14c677129b2c1b6311",
+    "size": 7048,
+    "url": "https://api.github.com/repos/volbil/cardkb-silicone-mold/contents/LICENSE.md?ref=main",
+    "html_url": "https://github.com/volbil/cardkb-silicone-mold/blob/main/LICENSE.md",
+    "git_url": "https://api.github.com/repos/volbil/cardkb-silicone-mold/git/blobs/0e259d42c996742e9e3cba14c677129b2c1b6311",
+    "download_url": "https://raw.githubusercontent.com/volbil/cardkb-silicone-mold/main/LICENSE.md",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/volbil/cardkb-silicone-mold/contents/LICENSE.md?ref=main",
+      "git": "https://api.github.com/repos/volbil/cardkb-silicone-mold/git/blobs/0e259d42c996742e9e3cba14c677129b2c1b6311",
+      "html": "https://github.com/volbil/cardkb-silicone-mold/blob/main/LICENSE.md"
+    }
+  },
+  {
+    "name": "README.md",
+    "path": "README.md",
+    "sha": "3db7a44d6f5fbf1ef94f833bf9cd1d19d51f6146",
+    "size": 3756,
+    "url": "https://api.github.com/repos/volbil/cardkb-silicone-mold/contents/README.md?ref=main",
+    "html_url": "https://github.com/volbil/cardkb-silicone-mold/blob/main/README.md",
+    "git_url": "https://api.github.com/repos/volbil/cardkb-silicone-mold/git/blobs/3db7a44d6f5fbf1ef94f833bf9cd1d19d51f6146",
+    "download_url": "https://raw.githubusercontent.com/volbil/cardkb-silicone-mold/main/README.md",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/volbil/cardkb-silicone-mold/contents/README.md?ref=main",
+      "git": "https://api.github.com/repos/volbil/cardkb-silicone-mold/git/blobs/3db7a44d6f5fbf1ef94f833bf9cd1d19d51f6146",
+      "html": "https://github.com/volbil/cardkb-silicone-mold/blob/main/README.md"
+    }
+  },
+  {
+    "name": "images",
+    "path": "images",
+    "sha": "a7cffe79734706575451ba3ea4b189ce13c374ec",
+    "size": 0,
+    "url": "https://api.github.com/repos/volbil/cardkb-silicone-mold/contents/images?ref=main",
+    "html_url": "https://github.com/volbil/cardkb-silicone-mold/tree/main/images",
+    "git_url": "https://api.github.com/repos/volbil/cardkb-silicone-mold/git/trees/a7cffe79734706575451ba3ea4b189ce13c374ec",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/volbil/cardkb-silicone-mold/contents/images?ref=main",
+      "git": "https://api.github.com/repos/volbil/cardkb-silicone-mold/git/trees/a7cffe79734706575451ba3ea4b189ce13c374ec",
+      "html": "https://github.com/volbil/cardkb-silicone-mold/tree/main/images"
+    }
+  }
+]
