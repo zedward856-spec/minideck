@@ -18,6 +18,7 @@ RADXA_DROP = 0.82              # Radxa (and so its ports, pegs, the charger leve
 LORA_DROP = 0.88               # LoRa, to stay under the lowered DAC
 PN532_DROP = 0.4               # PN532 sits in a 0.4 mm pocket in the floor (floor 0.8 there)
 MT3608_DROP = 0.5              # boost, to stay clear of the lowered charger
+TP4056_SHIFT_X = 0.9           # charger 0.9 mm toward the Radxa: room for the power switch beside it (flush knob)
 # ports right behind the front wall, so the wall can hug them (the user's request)
 PORT_GAP = 0.1
 
@@ -63,7 +64,7 @@ def placed_meshes():
     rz = out["radxa"].bounds[1][2] - 1.2 - 3.1 / 2
     tp = out["tp4056"].vertices
     usb = tp[tp[:, 1] < tp[:, 1].min() + 0.2]
-    out["tp4056"].apply_translation((0, 0, rz - (usb[:, 2].min() + usb[:, 2].max()) / 2))
+    out["tp4056"].apply_translation((TP4056_SHIFT_X, 0, rz - (usb[:, 2].min() + usb[:, 2].max()) / 2))
     return out
 
 

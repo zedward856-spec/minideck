@@ -290,8 +290,8 @@ def _inside(pts, mesh):
         warnings.simplefilter("ignore")
         r = _pv.PolyData(np.asarray(pts, float)).select_enclosed_points(m, tolerance=1e-6, check_surface=False)
     return np.asarray(r["SelectedPoints"]).astype(bool)
-req("side walls closed at the Radxa's ends (no slot in front of the camera connector or the microSD)",
-    bool(_inside([[OUT_W - 1.0, 18.7, 20.6], [OUT_W - 1.0, 15.0, 20.0], [1.0, 17.9, 20.8], [1.0, 14.0, 21.0]], bot).all()))
+req("side walls closed at the Radxa's ends (no slot in front of the camera connector or the microSD; the left one only has the switch recess)",
+    bool(_inside([[OUT_W - 1.0, 18.7, 20.6], [OUT_W - 1.0, 15.0, 20.0], [1.75, 14.0, 20.8], [1.75, 26.0, 21.0]], bot).all()))
 
 # ---------------- power switch: SS12D00 inside the left wall, printed knob outside ----------------
 import switch as _sw, glob as _glob2
@@ -321,6 +321,9 @@ req("power switch (both positions) clear of the case, TP4056, MT3608, keyboard a
 req("switch knob slides end to end without touching the case", not _kn_hits,
     ", ".join(f"{k} {v}" for k, v in _kn_hits.items()) or f"travel {SWITCH['travel']} mm")
 _kl = SWITCH["knob"][0]; _sl = (SWITCH["lever"][0] + SWITCH["travel"]) / 2 + 0.2
+_kmin = min(_tmb(_sw.knob(a), f"sw_knobf{int(a)}").bounds[0][0] for a in (-1.0, 1.0))
+req("switch knob flush: nothing sticks out of the left face (no bumping it on or off in a pocket)", _kmin > -0.01,
+    f"fin top {(-_kmin if _kmin < 0 else 0):.2f} mm proud, recess {SWITCH['recess']} mm, fin {SWITCH['fin'][0]} x {SWITCH['fin'][1]} mm")
 req("switch hidden: the knob covers the lever slot in both positions", _kl / 2 - SWITCH["travel"] / 2 >= _sl + 0.5,
     f"overlap {_kl / 2 - SWITCH['travel'] / 2 - _sl:.1f} mm each side")
 if "tp4056" in _near:

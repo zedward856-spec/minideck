@@ -92,7 +92,9 @@ def w(name, kind, a, b, base, lid=None, note=""):
     P.append(dict(name=name, kind=kind, a=a, b=b, base=[np.array(p, float) for p in base],
                   lid=[np.array(p, float) for p in lid] if lid else None, note=note))
 
-TP = dict(bp=(8.0, 29.5, 19.4), bn=(11.0, 29.5, 19.4), op=(16.0, 29.5, 19.4), on=(19.0, 29.5, 19.4))
+import layout as _L
+_tx = _L.TP4056_SHIFT_X
+TP = dict(bp=(8.0 + _tx, 29.5, 19.4), bn=(11.0 + _tx, 29.5, 19.4), op=(16.0 + _tx, 29.5, 19.4), on=(19.0 + _tx, 29.5, 19.4))
 MT = dict(ip=(7.0, 34.6, 15.9), in_=(10.0, 34.6, 15.9), op=(21.5, 7.0, 12.5), on=(21.5, 9.0, 12.5))
 S5 = np.array([25.6, YB - 1.0, 11.6])          # 5 V splice (heat-shrunk), just behind the Radxa
 SG = np.array([25.6, YB + 1.0, 11.6])          # GND splice

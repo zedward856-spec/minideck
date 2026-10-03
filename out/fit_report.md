@@ -1,6 +1,6 @@
 # Minideck fit + requirements check
 
-**52 / 52 pass**
+**53 / 53 pass**
 
 - PASS  keyboard fits in the case (no part of it inside the plastic)  — deepest contact 0.13 mm
 - PASS  radxa fits in the case (no part of it inside the plastic)  — deepest contact 0.00 mm
@@ -15,7 +15,7 @@
 - PASS  no two parts collide with each other  — none
 - PASS  PN532 exactly where you placed it (only lowered 0.4 mm into the floor pocket, as agreed)  — x/y unchanged, z -0.40 mm
 - PASS  battery chamber at your battery's height and front-back position  — slid 12.1 mm left so the door spring reaches it
-- PASS  other boards where you placed them (only the noted shifts, x/y/z mm)  — radxa [0.0, -2.86, -0.82]; tp4056 [0.0, -3.21, -0.66]; dac [0.0, -1.76, -1.62]; lora [0.0, 0.0, -0.02]; mt3608 [0.0, 0.0, -0.5]
+- PASS  other boards where you placed them (only the noted shifts, x/y/z mm)  — radxa [0.0, -2.86, -0.82]; tp4056 [0.9, -3.21, -0.66]; dac [0.0, -1.76, -1.62]; lora [0.0, 0.0, -0.02]; mt3608 [0.0, 0.0, -0.5]
 - PASS  round battery chamber  — bore 18.9 mm
 - PASS  hinged battery door opens to 90 deg (held shut by the lock, no click latch)  — overlap by angle [0, 0, 0, 0, 0, 0]
 - PASS  battery door up/down lock: blocks the door when down, free when up  — door tab 1.6 mm into the case, 1.3 thick x 4.0 tall, held by a 0.8 mm flange; M2 screw + washer keeps the slider captive; slide 4.4 mm up to open
@@ -23,7 +23,7 @@
 - PASS  charger USB-C level with the Radxa's  — charger 16.57 / Radxa 16.57 mm
 - PASS  front wall hugs the ports (ports touch the wall)
 - PASS  micro-HDMI closed (no hole), wall thinned for room (still solid under the stripe grooves)  — skin 1.2 mm, grooves 0.6 mm
-- PASS  front, left to right: charger | Radxa USB-C x2 | jack  — charger x13.8 | usb-c x34.7 | usb-c x47.2 | jack x63.0
+- PASS  front, left to right: charger | Radxa USB-C x2 | jack  — charger x14.7 | usb-c x34.7 | usb-c x47.2 | jack x63.0
 - PASS  charger/boost bay is a plain compartment  — 0.0 mm3 of plastic inside (only the door hinge housing sits at its back corner)
 - PASS  keyboard sits inside the case, all keys through your cover's openings  — 51 keys
 - PASS  keys stand above the plate (and stay at/above it when pressed); closed lid clears them  — keys +0.75 mm vs plate, 0.30 mm under the closed screen
@@ -49,8 +49,9 @@
 - PASS  coax + SDR USB reach the boards (bay opening into the box)  — 13.4 x 18.5 mm opening, shared with the screen cables
 - PASS  GPS module fits its cradle in the bay right of the battery  — modules up to 15.6 x 16.4 mm
 - PASS  GPS patch antenna fits the lid frame, clear of the screen and driver board  — 18.0 x 18.0 patch, faces the lid back (sky)
-- PASS  side walls closed at the Radxa's ends (no slot in front of the camera connector or the microSD)
+- PASS  side walls closed at the Radxa's ends (no slot in front of the camera connector or the microSD; the left one only has the switch recess)
 - PASS  power switch (both positions) clear of the case, TP4056, MT3608, keyboard and wires  — none
 - PASS  switch knob slides end to end without touching the case  — travel 2.0 mm
+- PASS  switch knob flush: nothing sticks out of the left face (no bumping it on or off in a pocket)  — fin top 0.00 mm proud, recess 1.4 mm, fin 1.2 x 4.2 mm
 - PASS  switch hidden: the knob covers the lever slot in both positions  — overlap 3.0 mm each side
-- PASS  TP4056 still fits under the switch  — switch body ends at x 4.90, charger starts at x 4.99
+- PASS  TP4056 still fits under the switch  — switch body ends at x 5.75, charger starts at x 5.89

@@ -16,7 +16,7 @@ PARTS = [
     ("battery_lock_slider", "yellow",    "battery_lock_clip",  1, "0.12 mm layers"),
     ("hinge_cap",           "yellow",    "torque_hinge_cap",   1, "0.12 mm layers, logo up"),
     ("hinge_axle",          "yellow",    "hinge_axle",         1, "0.12 mm layers, flange down"),
-    ("switch_knob",         "yellow",    "switch_knob",        1, "0.12 mm layers, flat back down (the lever socket), ridge up"),
+    ("switch_knob",         "yellow",    "switch_knob",        1, "0.12 mm layers, flat back down (the lever socket), fin up; snaps into the flush recess"),
     ("battery_strip_test",  "tests",     "battery_door_fit_test", 1, "optional: the door, lock and chamber end, to check the fit first"),
 ]
 COLOURS = {
@@ -55,7 +55,7 @@ def main():
            "- 8 × M2 heat-set inserts (3.5 OD × 3 mm): 4 in the hinge-box floor, 4 in the lid shell",
            "- 12 × M2 × 4 countersunk screws",
            "- ~26 mm of 1.75 mm filament as the battery-door hinge pin",
-           "- 1 × SS12D00 mini slide switch (SPDT, 8.6 × 3.6 × 3.5 mm body, 3 mm lever) for power",
+           "- 1 × SS12D00 mini slide switch (SPDT, 8.6 × 3.6 × 3.5 mm body) for power: trim its lever to 1.35 mm",
            "",
            "**Optional paint fill.** The logos, MINIDECK text and side stripes are engraved 0.3–0.6 mm deep. Go over them with a paint marker and wipe the surface with IPA.",
            "",

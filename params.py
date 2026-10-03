@@ -161,15 +161,18 @@ HINGE_LOGO = dict(width=9.0, depth=0.3, enabled=True)        # both hinge end ca
 # camera FPC at the right end). No opening in the case: take the keyboard plate off to swap the card.
 SD_CARD = dict(y=(12.4, 23.4), z=(20.42, 21.17), mouth_x=26.5, protrude=2.0)   # inserted card, case frame
 
-# ---- power switch: a common SS12D00 mini slide switch (SPDT) in the TP4056 OUT+ wire. Its body sits against
-# the inside of the left wall, beside the charger (only its pins and solder joints reach over the charger),
-# the lever pokes through a small slot and carries a printed pill-shaped knob outside. Set to your switch:
+# ---- power switch: a common SS12D00 mini slide switch (SPDT) in the TP4056 OUT+ wire. Its body sits just
+# inside the left wall, beside the charger (only its pins and solder joints reach over the charger); the lever
+# (trimmed short) goes through a small slot into a printed knob that sits FLUSH in a recess in the wall, so
+# nothing sticks out to get bumped in a pocket. Set to your switch:
 SWITCH = dict(body=(8.6, 3.5, 3.6),      # along the slide (y), lever axis (x), across (z)
-              lever=(1.5, 1.3, 3.0),     # lever: along slide, across, length out of the body
+              lever=(1.5, 1.3, 1.35),    # lever: along slide, across, length out of the body AFTER trimming
               travel=2.0,                # lever travel end to end
               pins=(3, 2.54, 3.5, 0.5),  # count, pitch, length, size
               y=20.0, top=22.5,          # body centre (y) and top (under the keyboard at 22.73)
-              wall_pocket=0.6,           # body sunk into the wall's inside
-              knob=(12.0, 5.2, 1.1),     # pill knob: length (y), height (z), base thickness
-              ridge=(6.0, 2.2, 1.3),     # taller pill in the middle: length, height, extra height
-              recess=0.6, clr=0.15)      # knob recess in the outside face, clearances
+              face_x=2.25,               # body face (lever side): 0.25 in from the wall's inside (spacer pad)
+              recess=1.4,                # knob recess depth in the outside face (0.6 mm wall left behind it)
+              knob=(12.0, 5.2, 0.6),     # knob plate: length (y), height (z), thickness
+              fin=(1.2, 4.2),            # thin vertical fin on the plate: width (y), height (z); top flush
+              lip=0.25,                  # snap lips round the recess mouth (knob clicks in behind them)
+              clr=0.15)                  # clearances

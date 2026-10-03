@@ -27,7 +27,7 @@ Every wire and pin is in **[WIRING.md](WIRING.md)**, and the print audit is in [
 | 1 | TP4056 USB-C charger (with protection) | |
 | 1 | MT3608 boost converter | Set to **5.1 V before** connecting anything |
 | 1 | 18650 cell (button top) | |
-| 1 | SS12D00 mini slide switch (SPDT) | Power switch: 8.6 × 3.6 × 3.5 mm body, 3 mm lever. Different size? Edit `SWITCH` in `params.py` |
+| 1 | SS12D00 mini slide switch (SPDT) | Power switch: 8.6 × 3.6 × 3.5 mm body; the lever gets trimmed to 1.35 mm. Different size? Edit `SWITCH` in `params.py` |
 | 1 | microSD card | For the OS |
 
 ### Hardware
@@ -102,7 +102,7 @@ The order follows the collision-checked teardown on the promo site, played forwa
 3. **LoRa module** and **DAC**, jack into its front hole.
 4. **Radxa**, upside down, USB-C ports into the front-wall openings. Its microSD socket is at the board's **left** end (the camera connector is at the right end).
 5. **GPS board** in the bay right of the battery; **MT3608** and **TP4056** (USB-C into its front opening).
-   **Power switch:** sit the SS12D00 on its block against the left wall, lever through the small slot (a dab of hot glue holds it), wires to its pins over the charger. Press the printed pill knob onto the lever from outside.
+   **Power switch:** first **trim the SS12D00's lever to 1.35 mm** above the body with flush cutters (so the knob can sit flush). Sit the switch on its block against the spacer pad on the left wall, lever through the small slot (a dab of hot glue holds it), wires to its pins over the charger. From outside, snap the printed knob into its recess so the lever goes into the socket in its back; the thin fin ends level with the case, so it can't be bumped in a pocket.
 6. **SDR** into the hinge box; route its antenna coax.
 
 **Lid**
