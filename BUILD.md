@@ -27,6 +27,7 @@ Every wire and pin is in **[WIRING.md](WIRING.md)**, and the print audit is in [
 | 1 | TP4056 USB-C charger (with protection) | |
 | 1 | MT3608 boost converter | Set to **5.1 V before** connecting anything |
 | 1 | 18650 cell (button top) | |
+| 1 | SS12D00 mini slide switch (SPDT) | Power switch: 8.6 × 3.6 × 3.5 mm body, 3 mm lever. Different size? Edit `SWITCH` in `params.py` |
 | 1 | microSD card | For the OS |
 
 ### Hardware
@@ -80,7 +81,7 @@ Files are in **[`print/`](print/)**, one folder per filament colour (one batch e
 
 Solder everything **before** it goes into the case: one wire per Radxa pad, laid flat (there's about 3 mm above the board under the keyboard). [WIRING.md](WIRING.md) has the full table; the 3D wire routes are in `out/parts_in_place/wires_*.stl` and show in `viewer.py`.
 
-- **Power:** 18650 → TP4056 B+/B− → TP4056 OUT → MT3608 → a 5 V / GND splice behind the Radxa → Radxa pins 2/6, the screen (through the hinge) and the GPS (pin 4). A power switch would go in the TP4056 OUT+ wire.
+- **Power:** 18650 → TP4056 B+/B− → TP4056 OUT+ → **power switch** (middle pin in, one outer pin out) → MT3608 → a 5 V / GND splice behind the Radxa → Radxa pins 2/6, the screen (through the hinge) and the GPS (pin 4).
 - **I²C5** (pins 29/31): PN532, with the CardKB chained onto the PN532's pins.
 - **UART3** (3/5): GPS. **UART4** (16/18): LoRa, plus M0/M1/AUX on 13/7/22.
 - **I²S3** (12/35/40): DAC.
@@ -101,6 +102,7 @@ The order follows the collision-checked teardown on the promo site, played forwa
 3. **LoRa module** and **DAC**, jack into its front hole.
 4. **Radxa**, upside down, USB-C ports into the front-wall openings. Its microSD socket is at the board's **left** end (the camera connector is at the right end).
 5. **GPS board** in the bay right of the battery; **MT3608** and **TP4056** (USB-C into its front opening).
+   **Power switch:** sit the SS12D00 on its block against the left wall, lever through the small slot (a dab of hot glue holds it), wires to its pins over the charger. Press the printed pill knob onto the lever from outside.
 6. **SDR** into the hinge box; route its antenna coax.
 
 **Lid**

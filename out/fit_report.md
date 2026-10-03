@@ -1,6 +1,6 @@
 # Minideck fit + requirements check
 
-**48 / 48 pass**
+**52 / 52 pass**
 
 - PASS  keyboard fits in the case (no part of it inside the plastic)  — deepest contact 0.13 mm
 - PASS  radxa fits in the case (no part of it inside the plastic)  — deepest contact 0.00 mm
@@ -50,3 +50,7 @@
 - PASS  GPS module fits its cradle in the bay right of the battery  — modules up to 15.6 x 16.4 mm
 - PASS  GPS patch antenna fits the lid frame, clear of the screen and driver board  — 18.0 x 18.0 patch, faces the lid back (sky)
 - PASS  side walls closed at the Radxa's ends (no slot in front of the camera connector or the microSD)
+- PASS  power switch (both positions) clear of the case, TP4056, MT3608, keyboard and wires  — none
+- PASS  switch knob slides end to end without touching the case  — travel 2.0 mm
+- PASS  switch hidden: the knob covers the lever slot in both positions  — overlap 3.0 mm each side
+- PASS  TP4056 still fits under the switch  — switch body ends at x 4.90, charger starts at x 4.99

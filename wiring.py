@@ -106,8 +106,16 @@ w("BAT+", "pwr", "18650 + contact (right end)", "TP4056 B+",
 w("BAT-", "gnd", "18650 - contact (door spring)", "TP4056 B-",
   [(bt.WIRE_X_IN, bt.YC - 6.0, bt.WIRE_Z), (bt.WIRE_X_IN, 36.6, bt.WIRE_Z), (TP["bn"][0], 31.0, 20.0), TP["bn"]],
   note="24 AWG black - through the hole in the chamber divider")
-w("TP OUT+ -> boost IN+", "pwr", "TP4056 OUT+", "MT3608 VIN+", [TP["op"], (TP["op"][0], 32.5, 18.0), (7.0, 34.6, 16.6), MT["ip"]],
-  note="24 AWG red (a power switch would go in this wire)")
+# the power switch (SS12D00, inside the left wall) breaks TP4056 OUT+ -> MT3608 VIN+
+import switch as SW
+_pz = SW.ZC; _px = SW.X1 + SWITCH["pins"][2] - 0.3
+w("TP OUT+ -> switch", "pwr", "TP4056 OUT+", "power switch middle pin (common)",
+  [TP["op"], (TP["op"][0], 29.5, 20.6), (10.4, SWITCH["y"], 20.9), (_px, SWITCH["y"], _pz)],
+  note="24 AWG red, over the top of the charger")
+w("switch -> boost IN+", "pwr", "power switch outer pin (the ON end)", "MT3608 VIN+",
+  [(_px, SWITCH["y"] + SWITCH["pins"][1], _pz), (9.8, SWITCH["y"] + SWITCH["pins"][1], 21.0), (9.8, 31.6, 20.9),
+   (8.0, 32.8, 18.0), (7.0, 34.6, 16.6), MT["ip"]],
+  note="24 AWG red; check with a multimeter which outer pin is ON with the knob toward the back")
 w("TP OUT- -> boost IN-", "gnd", "TP4056 OUT-", "MT3608 VIN-", [TP["on"], (TP["on"][0], 33.0, 18.0), (10.0, 34.6, 16.6), MT["in_"]],
   note="24 AWG black")
 w("boost 5V -> splice", "pwr", "MT3608 OUT+ (set to 5.1 V)", "5 V splice",
@@ -242,8 +250,10 @@ def write_plan():
     L_ = ["# Minideck wiring plan", "",
           "Radxa ZERO 3W, mounted upside down: the 40 header pads (no header fitted) face UP under the",
           "keyboard - solder wires on that side and lay them flat (~3 mm of room above the board).",
-          "Pin 1 is assumed at the microSD end, odd pins on the inner row (Pi-Zero layout) - check the",
-          "square pad / '1' mark on your board before soldering.", "",
+          "Pin 1 is at the microSD end (Pi-Zero layout). Radxa's board drawing puts the microSD socket at the",
+          "board's **left** end in this case (the camera FPC is at the right end), so pin 1 is at the left end.",
+          "The 3D wire routes in the viewer were drawn with pin 1 at the right end: go by the pin numbers below,",
+          "not the 3D routes, and check the square pad / '1' mark on your board before soldering.", "",
           "## Radxa header use", "", "| Pin | Function | Wires |", "|---|---|---|"]
     fn = {1: "3V3", 2: "5V", 3: "GPIO1_A0 / UART3 RX", 4: "5V", 5: "GPIO1_A1 / UART3 TX", 6: "GND",
           7: "GPIO3_C4", 9: "GND", 12: "GPIO3_A3 / I2S3 SCLK (BCK)", 13: "GPIO3_A2", 14: "GND",
@@ -257,8 +267,10 @@ def write_plan():
     for wd in P:
         L_.append(f"| {wd['name']} | {wd['a']} | {wd['b']} | {wd['note']} |")
     L_ += ["", "## Notes", "",
-           "- **Power switch (missing!)**: nothing turns the deck off - the boost runs whenever a cell is in. "
-           "Put a small slide switch in the TP4056 OUT+ -> MT3608 VIN+ wire (I can add a slot for one).",
+           "- **Power switch**: an SS12D00 slide switch (SPDT, 8.6 x 3.6 mm body) in the left wall, beside the TP4056, "
+           "breaks TP4056 OUT+ -> MT3608 VIN+. Middle pin = from the charger, one outer pin = to the boost (the other "
+           "outer pin stays empty). The printed pill knob (print/yellow/switch_knob.stl) presses onto its lever. "
+           "Charging still works with the switch off (the TP4056 charges the cell directly).",
            "- Set the MT3608 to 5.1 V *before* connecting the Radxa. It is ~1.4 A max - a 3 A boost is safer.",
            "- One wire per Radxa pad. I2C (CardKB 0x5F, PN532 0x24) on I2C5 (pins 29/31) runs Radxa -> PN532, and the "
            "CardKB is chained onto the PN532's header pins. Power both from 3.3 V (pin 17) so the bus pull-ups stay at "

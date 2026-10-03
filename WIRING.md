@@ -2,10 +2,10 @@
 
 Radxa ZERO 3W, mounted upside down: the 40 header pads (no header fitted) face UP under the
 keyboard - solder wires on that side and lay them flat (~3 mm of room above the board).
-Pin 1 is at the microSD end (Pi-Zero layout). Radxa's board drawing puts the microSD socket at the board's
-**left** end in this case (the camera FPC is at the right end), so pin 1 is at the left end. The 3D wire routes in
-the viewer were drawn with pin 1 at the right end: go by the pin numbers below, not the 3D routes, and check the
-square pad / '1' mark on your board before soldering.
+Pin 1 is at the microSD end (Pi-Zero layout). Radxa's board drawing puts the microSD socket at the
+board's **left** end in this case (the camera FPC is at the right end), so pin 1 is at the left end.
+The 3D wire routes in the viewer were drawn with pin 1 at the right end: go by the pin numbers below,
+not the 3D routes, and check the square pad / '1' mark on your board before soldering.
 
 ## Radxa header use
 
@@ -43,7 +43,8 @@ square pad / '1' mark on your board before soldering.
 |---|---|---|---|
 | BAT+ | 18650 + contact (right end) | TP4056 B+ | 24 AWG silicone, red |
 | BAT- | 18650 - contact (door spring) | TP4056 B- | 24 AWG black - through the hole in the chamber divider |
-| TP OUT+ -> boost IN+ | TP4056 OUT+ | MT3608 VIN+ | 24 AWG red (a power switch would go in this wire) |
+| TP OUT+ -> switch | TP4056 OUT+ | power switch middle pin (common) | 24 AWG red, over the top of the charger |
+| switch -> boost IN+ | power switch outer pin (the ON end) | MT3608 VIN+ | 24 AWG red; check with a multimeter which outer pin is ON with the knob toward the back |
 | TP OUT- -> boost IN- | TP4056 OUT- | MT3608 VIN- | 24 AWG black |
 | boost 5V -> splice | MT3608 OUT+ (set to 5.1 V) | 5 V splice | 22 AWG red - one thick lead, split at a heat-shrunk splice behind the Radxa |
 | boost GND -> splice | MT3608 OUT- | GND splice | 22 AWG black |
@@ -87,7 +88,7 @@ square pad / '1' mark on your board before soldering.
 
 ## Notes
 
-- **Power switch (missing!)**: nothing turns the deck off - the boost runs whenever a cell is in. Put a small slide switch in the TP4056 OUT+ -> MT3608 VIN+ wire (I can add a slot for one).
+- **Power switch**: an SS12D00 slide switch (SPDT, 8.6 x 3.6 mm body) in the left wall, beside the TP4056, breaks TP4056 OUT+ -> MT3608 VIN+. Middle pin = from the charger, one outer pin = to the boost (the other outer pin stays empty). The printed pill knob (print/yellow/switch_knob.stl) presses onto its lever. Charging still works with the switch off (the TP4056 charges the cell directly).
 - Set the MT3608 to 5.1 V *before* connecting the Radxa. It is ~1.4 A max - a 3 A boost is safer.
 - One wire per Radxa pad. I2C (CardKB 0x5F, PN532 0x24) on I2C5 (pins 29/31) runs Radxa -> PN532, and the CardKB is chained onto the PN532's header pins. Power both from 3.3 V (pin 17) so the bus pull-ups stay at 3.3 V (the Radxa is not 5 V tolerant). Enable the i2c5 overlay.
 - 5 V: one 22 AWG lead from the boost to a heat-shrunk splice just behind the Radxa, branching to Radxa pin 2, the LoRa, the screen and the SDR. Same for GND (Radxa pin 6 + screen). The GPS runs from 5 V on pin 4 (its module has a regulator; its UART stays 3.3 V).

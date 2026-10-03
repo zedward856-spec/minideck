@@ -293,6 +293,40 @@ def _inside(pts, mesh):
 req("side walls closed at the Radxa's ends (no slot in front of the camera connector or the microSD)",
     bool(_inside([[OUT_W - 1.0, 18.7, 20.6], [OUT_W - 1.0, 15.0, 20.0], [1.0, 17.9, 20.8], [1.0, 14.0, 21.0]], bot).all()))
 
+# ---------------- power switch: SS12D00 inside the left wall, printed knob outside ----------------
+import switch as _sw, glob as _glob2
+def _tmb(shape, name):
+    export_stl(shape, f"out/_{name}.stl"); return trimesh.load(f"out/_{name}.stl")
+def _skin(mesh, n=5000, d=0.06):
+    p, fi = trimesh.sample.sample_surface(mesh, n); return p - mesh.face_normals[fi] * d
+_sw_hits, _kn_hits = {}, {}
+_near = {"case": bot}
+for _k in ("tp4056", "mt3608", "keyboard"):
+    if os.path.exists(f"out/parts_in_place/{_k}.stl"):
+        _near[_k] = trimesh.load(f"out/parts_in_place/{_k}.stl")
+for _f in _glob2.glob("out/parts_in_place/wires_base_*.stl"):
+    _w = trimesh.load(_f)
+    if _w.is_watertight:
+        _near["wire " + _f.split("_")[-1][:-4]] = _w
+for _at in (-1.0, 1.0):
+    _b = _tmb(_sw.body(_at), f"sw_body{int(_at)}"); _q = _skin(_b)
+    for k, v in _near.items():
+        n = int(_inside(_q, v).sum())
+        if n: _sw_hits[f"{k}@{_at:+.0f}"] = n
+    _kn = _tmb(_sw.knob(_at), f"sw_knob{int(_at)}"); _q = _skin(_kn, 3000)
+    n = int(_inside(_q, bot).sum())
+    if n: _kn_hits[f"case@{_at:+.0f}"] = n
+req("power switch (both positions) clear of the case, TP4056, MT3608, keyboard and wires", not _sw_hits,
+    ", ".join(f"{k} {v}" for k, v in _sw_hits.items()) or "none")
+req("switch knob slides end to end without touching the case", not _kn_hits,
+    ", ".join(f"{k} {v}" for k, v in _kn_hits.items()) or f"travel {SWITCH['travel']} mm")
+_kl = SWITCH["knob"][0]; _sl = (SWITCH["lever"][0] + SWITCH["travel"]) / 2 + 0.2
+req("switch hidden: the knob covers the lever slot in both positions", _kl / 2 - SWITCH["travel"] / 2 >= _sl + 0.5,
+    f"overlap {_kl / 2 - SWITCH['travel'] / 2 - _sl:.1f} mm each side")
+if "tp4056" in _near:
+    req("TP4056 still fits under the switch", not int(_inside(_skin(_near["tp4056"], 4000), bot).sum()),
+        f"switch body ends at x {_sw.X1:.2f}, charger starts at x {_near['tp4056'].bounds[0][0]:.2f}")
+
 # ---------------- report ----------------
 lines = ["# Minideck fit + requirements check", ""]
 ok = sum(1 for _, k, _ in R if k)

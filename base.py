@@ -326,6 +326,11 @@ def bottom():
     b -= box(hx0 - 1.0, HDMI_SKIN, rp["z"][0] - 1.0, hx1 + 1.0, IN_Y0 + 0.1, rp["z"][1] + 1.0)
     # no microSD opening: the socket is at the board's LEFT end, deep inside; swap the card with the
     # keyboard plate off (the right end has the camera FPC, so both side walls stay closed)
+    # power switch in the left wall, beside the charger: block + end stops under it, body pocket,
+    # lever slot and the knob's recess outside (switch.py)
+    import switch
+    b += switch.case_adds()
+    b -= switch.case_cuts()
 
 
     b &= outline_prism(-1, TOP_Z + 10)                   # nothing sticks outside the cover's outline
