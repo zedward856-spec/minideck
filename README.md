@@ -28,7 +28,7 @@ Press keys **1–6** in the viewer to switch palettes live. Palette 1 is the one
 | # | Body | Plate / bezel | Accent | Keys / legends |
 |---|---|---|---|---|
 | 1 | `#2D2D2D` charcoal | `#3D3D3D` dark grey | `#F7D116` cyber yellow | black / white |
-| 2 | `#0D0D12` | `#22232C` | `#FF2A6D` magenta + `#05D9E8` cyan | black / cyan |
+| 2 | `#0D0D12` | `#22232C` | `#05D9E8` cyan + `#FF2A6D` magenta | black / cyan |
 | 3 | `#111214` | `#3B3D42` | `#E0102A` red | black / white |
 | 4 | `#E7E6E1` | `#F6F6F3` | `#FF5A10` orange | white / black |
 | 5 | `#D6C9A8` | `#BFB08C` | `#7A1F2B` maroon | grey / white |

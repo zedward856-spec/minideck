@@ -73,7 +73,7 @@ DARKGREY = "#3d3d3d"                                          # neutral dark gre
 PALETTES = {
     "1": dict(name="Cyber yellow", body=CHARCOAL, plate=GREY, kbplate=DARKGREY, accent=YELLOW, accent2=YELLOW,
               keys="#161616", ink="#f0f0f0", glow=0.0, bg=("#dcdcdc", "#f8f8f8")),
-    "2": dict(name="Neon night", body="#0d0d12", plate="#22232c", accent="#ff2a6d", accent2="#05d9e8",
+    "2": dict(name="Neon night", body="#0d0d12", plate="#22232c", accent="#05d9e8", accent2="#ff2a6d",
               keys="#161618", ink="#05d9e8", glow=0.55, bg=("#07070b", "#1a1030")),
     "3": dict(name="Arasaka", body="#111214", plate="#3b3d42", accent="#e0102a", accent2="#e0102a",
               keys="#161618", ink="#f0f0f0", glow=0.15, bg=("#1b1c20", "#3a3d44")),
