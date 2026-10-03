@@ -47,7 +47,7 @@ Soldering iron (fine tip, plus a heat-set insert tip), flush cutters, tweezers, 
 
 ## 2. Print
 
-Files are in `out/`. PLA, 0.4 mm nozzle.
+Files are in **[`print/`](print/)**, one folder per filament colour (one batch each), already oriented on the bed. PLA, 0.4 mm nozzle.
 
 | File | Colour (palette 1) | Settings |
 |---|---|---|

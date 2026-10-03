@@ -4,7 +4,7 @@ A pocket clamshell cyberdeck. It's fully parametric (Python + [build123d](https:
 
 ![Minideck, Cyber yellow](docs/img/palette1_front.png)
 
-**[Build guide →](BUILD.md)** · [Wiring](WIRING.md) · Promo site: https://zedward856-spec.github.io/minideck-site/ (its own repo: [minideck-site](https://github.com/zedward856-spec/minideck-site))
+**[Print files →](print/)** · **[Build guide →](BUILD.md)** · [Wiring](WIRING.md) · Promo site: https://zedward856-spec.github.io/minideck-site/ (its own repo: [minideck-site](https://github.com/zedward856-spec/minideck-site))
 
 - **Size:** 93.7 × 81.5 × 39.5 mm (closed).
 - **Lid:** opens to 180° on a hidden torque hinge with a hollow axle for the cables.
@@ -40,7 +40,9 @@ The logos, MINIDECK text and side stripes are engraved 0.3–0.6 mm deep. The re
 
 ## Parts list
 
-### Printed parts (`out/`)
+### Printed parts
+
+Ready-to-print files are in **[`print/`](print/)**: one folder per filament colour, already in print orientation. Their source files are below, in `out/`.
 
 | File | Part | Colour (palette 1) | Notes |
 |---|---|---|---|
@@ -102,7 +104,8 @@ Every wire, pin and splice is in **[WIRING.md](WIRING.md)**.
 | `check.py` | 47 fit/clearance requirements |
 | `printability.py` | Print audit → `printability_report.md` |
 | `viewer.py` | Interactive 3D viewer |
-| `out/` | Print STLs, STEP assemblies, `parts_in_place/` meshes for the viewer |
+| `print/` | **The print files**, one folder per colour (`python3 export_print.py` rebuilds it) |
+| `out/` | Raw CAD output: STLs, STEP assemblies, `parts_in_place/` meshes for the viewer |
 | `models/` | Source models, Corpta font, logo SVG, Radxa downloads and schematic; `models/components/` real part models (sources in [BUILD.md](BUILD.md#component-models)), `models/coloured/` their real-colour versions |
 | `docs/img/` | README renders |
 
