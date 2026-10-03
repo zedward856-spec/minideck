@@ -316,7 +316,7 @@ function sceneTargets(t) {
   const T = { sd: 0, battery: 0, explode: 0, lid: 110, spin: Math.sin(t * 0.25) * 0.8, tilt: 0.32, x: m ? 0 : 55, y: m ? 28 : 8, z: 0, scale: 1, tags: 0, floor: 0 };
   switch (active.dataset.scene) {
     case "hero":
-      T.x = m ? 0 : 115; T.y = m ? 34 : 30; T.spin = -0.6 + Math.sin(t * 0.25) * 0.9; break;
+      T.x = m ? 0 : 115; T.y = m ? 66 : 30; T.spin = -0.6 + Math.sin(t * 0.25) * 0.9; break;
     case "apart": {
       const e = p < 0.38 ? ease(p / 0.38) : p < 0.66 ? 1 : 1 - ease((p - 0.66) / 0.34);
       T.explode = e; T.spin = -0.5 + p * Math.PI * 0.9; T.tilt = 0.32 + Math.sin(p * Math.PI) * 0.25;

@@ -250,3 +250,10 @@ main a, main button, .panel, .card, .bom, .hazard { pointer-events: auto; }
 .steps li.on b { color: var(--y); }
 .steps li.done { color: #777; text-decoration: line-through; text-decoration-color: rgba(247,209,22,.5); }
 .scene.tall3 { height: 200vh; display: block; padding-top: 0; padding-bottom: 0; }
+.dims { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 0; font-size: 11px; letter-spacing: .08em; }
+.dims span { padding: 5px 9px; border: 1px solid var(--line); color: var(--ink); background: rgba(10,10,12,.5); }
+.dims span:not(.sep) { color: var(--y); }
+.dims .sep { color: var(--dim); }
+.wm { margin-bottom: 14px; line-height: normal; }
+.wm > svg:first-child { aspect-ratio: 5000 / 709; height: auto; }
+.wm .g1, .wm .g2 { height: 100%; }
