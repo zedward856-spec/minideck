@@ -61,7 +61,7 @@ Files are in **[`print/`](print/)**, one folder per filament colour (one batch e
 | `battery_lock_slider.stl` | Cyber yellow | 0.12 mm |
 | `hinge_cap.stl`, `hinge_axle.stl` | Cyber yellow | 0.12 mm |
 
-**Optional paint fill.** The logos, MINIDECK text and side stripes are engraved 0.3–0.6 mm deep. Go over them with a paint marker (yellow on the dark parts, black on the yellow hinge caps) and wipe the surface with IPA.
+**Optional paint fill.** The logos, MINIDECK text, side stripes and the NFC mark on the underside (under the PN532: board outline, coil, NFC, 13.56 MHz, ISO 14443 A/B, TAP HERE) are engraved 0.3–0.6 mm deep. Go over them with a paint marker (yellow on the dark parts, black on the yellow hinge caps) and wipe the surface with IPA.
 
 ---
 
@@ -102,7 +102,7 @@ The order follows the collision-checked teardown on the promo site, played forwa
 3. **LoRa module** and **DAC**, jack into its front hole.
 4. **Radxa**, upside down, USB-C ports into the front-wall openings. Its microSD socket is at the board's **left** end (the camera connector is at the right end).
 5. **GPS board** in the bay right of the battery; **MT3608** and **TP4056** (USB-C into its front opening).
-   **Power switch:** trim the SS12D00's lever to **1.05 mm** above the body with flush cutters. From **inside** the case, drop the printed knob into its pocket in the left wall, fin out through the small slot (it only fits this way and can't fall out of the case). Then set the switch on its block right behind it, lever into the socket in the knob's back (a dab of hot glue holds the switch), wires to its pins over the charger. The thin fin ends level with the outside face, so it can't be bumped in a pocket.
+   **Power switch:** trim the SS12D00's lever to **1.05 mm** above the body with flush cutters. From inside the case, drop the printed knob into the gap between the left wall and the charger, fin toward the wall, and push it sideways into its pocket. The fin pokes out through the small slot, flush with the outside, and the knob can't fall out of the case. Then lower the switch straight down onto its block: its lever slides down the groove in the wall into the knob's open-topped socket. A dab of hot glue holds the switch; wires go to its pins over the charger.
 6. **SDR** into the hinge box; route its antenna coax.
 
 **Lid**

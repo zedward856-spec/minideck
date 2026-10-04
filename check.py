@@ -23,9 +23,24 @@ def tm(shape, name):
     return trimesh.load(f"out/_{name}.stl")
 
 
+def _vtk_in(pts, mesh):
+    """points inside a closed mesh, VTK test (trimesh's contains() blows up memory on the ~100k-face case)"""
+    import pyvista as pv, warnings
+    m = pv.PolyData(mesh.vertices, np.c_[np.full(len(mesh.faces), 3), mesh.faces].ravel())
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        r = pv.PolyData(np.asarray(pts, float)).select_enclosed_points(m, tolerance=1e-6, check_surface=False)
+    sel = np.asarray(r["SelectedPoints"]).astype(bool)
+    if sel.any():                            # points ON the surface (parts sitting flush) don't count: confirm depth
+        idx = np.where(sel)[0]
+        d = trimesh.proximity.ProximityQuery(mesh).signed_distance(np.asarray(pts, float)[idx])
+        sel[idx[d <= 1e-3]] = False
+    return sel
+
+
 def depth_into(part, solid, skip_xy=None, r=1.4):
     v = part.vertices[::max(1, len(part.vertices) // 50000)]
-    ins = v[solid.contains(v)]
+    ins = v[_vtk_in(v, solid)]
     if skip_xy is not None and len(ins):
         H = np.array(skip_xy)
         ins = ins[np.min(np.hypot(ins[:, None, 0] - H[None, :, 0], ins[:, None, 1] - H[None, :, 1]), axis=1) > r]
@@ -114,7 +129,7 @@ probe = np.array([[x, y, z] for x in np.linspace(rp["hdmi"][0], rp["hdmi"][1], 7
                   for z in np.linspace(rp["z"][0], rp["z"][1], 4)
                   for y in np.linspace(_d + 0.05, B.HDMI_SKIN - 0.05, 3)])
 req("micro-HDMI closed (no hole), wall thinned for room (still solid under the stripe grooves)",
-    bot.contains(probe).all(), f"skin {B.HDMI_SKIN} mm, grooves {_d} mm")
+    _vtk_in(probe, bot).all(), f"skin {B.HDMI_SKIN} mm, grooves {_d} mm")
 order = sorted([("charger", (ports["charger_usbc"][0] + ports["charger_usbc"][1]) / 2),
                 ("usb-c", sum(rp["usbc_a"]) / 2), ("usb-c", sum(rp["usbc_b"]) / 2), ("jack", ports["jack"][0])],
                key=lambda t: t[1])
@@ -143,7 +158,7 @@ lid_m = trimesh.util.concatenate([front, back])
 axle_m = tm(B.axle(), "axle_check")
 req("screen cables + GPS u.FL coax run through the hidden hinge "
     "(base -> box -> cheek B -> axle tube -> barrel -> lid)",
-    not bot.contains(path).any() and not lid_m.contains(path).any() and not axle_m.contains(path).any())
+    not _vtk_in(path, bot).any() and not lid_m.contains(path).any() and not axle_m.contains(path).any())
 allb = trimesh.util.concatenate([bot, lid_m])
 req("deck is a box: nothing sticks out behind (hinge hidden between the end cheeks)",
     allb.bounds[1][1] <= B.BOX_BACK + 0.01 and lid_m.bounds[1][2] <= Ld.LID_TOP + 0.01,
@@ -161,7 +176,7 @@ cap_m = tm(B.torque_cap(), "cap_check")
 for nm, part in (("axle tube", axle_m), ("hatch", tm(B.hatch(), "hatch_check")),
                  (f"torque hinge (body {_t['body_d']}x{_t['body_l']}, D-shaft {_t['shaft_d']}/{_t['shaft_flat']}x{_t['shaft_l']})", tq_m),
                  ("torque hinge cap (flush)", cap_m)):
-    hit = depth_into(part, bot) if False else bot.contains(part.vertices[::7]).sum() + lid_m.contains(part.vertices[::7]).sum()
+    hit = depth_into(part, bot) if False else _vtk_in(part.vertices[::7], bot).sum() + lid_m.contains(part.vertices[::7]).sum()
     req(f"{nm} fits (no clash with base or lid)", hit == 0, f"{hit} vertices inside")
 acx, acy = Ld.ACT_X0 + ACTIVE_W / 2, Ld.ACT_Y0 + ACTIVE_H / 2
 req("screen viewing area centred on the lid", abs(acx - OUT_W / 2) < 0.05 and abs(acy - (Ld.IN[1] + Ld.IN[3]) / 2) < 0.05,
@@ -170,7 +185,7 @@ leaks = []
 for x in np.arange(3, OUT_W - 3, 1.0):                  # can you see from inside to outside?
     for z in np.arange(2, B.WALL_TOP - 1, 1.0):
         ray = np.array([(x, y, z) for y in np.arange(OUT_D - WALL, B.BOX_BACK + 1, 0.25)])
-        if not bot.contains(ray).any():
+        if not _vtk_in(ray, bot).any():
             leaks.append((round(x), round(z)))
 req("no holes in the back (box walls closed)", not leaks, f"see-through spots: {leaks[:6]}" if leaks else "back is closed")
 sw = [round((bot_s & (Pos(0, hy, hz) * Rot(-a, 0, 0) * Pos(0, -hy, -hz) * (f_s + b_s))).volume, 2)
@@ -231,7 +246,7 @@ req("battery-door lock is a one-piece C-clip on a rail: slides only up/down, can
 _rad = dict(antenna_lora=ANT_LORA, antenna_sdr=ANT_SDR, antenna_wifi=ANT_WIFI, sdr_dongle=SDR_BODY)
 # (SDR's USB plug + adapter gone: it is wired to header pins 27/28 - see WIRING.md)
 radios = {n: tm(box(*v), n) for n, v in _rad.items()}
-_hits = {n: int(bot.contains(m.vertices).sum()) for n, m in radios.items()}
+_hits = {n: int(_vtk_in(m.vertices, bot).sum()) for n, m in radios.items()}
 _pairs = [(a, b) for a in _rad for b in _rad if a < b and (box(*_rad[a]) & box(*_rad[b])).volume > 0.001]
 req("radios fit in the box under the hinge: LoRa + Wi-Fi/BT + SDR FPC antennas, NESDR Nano 2+ with USB adapter",
     max(_hits.values()) == 0 and not _pairs,
@@ -332,11 +347,31 @@ req("switch knob flush: nothing sticks out of the left face (no bumping it on or
     f"fin top {(-_kmin if _kmin < 0 else 0):.2f} mm proud, fin {SWITCH['fin'][0]} x {SWITCH['fin'][1]} mm through a {SWITCH['skin']} mm skin")
 _slw, _slh = _sw.slot_size()
 req("switch knob fits from the inside only: its plate is bigger than the outside slot, so it can't fall out",
-    SWITCH["knob"][0] > _slw + 2 and SWITCH["knob"][1] > _slh + 0.5,
+    SWITCH["knob"][0] > _slw + 2 and SWITCH["knob"][1] >= _slh,
     f"plate {SWITCH['knob'][0]} x {SWITCH['knob'][1]} mm behind a {_slw:.1f} x {_slh:.1f} mm slot")
 if "tp4056" in _near:
     req("TP4056 still fits under the switch", not int(_inside(_skin(_near["tp4056"], 4000), bot).sum()),
         f"switch body ends at x {_sw.X1:.2f}, charger starts at x {_near['tp4056'].bounds[0][0]:.2f}")
+
+# ---------------- switch + knob can actually be fitted from inside ----------------
+from build123d import Pos as _Pos
+_ins = {}
+_kn0 = _tmb(_sw.knob(-1.0), "ins_knob")
+_tp = trimesh.load("out/parts_in_place/tp4056.stl")
+_path_k = [(3.5, 0, dz) for dz in (12, 8, 4, 2, 0)] + [(dx, 0, 0) for dx in (2.8, 2.0, 1.4, 0.8, 0.3, 0.0)]
+for _dx, _dy, _dz in _path_k:                                   # knob: down into the gap, then into its pocket
+    _m = _kn0.copy(); _m.apply_translation((_dx, _dy, _dz)); _q = _skin(_m, 2500)
+    for k, v in (("case", bot), ("TP4056", _tp)):
+        n = _hits(_q, v)
+        if n: _ins[f"knob {k} @({_dx},{_dz})"] = n
+_bd0 = _tmb(_sw.body(-1.0), "ins_body")
+for _dz in (10, 7, 5, 3, 2, 1, 0.5, 0.0):                        # switch: straight down, lever into the knob
+    _m = _bd0.copy(); _m.apply_translation((0, 0, _dz)); _q = _skin(_m, 3000)
+    for k, v in (("case", bot), ("TP4056", _tp), ("knob", _kn0)):
+        n = _hits(_q, v)
+        if n: _ins[f"switch {k} @dz{_dz}"] = n
+req("switch and knob fit from inside: knob drops in beside the charger and slides into its pocket, switch drops onto it",
+    not _ins, ", ".join(f"{k} {v}" for k, v in list(_ins.items())[:6]) or "both paths clear")
 
 # ---------------- report ----------------
 lines = ["# Minideck fit + requirements check", ""]

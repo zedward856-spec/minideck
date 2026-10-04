@@ -7,7 +7,7 @@ import os, shutil, numpy as np, trimesh
 
 # out/ file -> (colour folder, file name, qty, settings / notes)
 PARTS = [
-    ("bottom",              "charcoal",  "case_bottom",        1, "0.2 mm layers; supports only for the front port openings"),
+    ("bottom",              "charcoal",  "case_bottom",        1, "0.2 mm layers; supports only for the front port openings. The NFC mark is engraved in its underside (prints on the bed)"),
     ("screen_back",         "charcoal",  "lid_shell",          1, "0.2 mm layers, back face down"),
     ("box_hatch",           "charcoal",  "hinge_box_hatch",    1, "0.2 mm layers"),
     ("keyboard_top",        "dark-grey", "keyboard_plate",     1, "**0.12 mm layers**: the webs between keys are 0.42 mm"),
@@ -16,7 +16,7 @@ PARTS = [
     ("battery_lock_slider", "yellow",    "battery_lock_clip",  1, "0.12 mm layers"),
     ("hinge_cap",           "yellow",    "torque_hinge_cap",   1, "0.12 mm layers, logo up"),
     ("hinge_axle",          "yellow",    "hinge_axle",         1, "0.12 mm layers, flange down"),
-    ("switch_knob",         "yellow",    "switch_knob",        1, "0.12 mm layers, flat back down (the lever socket), fin up; goes in from inside the case"),
+    ("switch_knob",         "yellow",    "switch_knob",        1, "0.12 mm layers, flat back down, fin up; goes in from inside the case, the switch lever drops into its open-top socket"),
     ("battery_strip_test",  "tests",     "battery_door_fit_test", 1, "optional: the door, lock and chamber end, to check the fit first"),
 ]
 COLOURS = {
@@ -57,7 +57,7 @@ def main():
            "- ~26 mm of 1.75 mm filament as the battery-door hinge pin",
            "- 1 × SS12D00 mini slide switch (SPDT, 8.6 × 3.6 × 3.5 mm body) for power: trim its lever to 1.05 mm",
            "",
-           "**Optional paint fill.** The logos, MINIDECK text and side stripes are engraved 0.3–0.6 mm deep. Go over them with a paint marker and wipe the surface with IPA.",
+           "**Optional paint fill.** The logos, MINIDECK text, side stripes and the NFC mark under the PN532 are engraved 0.3–0.6 mm deep. Go over them with a paint marker and wipe the surface with IPA.",
            "",
            "Full build steps: [../BUILD.md](../BUILD.md)"]
     open("print/README.md", "w").write("\n".join(md) + "\n")

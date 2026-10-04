@@ -42,14 +42,15 @@ def pill_z(x0, x1, yc, zc, width, height):
 
 def knob(at=0.0):
     """the knob: a pill plate that sits in the pocket on the wall's INSIDE (bigger than the outside slot, so it
-    can't come out), and a thin vertical fin through the outer skin, its top level with the outside face"""
+    can't come out), and a thin vertical fin through the outer skin, its top level with the outside face. The
+    lever socket is open at the top, so the switch drops straight down into it."""
     kl, kh, kt = S["knob"]; fw, fh = S["fin"]; sk = S["skin"]
     yc = S["y"] + at * S["travel"] / 2
     xb = X0 - 0.05                            # plate back, just off the switch face
     k = pill_x(xb - kt, xb, yc, ZC, kl, kh)
     k += pill_z(0.0, xb - kt + 0.01, yc, ZC, fw, fh)      # fin: plate -> through the skin -> flush at x = 0
     lw, lt, ll = S["lever"]
-    k -= box(X0 - ll - 0.05, yc - lw / 2 - C, ZC - lt / 2 - C, xb + 0.01, yc + lw / 2 + C, ZC + lt / 2 + C)   # lever socket
+    k -= box(X0 - ll - 0.05, yc - lw / 2 - C, ZC - lt / 2 - C, xb + 0.01, yc + lw / 2 + C, ZC + kh)   # socket, open on top
     return k
 
 def slot_size():
@@ -57,23 +58,32 @@ def slot_size():
     return fw + S["travel"] + 2 * C, fh + 2 * C       # outside slot: the fin and its travel only
 
 def case_cuts():
-    kl, kh, kt = S["knob"]; tr = S["travel"]; sk = S["skin"]
-    sl, sh = slot_size()
+    kl, kh, kt = S["knob"]; tr = S["travel"]; sk = S["skin"]; lw, lt, ll = S["lever"]
     c = box(X0 - 0.01, Y0 - C, Z0 - C, X1 + 0.5, Y1 + C, Z1 + 0.3)                        # body space (+ ledge)
     c += pill_x(sk, WALL + 0.01, S["y"], ZC, kl + tr + 2 * C, kh + 2 * C)                  # knob pocket, open inside
-    fw, fh = S["fin"]; tr = S["travel"]                                                    # outside slot: the fin
-    for e in (-1, 1):                                                                        # swept along its travel
+    fw, fh = S["fin"]                                                                       # outside slot: the fin
+    for e in (-1, 1):                                                                       # swept along its travel
         c += pill_z(-1, sk + 0.01, S["y"] + e * tr / 2, ZC, fw + 2 * C, fh + 2 * C)
     c += box(-1, S["y"] - tr / 2, ZC - fh / 2 - C, sk + 0.01, S["y"] + tr / 2, ZC + fh / 2 + C)
-    c += box(WALL - 0.01, Y0 - 1.2, 21.7, 6.5, Y1 + 1.2, 22.72)                           # keyboard ledge over it
+    c += box(X0 - ll - 2 * C, S["y"] - (lw + tr) / 2 - C, ZC, WALL + 0.01,                 # groove: the lever drops
+             S["y"] + (lw + tr) / 2 + C, TOP_Z + 1)                                         # down into the knob
+    half = kl / 2 + tr / 2 + 0.6                                                            # access channel: the knob
+    c += box(WALL - 0.01, S["y"] - half, ZC - kh / 2 - C, 5.8, S["y"] + half, TOP_Z + 1)   # drops in from the top
     return c
 
+def pocket_footprint():
+    """outside-face (y, z) area with thin wall behind it (knob pocket + lever groove): stripes keep off it"""
+    from shapely.geometry import LineString, box as sb
+    kl, kh = S["knob"][:2]; tr = S["travel"]; lw = S["lever"][0]
+    L, H = kl + tr + 2 * C, kh + 2 * C
+    pocket = LineString([(S["y"] - L / 2 + H / 2, ZC), (S["y"] + L / 2 - H / 2, ZC)]).buffer(H / 2, 32)
+    groove = sb(S["y"] - (lw + tr) / 2 - C, ZC, S["y"] + (lw + tr) / 2 + C, TOP_Z + 1)
+    return pocket.union(groove)
+
 def case_adds():
-    """a block under the body (grows from the floor, beside the charger / boost) and end stops"""
-    a = box(WALL - 0.01, Y0 - 1.0, FLOOR - 0.01, 4.0, Y1 + 1.0, Z0 - C)
-    a += box(WALL - 0.01, Y0 - 1.0 - C, FLOOR - 0.01, 4.0, Y0 - C, Z1 - 0.4)
-    a += box(WALL - 0.01, Y1 + C, FLOOR - 0.01, 4.0, Y1 + 1.0 + C, Z1 - 0.4)
-    return a
+    """a block under the switch body (grows from the floor beside the charger / boost), kept below the knob
+    pocket so the knob can be slid in from inside; the switch is held with a dab of hot glue"""
+    return box(WALL - 0.01, Y0 - 1.0, FLOOR - 0.01, 4.0, Y1 + 1.0, Z0 - C)
 
 if __name__ == "__main__":
     export_stl(knob(-1), "out/parts_in_place/switch_knob.stl")        # shown in the OFF position

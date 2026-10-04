@@ -384,6 +384,8 @@ def bottom():
     pn = L.bounds("pn532")
     if pn[2] < FLOOR - 0.01:
         b -= box(pn[0] - 0.3, pn[1] - 0.3, pn[2] - 0.01, pn[3] + 0.3, pn[4] + 0.3, FLOOR + 0.01)
+    import nfc_mark                                       # NFC mark engraved under the PN532 (underside)
+    b -= nfc_mark.cut()
     import stripes
     sc = stripes.stripes_cut("bottom")
     if sc is not None:

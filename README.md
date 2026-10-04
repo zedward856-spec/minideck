@@ -34,7 +34,12 @@ Press keys **1–6** in the viewer to switch palettes live. Palette 1 is the one
 | 5 | `#D6C9A8` | `#BFB08C` | `#7A1F2B` maroon | grey / white |
 | 6 | `#4B5320` olive | `#B8A77C` tan | `#1A1A1A` black | black / cream |
 
-The logos, MINIDECK text and side stripes are engraved 0.3–0.6 mm deep. The renders show them paint-filled: fill them with a paint marker and wipe the surface with IPA. No multi-colour printer needed.
+The logos, MINIDECK text, side stripes and the NFC mark on the underside are engraved 0.3–0.6 mm deep.
+
+**Underside:** an NFC mark right under the PN532 (board outline, antenna coil, NFC, 13.56 MHz, ISO 14443 A/B, TAP HERE).
+
+![Underside NFC mark](docs/img/underside_nfc.png)
+ The renders show them paint-filled: fill them with a paint marker and wipe the surface with IPA. No multi-colour printer needed.
 
 ---
 

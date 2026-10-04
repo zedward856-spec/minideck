@@ -50,11 +50,12 @@ def keepouts(part, face):
         g.append(sbox(bt.HY - bt.KR - 1.1, B.FLOOR, bt.REC_Y1, bt.REC_Z1))          # battery door
         g.append(sbox(bt.REC_Y1, bt.LOCK_ZB - 0.2, bt.LOCK_REC_Y1,                  # lock slider
                       bt.LOCK_ZB + bt.LOCK_TRAVEL + bt.LOCK_BODY[1] + 0.2))
-        import switch as sw                                                          # power switch knob
-        kl, kh = SWITCH["knob"][:2]                                                 # (knob pocket behind the fin slot)
-        half = (kl + SWITCH["travel"]) / 2 + 0.4
-        g.append(sbox(SWITCH["y"] - half, sw.ZC - kh / 2 - 0.3, SWITCH["y"] + half, sw.ZC + kh / 2 + 0.3))
-    return unary_union(g).buffer(SIDE_STRIPES["hole_gap"], 32) if g else None
+    out = unary_union(g).buffer(SIDE_STRIPES["hole_gap"], 32) if g else None
+    if face == "left":                       # the switch: only its thin-walled pocket area, with a small gap
+        import switch as sw
+        sp = sw.pocket_footprint().buffer(SIDE_STRIPES.get("switch_gap", 0.8), 32)
+        out = sp if out is None else out.union(sp)
+    return out
 
 
 def patch_polygon(u0, u1, z0, z1, lean, avoid=None, part=None):

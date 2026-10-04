@@ -47,7 +47,7 @@ P = {
     "lid_inserts":   ("Lid M2 inserts", "brass", 2000, (0, 0, 8)),
     "screws_lid":    ("Bezel screws", "metal", 3000, (0, 0, -48)),
 }
-FILL_HOST = {"fill_logos_base": ["keyboard_top"], "fill_caps_base": ["hinge_cap", "hinge_axle"],
+FILL_HOST = {"fill_nfc_base": ["bottom"], "fill_logos_base": ["keyboard_top"], "fill_caps_base": ["hinge_cap", "hinge_axle"],
              "fill_stripes_base": ["bottom"], "fill_logos_lid": ["screen_back", "screen_front"],
              "fill_stripes_lid": ["screen_back"]}
 FILL_ROLE = {"fill_caps_base": "fill_dark"}

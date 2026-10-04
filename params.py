@@ -173,6 +173,13 @@ SWITCH = dict(body=(8.6, 3.5, 3.6),      # along the slide (y), lever axis (x), 
               y=20.0, top=22.5,          # body centre (y) and top (under the keyboard at 22.73)
               face_x=2.0,                # body face (lever side): against the wall's inside, over the knob pocket
               skin=0.7,                  # outer skin of the wall the fin passes through (fin top flush with it)
-              knob=(12.0, 5.2, 1.2),     # knob plate (inside the wall): length (y), height (z), thickness
-              fin=(1.2, 4.2),            # thin vertical fin: width (y), height (z)
+              knob=(12.0, 3.4, 1.2),     # knob plate (inside the wall): length (y), height (z), thickness
+              fin=(1.2, 3.0),            # thin vertical fin: width (y), height (z)
               clr=0.15)                  # clearances
+
+# ---- NFC mark on the underside, right under the PN532 (nfc_mark.py): board outline, antenna coil, NFC + specs
+NFC_MARK = dict(depth=0.3,                 # floor under the PN532 is 0.8 mm: 0.5 mm stays
+                line=0.55, pitch=1.25,     # line width (>= nozzle) and coil turn pitch
+                inset=0.6, coil_gap=2.2, turns=4,
+                nfc_h=6.5,
+                lines=[("13.56 MHz", 3.4), ("ISO 14443 A/B", 2.9), ("TAP HERE", 2.9)])

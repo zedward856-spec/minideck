@@ -1,6 +1,6 @@
 # Minideck fit + requirements check
 
-**53 / 53 pass**
+**54 / 54 pass**
 
 - PASS  keyboard fits in the case (no part of it inside the plastic)  — deepest contact 0.13 mm
 - PASS  radxa fits in the case (no part of it inside the plastic)  — deepest contact 0.00 mm
@@ -52,6 +52,7 @@
 - PASS  side walls closed at the Radxa's ends (no slot in front of the camera connector or the microSD; the left one only has the switch's fin slot)
 - PASS  power switch (both positions) clear of the case, TP4056, MT3608, keyboard and wires  — none
 - PASS  switch knob slides end to end without touching the case  — travel 2.0 mm
-- PASS  switch knob flush: nothing sticks out of the left face (no bumping it on or off in a pocket)  — fin top 0.00 mm proud, fin 1.2 x 4.2 mm through a 0.7 mm skin
-- PASS  switch knob fits from the inside only: its plate is bigger than the outside slot, so it can't fall out  — plate 12.0 x 5.2 mm behind a 3.5 x 4.5 mm slot
+- PASS  switch knob flush: nothing sticks out of the left face (no bumping it on or off in a pocket)  — fin top 0.00 mm proud, fin 1.2 x 3.0 mm through a 0.7 mm skin
+- PASS  switch knob fits from the inside only: its plate is bigger than the outside slot, so it can't fall out  — plate 12.0 x 3.4 mm behind a 3.5 x 3.3 mm slot
 - PASS  TP4056 still fits under the switch  — switch body ends at x 5.50, charger starts at x 5.89
+- PASS  switch and knob fit from inside: knob drops in beside the charger and slides into its pocket, switch drops onto it  — both paths clear

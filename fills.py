@@ -75,9 +75,15 @@ def save(solids, name):
     export_stl(u, f"out/parts_in_place/{name}.stl")
     print("wrote", name)
 
+def nfc_fill():
+    """paint fill for the NFC mark under the PN532 (underside: from just inside the face up to its depth)"""
+    import nfc_mark
+    return [nfc_mark.solid(E, NFC_MARK["depth"])]
+
 if __name__ == "__main__":
     save(logos_lid(), "fill_logos_lid")
     save(logos_base(), "fill_logos_base")
     save(caps(), "fill_caps_base")
     save(stripe_fill("lid"), "fill_stripes_lid")
     save(stripe_fill("bottom"), "fill_stripes_base")
+    save(nfc_fill(), "fill_nfc_base")

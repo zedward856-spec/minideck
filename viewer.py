@@ -60,6 +60,7 @@ LID.add("screws_lid")
 PARTS += [("fill_logos_base", "paint fill: plate logo", "#f7d116", True),
           ("fill_logos_lid", "paint fill: lid logos + MINIDECK", "#f7d116", True),
           ("fill_caps_base", "paint fill: hinge-cap logos (dark)", "#161616", True),
+          ("fill_nfc_base", "paint fill: NFC mark (underside)", "#f7d116", True),
           ("fill_stripes_base", "paint fill: stripes (base)  [g]", "#f7d116", True),
           ("fill_stripes_lid", "paint fill: stripes (lid)  [g]", "#f7d116", True)]
 LID |= {"fill_logos_lid", "fill_stripes_lid"}
@@ -100,7 +101,7 @@ COLOR = {
 METAL = {"screws_base": (0.55, 0.3), "screws_lid": (0.55, 0.3), "torque_hinge": (0.5, 0.4), "m2_hardware": (0.55, 0.35), "lid_inserts": (0.55, 0.35), "lora": (0.5, 0.35)}
 PLASTIC_PRINT = {"bottom", "screen_back", "box_hatch", "keyboard_top", "screen_front", "battery_door",
                  "door_lock", "hinge_cap", "hinge_axle", "switch_knob",
-                 "fill_logos_base", "fill_logos_lid", "fill_caps_base", "fill_stripes_base", "fill_stripes_lid"}
+                 "fill_logos_base", "fill_logos_lid", "fill_caps_base", "fill_stripes_base", "fill_stripes_lid", "fill_nfc_base"}
 PARTS = [(f, l, COLOR.get(f, c), v) for f, l, c, v in PARTS]
 
 def radxa_colours(m):
@@ -264,7 +265,7 @@ p.add_slider_widget(set_opacity, [0.05, 1.0], value=OPACITY, title="transparency
 ROLE = {"bottom": "body", "screen_back": "body", "box_hatch": "body", "keyboard_top": "kbplate",
         "screen_front": "kbplate", "battery_door": "accent", "door_lock": "accent2", "hinge_cap": "accent2",
         "hinge_axle": "accent2", "switch_knob": "accent2", "fill_logos_base": "accent", "fill_logos_lid": "accent",
-        "fill_stripes_base": "accent", "fill_stripes_lid": "accent", "fill_caps_base": "body"}
+        "fill_stripes_base": "accent", "fill_stripes_lid": "accent", "fill_caps_base": "body", "fill_nfc_base": "accent"}
 _paltext = [None]
 def apply_palette(key):
     pal = PALETTES[key]
