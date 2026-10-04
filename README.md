@@ -100,6 +100,30 @@ Every wire, pin and splice is in **[WIRING.md](WIRING.md)**.
 
 ---
 
+## Thermal
+
+A 3D thermal simulation of the base (`thermal_sim.py`: every part on a 1 mm grid, heat from the SoC, SDR, boost, charger and
+cell, conduction inside, convection + radiation outside) compares the current sealed design with vents, PETG, an aluminium
+heat path, a micro blower and software limits. **[Interactive thermal lab →](https://zedward856-spec.github.io/minideck-site/thermal.html)**:
+pick a load and a cooling option, slice through the deck, hover for temperatures, or see everything above a threshold in 3D.
+Full table: [thermal_report.md](thermal_report.md).
+
+![Thermal: heavy load, current vs best option](previews/thermal_compare.png)
+
+| Heavy use (SDR + Wi-Fi + CPU) | SoC | Battery | SDR |
+|---|---|---|---|
+| current (PLA, sealed) | 168 °C | 68 °C | 114 °C |
+| vents 150 mm² | 163 | 65 | 110 |
+| Al pillar SoC → Al floor plate | 129 | 67 | 113 |
+| micro blower 0.2 L/s + vents | 131 | 46 | 84 |
+| pillar + plate + blower + vents | **105** | **53** | **94** |
+| SDR switched off | 166 | 59 | 38 |
+| CPU capped at 1.2 W | 119 | 65 | 112 |
+
+Typical use, sealed: SoC ~81 °C, battery ~40 °C. Vents barely help (the deck is only ~15 mm tall inside); the aluminium path is
+the biggest win for the CPU, a blower for the battery and SDR. Sustained heavy load is shown un-throttled: the real SoC slows
+itself down around 85–95 °C. Estimates for comparing options, not lab measurements.
+
 ## Repository layout
 
 | Path | What |
@@ -112,6 +136,7 @@ Every wire, pin and splice is in **[WIRING.md](WIRING.md)**.
 | `keycaps.py`, `screws.py` | Viewer-only silicone keycaps and screws |
 | `check.py` | Fit / clearance requirements (`out/fit_report.md`) |
 | `assembly_check.py` | Simulates the whole build part by part: can every part get in? (`assembly_report.md`) |
+| `thermal_sim.py`, `thermal_export.py` | 3D thermal simulation (`thermal_report.md`) and its export for the interactive thermal lab |
 | `printability.py` | Print audit → `printability_report.md` |
 | `viewer.py` | Interactive 3D viewer |
 | `print/` | **The print files**, one folder per colour (`python3 export_print.py` rebuilds it) |
