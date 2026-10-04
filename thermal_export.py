@@ -6,7 +6,7 @@ Each run: temperatures on the 1 mm grid as uint8 (t = lo + v * step), C order (x
 import os, json, numpy as np
 import thermal_sim as TS
 
-OUT = os.path.expanduser("~/minideck-site/thermal")
+OUT = os.path.expanduser("~/minideck-site/thermal/data")
 RUNS = [("typical", "current (PLA, sealed)", dict()),
         ("typical", "Al pillar + Al floor plate", dict(pillar=True, plate=True)),
         ("typical", "pillar + plate + blower + vents", dict(pillar=True, plate=True, fan=0.1e-3, vents=60)),
