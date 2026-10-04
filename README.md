@@ -4,7 +4,9 @@ A pocket clamshell cyberdeck. It's fully parametric (Python + [build123d](https:
 
 ![Minideck, Cyber yellow](docs/img/palette1_front.png)
 
-**[Print files →](print/)** · **[Build guide →](BUILD.md)** · [Wiring](WIRING.md) · Promo site: https://zedward856-spec.github.io/minideck-site/ (its own repo: [minideck-site](https://github.com/zedward856-spec/minideck-site))
+**[Print files →](print/)** · **[Build guide →](BUILD.md)** · [Wiring](WIRING.md) · Promo site: https://zedward856-spec.github.io/minideck-site/ (its own repo: [minideck-site](https://github.com/zedward856-spec/minideck-site)) · [3D viewer / AR](https://zedward856-spec.github.io/minideck-site/viewer/) · [Thermal lab](https://zedward856-spec.github.io/minideck-site/thermal/)
+
+Reports: [fit checks](out/fit_report.md) · [assembly check](assembly_report.md) · [thermal](thermal_report.md) · [printability](printability_report.md)
 
 - **Size:** 93.7 × 81.5 × 39.5 mm (closed).
 - **Lid:** opens to 180° on a hidden torque hinge with a hollow axle for the cables.
@@ -96,7 +98,7 @@ Suggested filament: Bambu PLA Matte Charcoal, PLA Basic Dark Gray and PLA Basic 
 | 1 | Friction torque hinge (pocket in the left hinge cheek) |
 | – | Silicone wire: 22/24 AWG for power, 28–30 AWG for signals; 1.13 mm u.FL coax for the antennas |
 
-Every wire, pin and splice is in **[WIRING.md](WIRING.md)**.
+Every wire, pin and splice is in **[WIRING.md](WIRING.md)**. The same wiring as Obsidian canvases (open the folder as a vault, or drop the files into one): [every wire](wiring/minideck-wiring-all.canvas) (47) · [power only](wiring/minideck-wiring-power.canvas) (25).
 
 ---
 
