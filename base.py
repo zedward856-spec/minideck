@@ -29,7 +29,7 @@ CLAMP_T = 0.0                            # no rim: the plate's underside rests o
 PLATE_SCREWS = [(3.2, 3.3), (OUT_W - 3.2, 3.3), (3.2, OUT_D - 3.3), (OUT_W - 3.2, OUT_D - 3.3)]
 M2_PILOT, M2_CLEAR, M2_CSK = 1.7, 2.3, 4.0
 
-PEG_D, PEG_H = 2.4, 3.0                  # pegs through the Radxa's holes
+PEG_D, PEG_H = 2.4, 1.3                  # pegs through the Radxa's holes (short: it must slide in under the front ledge, then drop on)
 GPS_Y0 = 38.6                            # GPS module cradle: front edge of the module
 USB_SLOT_CLR, USB_RECESS = 0.3, (11.8, 6.5, 0.8)
 JACK_HOLE, JACK_RECESS = 5.4, (8.0, 0.8)   # hugs the jack barrel, recess for the plug body
@@ -386,6 +386,10 @@ def bottom():
     pn = L.bounds("pn532")
     if pn[2] < FLOOR - 0.01:
         b -= box(pn[0] - 0.3, pn[1] - 0.3, pn[2] - 0.01, pn[3] + 0.3, pn[4] + 0.3, FLOOR + 0.01)
+    # the PN532 is longer than the gap between the front wall and the battery tube, so over its width the tube
+    # is opened into a cradle (its front half removed down to the floor): the board drops straight in. The cell
+    # is rigid and both its ends stay in closed tube, so it is still held; it sits 0.7 mm over the board's edge.
+    b -= box(pn[0] - 0.25, pn[4] - 7.0, FLOOR, pn[3] + 0.25, bt.YC, bt.CV_Z0 + 0.01)
     import nfc_mark                                       # NFC mark engraved under the PN532 (underside)
     b -= nfc_mark.cut()
     import stripes

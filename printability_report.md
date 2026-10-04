@@ -5,14 +5,14 @@ nozzle 0.4, layer 0.2, bed 256; parts in their print orientation
 ## bottom - 8 issue(s)
 size [93.7, 81.5, 39.5] mm
 
-- **thin wall (<0.6 mm, min 0.01) x34.5-59.2 y12.7-24.4 z0.1-0.3 (369 samples)**
-- **thin wall (<0.6 mm, min 0.01) x34.8-39.4 y27.6-32.2 z0.1-0.3 (66 samples)**
-- **thin wall (<0.6 mm, min 0.01) x49.9-58.3 y12.6-15.5 z0.1-0.3 (50 samples)**
-- **thin wall (<0.6 mm, min 0.01) x28.5-32.7 y5.6-10.0 z0.3-0.3 (47 samples)**
-- **thin wall (<0.6 mm, min 0.01) x28.5-33.1 y35.4-40.0 z0.3-0.3 (47 samples)**
-- **thin wall (<0.6 mm, min 0.01) x60.7-65.2 y5.6-10.1 z0.3-0.3 (42 samples)**
-- **gap narrower than 0.3 mm (will fuse) x2.0-3.6 y1.9-3.3 z22.1-22.4 (12 samples)**
-- **gap narrower than 0.3 mm (will fuse) x90.1-91.7 y1.9-3.3 z22.1-22.4 (11 samples)**
+- **thin wall (<0.6 mm, min 0.01) x41.7-59.2 y17.5-24.2 z0.1-0.3 (216 samples)**
+- **thin wall (<0.6 mm, min 0.01) x34.6-44.0 y17.3-24.0 z0.1-0.3 (82 samples)**
+- **thin wall (<0.6 mm, min 0.01) x35.5-47.2 y12.7-15.5 z0.1-0.3 (76 samples)**
+- **thin wall (<0.6 mm, min 0.01) x61.1-65.2 y5.5-10.1 z0.3-0.3 (52 samples)**
+- **thin wall (<0.6 mm, min 0.01) x34.8-39.1 y28.1-32.1 z0.1-0.3 (52 samples)**
+- **thin wall (<0.6 mm, min 0.01) x60.6-65.2 y35.4-40.0 z0.3-0.3 (50 samples)**
+- **gap narrower than 0.3 mm (will fuse) x2.0-3.6 y1.9-3.2 z22.1-22.4 (14 samples)**
+- **gap narrower than 0.3 mm (will fuse) x90.4-91.5 y2.0-2.9 z22.1-22.4 (9 samples)**
 - bridge ~6 mm at z=1.2 (x4-10 y65-78) - fine
 - bridge ~6 mm at z=1.2 (x84-90 y65-78) - fine
 - bridge ~12 mm at z=22.9 (x2-92 y64-80) - fine

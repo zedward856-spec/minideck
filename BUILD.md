@@ -97,10 +97,10 @@ Check pin 1 on your board (square pad) before soldering: the plan assumes it's a
 The order follows the collision-checked teardown on the promo site, played forwards.
 
 **Base**
-1. **PN532** into its floor pocket.
+1. **PN532** straight down into its floor pocket, back edge into the open cradle under the battery tube; press until it snaps under the two front corner clips. (Fit it before the cell.)
 2. **FPC antennas** onto the hinge-box walls: LoRa and SDR on the back wall, Wi-Fi/BT on the top.
 3. **LoRa module** and **DAC**, jack into its front hole.
-4. **Radxa**, upside down, USB-C ports into the front-wall openings. Its microSD socket is at the board's **left** end (the camera connector is at the right end).
+4. **Radxa**, upside down: hold it a few mm back, slide it forward so its front edge goes under the keyboard ledge (ports at the front-wall openings), then drop it onto its four short pegs. Its microSD socket is at the board's **left** end (the camera connector is at the right end).
 5. **Pololu boost** flat in its spot under the charger, then the **TP4056** over it (USB-C into its front opening). **GPS board** standing on its long edge in its cradle right of the battery, back against the chamber wall (foam tape), parts and u.FL facing the right wall.
    **Power switch:** trim the SS12D00's lever to **1.05 mm** above the body with flush cutters. From inside the case, drop the printed knob into the gap between the left wall and the charger, fin toward the wall, and push it sideways into its pocket. The fin pokes out through the small slot, flush with the outside, and the knob can't fall out of the case. Then lower the switch straight down onto its block: its lever slides down the groove in the wall into the knob's open-topped socket. A dab of hot glue holds the switch; wires go to its pins over the charger.
 6. **SDR** into the hinge box; route its antenna coax.
@@ -115,7 +115,7 @@ The order follows the collision-checked teardown on the promo site, played forwa
 11. Feed the HDMI ribbon, screen power and GPS coax through the **hollow axle**, then slide the axle in from the right until the flange sits flush.
 12. **Hinge cap** over the torque hinge on the left.
 
-**Keyboard**
+**Keyboard** (swing the lid open first)
 13. **CardKB** in, its Grove wires out through the groove to the PN532.
 14. **Keyboard plate** on, 4 × M2 × 4 into the pilots. Don't overtighten: they're printed threads.
 15. **Silicone cover** over the keys.
@@ -127,6 +127,8 @@ The order follows the collision-checked teardown on the promo site, played forwa
 19. **Hatch** on the hinge-box floor, 4 × M2 × 4.
 20. **microSD:** there's no outside slot. The socket is at the Radxa's left end, under the keyboard. Flash the card and put it in before step 13, or later take the keyboard plate (4 screws) and keyboard off to swap it.
 ---
+
+Every step above was simulated part by part, each against everything already fitted (`python3 assembly_check.py` → [assembly_report.md](assembly_report.md)): no part has to be forced. Tight spots are marked there.
 
 ## 6. First boot
 

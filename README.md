@@ -110,7 +110,8 @@ Every wire, pin and splice is in **[WIRING.md](WIRING.md)**.
 | `stripes.py`, `logo.py`, `fills.py` | Hazard stripes, Optic logo engraving, paint-fill preview meshes |
 | `wiring.py` | Wiring plan + 3D wire routes (`WIRING.md`) |
 | `keycaps.py`, `screws.py` | Viewer-only silicone keycaps and screws |
-| `check.py` | 47 fit/clearance requirements |
+| `check.py` | Fit / clearance requirements (`out/fit_report.md`) |
+| `assembly_check.py` | Simulates the whole build part by part: can every part get in? (`assembly_report.md`) |
 | `printability.py` | Print audit → `printability_report.md` |
 | `viewer.py` | Interactive 3D viewer |
 | `print/` | **The print files**, one folder per colour (`python3 export_print.py` rebuilds it) |
