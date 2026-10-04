@@ -9,7 +9,7 @@ PLA, 0.4 mm nozzle. Rebuild this folder from the CAD with `python3 export_print.
 |---|---|---|---|
 | `case_bottom.stl` | 1 | 93.7 × 81.5 × 39.5 | 0.2 mm layers; supports only for the front port openings. The NFC mark is engraved in its underside (prints on the bed) |
 | `lid_shell.stl` | 1 | 93.7 × 79.5 × 15.0 | 0.2 mm layers, back face down |
-| `hinge_box_hatch.stl` | 1 | 85.3 × 12.8 × 1.2 | 0.2 mm layers |
+| `hinge_box_hatch.stl` | 1 | 85.3 × 12.8 × 3.2 | 0.2 mm layers |
 
 ## `dark-grey/` · Dark grey `#3D3D3D` (e.g. Bambu PLA Basic Dark Gray)
 

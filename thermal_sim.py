@@ -90,6 +90,29 @@ def boxmask(lo, n, b):
     return mx[:, None, None] & my[None, :, None] & mz[None, None, :]
 
 
+def thin_gaps(k, occ, lo, n, solid):
+    """The SDR sits a fraction of a mm off the hatch and under the compartment roof: gaps the 1 mm grid can't
+    draw. Give the cell between it and the case the real gap's conductance (an air cell drawn too thick
+    gets a higher k; an SDR cell drawn touching the case gets the SDR + real air gap in series)."""
+    if "sdr_dongle" not in occ:
+        return
+    b = _CACHE.get("sdr_bounds")
+    if b is None:
+        return
+    g_bot, g_top = max(b[0][2] - 1.2, 0.0), max(22.93 - b[1][2], 0.0)   # hatch top 1.2, compartment roof 22.93
+    s = occ["sdr_dongle"]
+    for (i, j) in zip(*np.where(s.any(axis=2))):
+        col = np.where(s[i, j])[0]
+        for kz, nb, g in ((col.min(), col.min() - 1, g_bot), (col.max(), col.max() + 1, g_top)):
+            if g <= 0 or not (0 <= nb < n[2]):
+                continue
+            if not solid[i, j, nb]:                       # air cell drawn 1 mm thick
+                k[i, j, nb] = K["air"] / max(g, 0.05)
+            elif not s[i, j, nb] and not (nb < kz and g > 0.2):   # touching the case (not a rib it stands on):
+                # put the real gap in series
+                k[i, j, kz] = 1.0 / ((1.0 - g) / K["chip"] + g / K["air"])
+
+
 _CACHE = {}
 def geometry():
     if "g" in _CACHE:
@@ -98,7 +121,10 @@ def geometry():
     occ = {}
     for name, mat in PARTS:
         if os.path.exists(f"{SRC}/{name}.stl"):
-            occ[name] = fill(trimesh.load(f"{SRC}/{name}.stl"), lo, n)
+            mesh = trimesh.load(f"{SRC}/{name}.stl")
+            occ[name] = fill(mesh, lo, n)
+            if name == "sdr_dongle":
+                _CACHE["sdr_bounds"] = mesh.bounds
     _CACHE["g"] = (lo, n, occ)
     return _CACHE["g"]
 
@@ -121,6 +147,7 @@ def solve(scen, case_mat="pla", vents=0.0, fan=0.0, pillar=False, plate=False, s
     inside_air = ~solid & shell
     outside = ~solid & ~inside_air
     k[inside_air] = K["air"]
+    thin_gaps(k, occ, lo, n, solid)
     # cooling options
     if pillar:                                            # aluminium block from the SoC down to the floor, pads at both ends
         m = boxmask(lo, n, (70.5, 80.5, 14.5, 24.5, 1.2, 16.6)) & ~solid

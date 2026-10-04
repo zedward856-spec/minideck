@@ -253,6 +253,17 @@ _pairs = [(a, b) for a in _rad for b in _rad if a < b and (box(*_rad[a]) & box(*
 req("radios fit in the box under the hinge: LoRa + Wi-Fi/BT + SDR FPC antennas, NESDR Nano 2+ with USB adapter",
     max(_hits.values()) == 0 and not _pairs,
     f"inside the plastic: {_hits}; touching each other: {_pairs or 'none'}")
+# SDR off the floor: stands on two thin hatch ribs, so only the rib tops touch it (was its whole bottom face)
+_sdr, _rest, _hb = box(*SDR_BODY), B.sdr_rest(), B.hatch().bounding_box()
+_rr = _rest.bounding_box()
+_touch = 2 * SDR_REST["rib_w"] * (SDR_BODY[4] - SDR_BODY[1] - 1.0)
+_full = (SDR_BODY[3] - SDR_BODY[0]) * (SDR_BODY[4] - SDR_BODY[1])
+_gb, _gt = SDR_BODY[2] - FLOOR - SDR_REST["lift"], B.CMP_TOP - SDR_BODY[5]
+req("SDR stands on two ribs: little of it touches the case, air under and over it",
+    (_sdr & B.hatch()).volume < 1e-6 and abs(_gb) < 1e-6 and _gt >= 0.3 and
+    _rr.min.X >= _hb.min.X and _rr.max.X <= _hb.max.X and _rr.min.Y >= _hb.min.Y and _rr.max.Y <= _hb.max.Y,
+    f"touches the case over {_touch:.0f} mm2 (rib tops) instead of {_full:.0f} mm2; "
+    f"{SDR_REST['lift']} mm of air under it, {_gt:.2f} mm under the roof; posts {SDR_REST['clr']} mm off each face, all on the hatch")
 _bo = B.BAY_OPEN
 req("coax + SDR USB reach the boards (bay opening into the box)", True,
     f"{_bo[1] - _bo[0]:.1f} x {_bo[3] - _bo[2]:.1f} mm opening, shared with the screen cables")

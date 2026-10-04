@@ -315,6 +315,13 @@
   "note": "1.13 mm u.FL coax, ~120 mm (Molex 211140 has its own 100 mm lead)"
  },
  {
+  "name": "SDR antenna coax",
+  "kind": "coax",
+  "a": "SDR MCX jack",
+  "b": "SDR FPC antenna (box back wall)",
+  "note": "MCX-to-u.FL pigtail, ~60 mm (1.13 mm coax); the FPC antenna's u.FL is at its left end"
+ },
+ {
   "name": "Wi-Fi antenna coax",
   "kind": "coax",
   "a": "Radxa u.FL (Wi-Fi)",

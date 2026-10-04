@@ -16,20 +16,22 @@ def logo_poly(width, cx=0.0, cy=0.0, angle=0.0, flip_v=True):
             if len(nums) >= 6:
                 polys.append(Polygon(list(zip(nums[0::2], nums[1::2]))).buffer(0))
     g = unary_union(polys)
-    # the inner chevrons touch the frame at single points: fuse them with a hair-thin bridge so
-    # every engraving is a proper solid (point contacts make non-manifold edges)
+    # the inner chevrons touch the frame at single points (point contacts make non-manifold edges).
+    # Keep both sharp: nudge the chevron a hair away from the frame, so its tip stops just short of it
+    # (a round bridge here used to blob over the two points)
     from shapely.ops import nearest_points
     from shapely.geometry import Point
-    w = 0.012 * (g.bounds[2] - g.bounds[0])                # ~0.5 mm on a 40 mm logo
+    gap = 0.004 * (g.bounds[2] - g.bounds[0])              # ~0.04 mm on a 9 mm logo
     parts = list(g.geoms) if hasattr(g, "geoms") else [g]
-    bridges = []
     for i in range(len(parts)):
         for j in range(i + 1, len(parts)):
             if parts[i].distance(parts[j]) < 1e-6:
                 a, _ = nearest_points(parts[i], parts[j])
-                bridges.append(Point(a.x, a.y).buffer(w, 4))
-    if bridges:
-        g = unary_union([g] + [b.intersection(g.convex_hull) for b in bridges])
+                k = i if parts[i].area < parts[j].area else j      # the chevron, not the frame
+                c = parts[k].centroid
+                d = ((c.x - a.x) ** 2 + (c.y - a.y) ** 2) ** 0.5
+                parts[k] = affinity.translate(parts[k], gap * (c.x - a.x) / d, gap * (c.y - a.y) / d)
+    g = unary_union(parts)
     x0, y0, x1, y1 = g.bounds
     s = width / (x1 - x0)
     g = affinity.translate(g, -(x0 + x1) / 2, -(y0 + y1) / 2)

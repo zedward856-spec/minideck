@@ -231,7 +231,26 @@ def hatch():
     for x, y in HATCH_SCREWS:
         h -= cyl_z(x, y, -1, FLOOR + 1, M2_CLEAR)
         h -= Pos(x, y, -0.01) * Cone(M2_CSK / 2, M2_CLEAR / 2, 0.9, align=CEN)
+    h += sdr_rest()
     return h
+
+
+def sdr_rest():
+    """Two thin ribs the SDR stands on (air under the rest of it) + posts that keep it in place."""
+    r, (x0, y0, _, x1, y1, _) = SDR_REST, SDR_BODY
+    top, c = FLOOR + r["lift"], r["clr"]
+    pw, pd, ph = r["post"]
+    ew, ed, eh = r["end"]
+    out = None
+    for xa in (x0 + r["rib_in"], x1 - r["rib_in"] - r["rib_w"]):
+        rib = box(xa, y0 + 0.5, FLOOR - 0.01, xa + r["rib_w"], y1 - 0.5, top)
+        rib += box(xa, y0 - c - pd, FLOOR - 0.01, xa + pw, y0 - c, FLOOR + ph)      # front post
+        rib += box(xa, y1 + c, FLOOR - 0.01, xa + pw, y1 + c + pd, FLOOR + ph)      # back post
+        out = rib if out is None else out + rib
+    ym = (y0 + y1) / 2
+    out += box(x0 - c - ew, ym - ed / 2, FLOOR - 0.01, x0 - c, ym + ed / 2, FLOOR + eh)   # end stops
+    out += box(x1 + c, ym - ed / 2, FLOOR - 0.01, x1 + c + ew, ym + ed / 2, FLOOR + eh)
+    return out
 
 
 def grow(b, d):

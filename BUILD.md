@@ -103,7 +103,7 @@ The order follows the collision-checked teardown on the promo site, played forwa
 4. **Radxa**, upside down: hold it a few mm back, slide it forward so its front edge goes under the keyboard ledge (ports at the front-wall openings), then drop it onto its four short pegs. Its microSD socket is at the board's **left** end (the camera connector is at the right end).
 5. **Pololu boost** flat in its spot under the charger, then the **TP4056** over it (USB-C into its front opening). **GPS board** standing on its long edge in its cradle right of the battery, back against the chamber wall (foam tape), parts and u.FL facing the right wall.
    **Power switch:** trim the SS12D00's lever to **1.05 mm** above the body with flush cutters. From inside the case, drop the printed knob into the gap between the left wall and the charger, fin toward the wall, and push it sideways into its pocket. The fin pokes out through the small slot, flush with the outside, and the knob can't fall out of the case. Then lower the switch straight down onto its block: its lever slides down the groove in the wall into the knob's open-topped socket. A dab of hot glue holds the switch; wires go to its pins over the charger.
-6. **SDR** into the hinge box; route its antenna coax.
+6. **SDR** into the hinge box, MCX jack to the left, USB end (wires) to the right toward the bay opening. Fit the MCX-to-u.FL pigtail to the SDR FPC antenna (its u.FL is at the antenna's left end). With the deck upside down, screw the **hatch** on over it: its two thin ribs and four little posts locate the SDR, so it ends up standing on the rib tops, off the floor (only the ribs touch it).
 
 **Lid**
 7. **GPS patch** into its pocket in the lid shell, coax out through the hinge.

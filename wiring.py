@@ -218,6 +218,10 @@ w("LoRa antenna coax", "coax", "E22 u.FL", "LoRa FPC antenna (box back wall)",
   [(LRP[0] + 1.5, 14.0, 10.0), (69.6, 14.0, 10.0), (69.6, 27.0, 12.5), (69.6, ln[0], ln[1]), (ln[2], ln[0], ln[1]),
    (ln[2], 60.5, ln[1]), (ln[2], 77.5, 6.0), (40.0, 78.6, 9.0), (31.0, 79.3, 17.0)],
   note="1.13 mm u.FL coax, ~120 mm (Molex 211140 has its own 100 mm lead)")
+SDRM = (SDR_BODY[0] - 2.5, (SDR_BODY[1] + SDR_BODY[4]) / 2, (SDR_BODY[2] + SDR_BODY[5]) / 2)   # MCX jack, left end
+w("SDR antenna coax", "coax", "SDR MCX jack", "SDR FPC antenna (box back wall)",
+  [SDRM, (6.0, SDRM[1], SDRM[2]), (6.0, 77.0, 10.0), (9.0, 78.9, 9.0), (12.5, 79.2, 8.0)],
+  note="MCX-to-u.FL pigtail, ~60 mm (1.13 mm coax); the FPC antenna's u.FL is at its left end")
 ln = lane()
 w("Wi-Fi antenna coax", "coax", "Radxa u.FL (Wi-Fi)", "Wi-Fi FPC antenna (box roof)",
   [(_b[3] - 58.0, 9.0, _ZP + 0.2), (34.0, 9.0, 13.0), (34.0, ln[0], ln[1]), (ln[2], ln[0], ln[1]),

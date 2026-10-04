@@ -903,7 +903,7 @@
    "x": 720,
    "y": 960,
    "width": 226,
-   "height": 240,
+   "height": 328,
    "label": "NESDR Nano 2+ (USB wired to pins)"
   },
   {
@@ -941,6 +941,24 @@
    "width": 190,
    "height": 36,
    "text": "VBUS"
+  },
+  {
+   "id": "p_sdr_4",
+   "type": "text",
+   "x": 738,
+   "y": 1182,
+   "width": 190,
+   "height": 36,
+   "text": "SDR MCX jack"
+  },
+  {
+   "id": "p_sdr_5",
+   "type": "text",
+   "x": 738,
+   "y": 1226,
+   "width": 190,
+   "height": 36,
+   "text": "SDR FPC antenna (box back wall)"
   },
   {
    "id": "g_radxa_io",
@@ -1030,7 +1048,7 @@
    "y": -980,
    "width": 900,
    "height": 120,
-   "text": "# Minideck \u2014 every wire\n46 wires \u00b7 generated from the wiring plan (`python3 wiring_canvas.py`)"
+   "text": "# Minideck \u2014 every wire\n47 wires \u00b7 generated from the wiring plan (`python3 wiring_canvas.py`)"
   },
   {
    "id": "legend",
@@ -1504,6 +1522,16 @@
   },
   {
    "id": "w45",
+   "fromNode": "p_sdr_4",
+   "fromSide": "right",
+   "toNode": "p_sdr_5",
+   "toSide": "right",
+   "toEnd": "none",
+   "color": "#a5b4c8",
+   "label": "SDR antenna coax"
+  },
+  {
+   "id": "w46",
    "fromNode": "p_radxa_io_1",
    "fromSide": "right",
    "toNode": "p_wifi_ant_0",

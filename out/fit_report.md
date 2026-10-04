@@ -1,6 +1,6 @@
 # Minideck fit + requirements check
 
-**55 / 55 pass**
+**56 / 56 pass**
 
 - PASS  keyboard fits in the case (no part of it inside the plastic)  — deepest contact 0.13 mm
 - PASS  radxa fits in the case (no part of it inside the plastic)  — deepest contact 0.00 mm
@@ -46,6 +46,7 @@
 - PASS  every heat-set insert sits in an open hole (not buried in plastic)  — [True, True, True, True, True, True, True, True]
 - PASS  battery-door lock is a one-piece C-clip on a rail: slides only up/down, can't fall off  — blocked pull out, push in, forward, back; lips hook 0.4 mm behind the rail; detent press along the travel [0, 0.08, 0.08, 0.08, 0] mm3 (clicks at both ends)
 - PASS  radios fit in the box under the hinge: LoRa + Wi-Fi/BT + SDR FPC antennas, NESDR Nano 2+ with USB adapter  — inside the plastic: {'antenna_lora': 0, 'antenna_sdr': 0, 'antenna_wifi': 0, 'sdr_dongle': 0}; touching each other: none
+- PASS  SDR stands on two ribs: little of it touches the case, air under and over it  — touches the case over 17 mm2 (rib tops) instead of 192 mm2; 0.35 mm of air under it, 0.38 mm under the roof; posts 0.25 mm off each face, all on the hatch
 - PASS  coax + SDR USB reach the boards (bay opening into the box)  — 13.4 x 18.5 mm opening, shared with the screen cables
 - PASS  GPS module fits its cradle in the bay right of the battery (standing on its edge)  — modules up to 15.6 x 16.4 mm
 - PASS  GPS patch antenna fits the lid frame, clear of the screen and driver board  — 18.0 x 18.0 patch, faces the lid back (sky)

@@ -86,6 +86,7 @@ not the 3D routes, and check the square pad / '1' mark on your board before sold
 | HDMI ribbon | Radxa micro-HDMI (soldered) | driver board mini-HDMI (C2 plug) | FPV FPC ribbon, rolled through the 8.4 mm hinge bore |
 | GPS antenna coax | GPS module u.FL | patch antenna (lid) | 1.13 mm u.FL-u.FL coax, ~150 mm |
 | LoRa antenna coax | E22 u.FL | LoRa FPC antenna (box back wall) | 1.13 mm u.FL coax, ~120 mm (Molex 211140 has its own 100 mm lead) |
+| SDR antenna coax | SDR MCX jack | SDR FPC antenna (box back wall) | MCX-to-u.FL pigtail, ~60 mm (1.13 mm coax); the FPC antenna's u.FL is at its left end |
 | Wi-Fi antenna coax | Radxa u.FL (Wi-Fi) | Wi-Fi FPC antenna (box roof) | 1.13 mm u.FL coax; enable the external antenna overlay in rsetup |
 
 ## Notes

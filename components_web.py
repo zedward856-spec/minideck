@@ -195,12 +195,13 @@ def own():
     pads = trimesh.util.concatenate([box((f, lo[1] + 1.0 + k * 2.54, hi[2] - 1.6), (f + 0.04, lo[1] + 2.4 + k * 2.54, hi[2] - 0.4)) for k in range(5)])
     save("gps_module", [(pcb, hexc("#1d6b3a")), (can, hexc("#cfd2d6")), (trimesh.util.concatenate([ipex, pads]), hexc("#d4a93a")), (chips, hexc("#141416"))])
 
-    # NESDR Nano 2+: black anodised body, silver USB plug end, gold MCX jack on top
+    # NESDR Nano 2+: black anodised body; the USB end (plug cut off, wired) faces the bay opening on the right,
+    # the gold MCX antenna jack is on the left end
     lo, hi = placeholder("sdr_dongle").bounds
-    body = box((lo[0] + 4.0, lo[1], lo[2]), (hi[0], hi[1], hi[2]))
-    usb = box((lo[0], lo[1] + 1.2, lo[2] + 4.0), (lo[0] + 4.0, hi[1] - 1.2, hi[2] - 4.0))
-    mcx = cyl(1.8, 3.0, 0, (hi[0] + 1.0, (lo[1] + hi[1]) / 2, (lo[2] + hi[2]) / 2), 24)
-    stripe = box((lo[0] + 6, lo[1] - 0.02, lo[2] + 3), (lo[0] + 9, hi[1] + 0.02, hi[2] - 3))
+    body = box((lo[0], lo[1], lo[2]), (hi[0] - 4.0, hi[1], hi[2]))
+    usb = box((hi[0] - 4.0, lo[1] + 1.2, lo[2] + 4.0), (hi[0], hi[1] - 1.2, hi[2] - 4.0))
+    mcx = cyl(1.8, 3.0, 0, (lo[0] - 1.0, (lo[1] + hi[1]) / 2, (lo[2] + hi[2]) / 2), 24)
+    stripe = box((hi[0] - 9, lo[1] - 0.02, lo[2] + 3), (hi[0] - 6, hi[1] + 0.02, hi[2] - 3))
     save("sdr_dongle", [(body, hexc("#19191b")), (usb, hexc("#c9cacc")), (mcx, hexc("#d4a93a")), (stripe, hexc("#d22b2b"))])
 
     # EHD-40P-V3 driver: black PCB, silver mini-HDMI + USB-C on the hinge edge, gold 40-pin FPC socket, chips
