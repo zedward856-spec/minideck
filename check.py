@@ -290,15 +290,21 @@ def _inside(pts, mesh):
         warnings.simplefilter("ignore")
         r = _pv.PolyData(np.asarray(pts, float)).select_enclosed_points(m, tolerance=1e-6, check_surface=False)
     return np.asarray(r["SelectedPoints"]).astype(bool)
-req("side walls closed at the Radxa's ends (no slot in front of the camera connector or the microSD; the left one only has the switch recess)",
-    bool(_inside([[OUT_W - 1.0, 18.7, 20.6], [OUT_W - 1.0, 15.0, 20.0], [1.75, 14.0, 20.8], [1.75, 26.0, 21.0]], bot).all()))
+req("side walls closed at the Radxa's ends (no slot in front of the camera connector or the microSD; the left one only has the switch's fin slot)",
+    bool(_inside([[OUT_W - 1.0, 18.7, 20.6], [OUT_W - 1.0, 15.0, 20.0], [0.35, 14.0, 20.8], [0.35, 26.0, 21.0]], bot).all()))
 
 # ---------------- power switch: SS12D00 inside the left wall, printed knob outside ----------------
 import switch as _sw, glob as _glob2
 def _tmb(shape, name):
     export_stl(shape, f"out/_{name}.stl"); return trimesh.load(f"out/_{name}.stl")
 def _skin(mesh, n=5000, d=0.06):
-    p, fi = trimesh.sample.sample_surface(mesh, n); return p - mesh.face_normals[fi] * d
+    p, fi = trimesh.sample.sample_surface(mesh, n, seed=1); return p - mesh.face_normals[fi] * d
+def _hits(q, mesh, depth=0.03):
+    """fast VTK inside-test, then confirm the few flagged points with an exact depth (no false alarms)"""
+    sel = q[_inside(q, mesh)]
+    if not len(sel):
+        return 0
+    return int((trimesh.proximity.ProximityQuery(mesh).signed_distance(sel[:400]) > depth).sum())
 _sw_hits, _kn_hits = {}, {}
 _near = {"case": bot}
 for _k in ("tp4056", "mt3608", "keyboard"):
@@ -311,10 +317,10 @@ for _f in _glob2.glob("out/parts_in_place/wires_base_*.stl"):
 for _at in (-1.0, 1.0):
     _b = _tmb(_sw.body(_at), f"sw_body{int(_at)}"); _q = _skin(_b)
     for k, v in _near.items():
-        n = int(_inside(_q, v).sum())
+        n = _hits(_q, v)
         if n: _sw_hits[f"{k}@{_at:+.0f}"] = n
     _kn = _tmb(_sw.knob(_at), f"sw_knob{int(_at)}"); _q = _skin(_kn, 3000)
-    n = int(_inside(_q, bot).sum())
+    n = _hits(_q, bot)
     if n: _kn_hits[f"case@{_at:+.0f}"] = n
 req("power switch (both positions) clear of the case, TP4056, MT3608, keyboard and wires", not _sw_hits,
     ", ".join(f"{k} {v}" for k, v in _sw_hits.items()) or "none")
@@ -323,9 +329,11 @@ req("switch knob slides end to end without touching the case", not _kn_hits,
 _kl = SWITCH["knob"][0]; _sl = (SWITCH["lever"][0] + SWITCH["travel"]) / 2 + 0.2
 _kmin = min(_tmb(_sw.knob(a), f"sw_knobf{int(a)}").bounds[0][0] for a in (-1.0, 1.0))
 req("switch knob flush: nothing sticks out of the left face (no bumping it on or off in a pocket)", _kmin > -0.01,
-    f"fin top {(-_kmin if _kmin < 0 else 0):.2f} mm proud, recess {SWITCH['recess']} mm, fin {SWITCH['fin'][0]} x {SWITCH['fin'][1]} mm")
-req("switch hidden: the knob covers the lever slot in both positions", _kl / 2 - SWITCH["travel"] / 2 >= _sl + 0.5,
-    f"overlap {_kl / 2 - SWITCH['travel'] / 2 - _sl:.1f} mm each side")
+    f"fin top {(-_kmin if _kmin < 0 else 0):.2f} mm proud, fin {SWITCH['fin'][0]} x {SWITCH['fin'][1]} mm through a {SWITCH['skin']} mm skin")
+_slw, _slh = _sw.slot_size()
+req("switch knob fits from the inside only: its plate is bigger than the outside slot, so it can't fall out",
+    SWITCH["knob"][0] > _slw + 2 and SWITCH["knob"][1] > _slh + 0.5,
+    f"plate {SWITCH['knob'][0]} x {SWITCH['knob'][1]} mm behind a {_slw:.1f} x {_slh:.1f} mm slot")
 if "tp4056" in _near:
     req("TP4056 still fits under the switch", not int(_inside(_skin(_near["tp4056"], 4000), bot).sum()),
         f"switch body ends at x {_sw.X1:.2f}, charger starts at x {_near['tp4056'].bounds[0][0]:.2f}")

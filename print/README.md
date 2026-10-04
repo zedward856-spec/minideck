@@ -26,7 +26,7 @@ PLA, 0.4 mm nozzle. Rebuild this folder from the CAD with `python3 export_print.
 | `battery_lock_clip.stl` | 1 | 11.8 × 9.3 × 4.5 | 0.12 mm layers |
 | `torque_hinge_cap.stl` | 1 | 10.9 × 10.8 × 1.2 | 0.12 mm layers, logo up |
 | `hinge_axle.stl` | 1 | 11.9 × 13.0 × 15.2 | 0.12 mm layers, flange down |
-| `switch_knob.stl` | 1 | 5.2 × 12.0 × 1.3 | 0.12 mm layers, flat back down (the lever socket), fin up; snaps into the flush recess |
+| `switch_knob.stl` | 1 | 5.2 × 12.0 × 2.0 | 0.12 mm layers, flat back down (the lever socket), fin up; goes in from inside the case |
 
 ## `tests/` · any
 
@@ -39,7 +39,7 @@ PLA, 0.4 mm nozzle. Rebuild this folder from the CAD with `python3 export_print.
 - 8 × M2 heat-set inserts (3.5 OD × 3 mm): 4 in the hinge-box floor, 4 in the lid shell
 - 12 × M2 × 4 countersunk screws
 - ~26 mm of 1.75 mm filament as the battery-door hinge pin
-- 1 × SS12D00 mini slide switch (SPDT, 8.6 × 3.6 × 3.5 mm body) for power: trim its lever to 1.35 mm
+- 1 × SS12D00 mini slide switch (SPDT, 8.6 × 3.6 × 3.5 mm body) for power: trim its lever to 1.05 mm
 
 **Optional paint fill.** The logos, MINIDECK text and side stripes are engraved 0.3–0.6 mm deep. Go over them with a paint marker and wipe the surface with IPA.
 

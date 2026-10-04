@@ -51,7 +51,7 @@ def keepouts(part, face):
         g.append(sbox(bt.REC_Y1, bt.LOCK_ZB - 0.2, bt.LOCK_REC_Y1,                  # lock slider
                       bt.LOCK_ZB + bt.LOCK_TRAVEL + bt.LOCK_BODY[1] + 0.2))
         import switch as sw                                                          # power switch knob
-        kl, kh = SWITCH["knob"][:2]                                                 # (+ recess clearance)
+        kl, kh = SWITCH["knob"][:2]                                                 # (knob pocket behind the fin slot)
         half = (kl + SWITCH["travel"]) / 2 + 0.4
         g.append(sbox(SWITCH["y"] - half, sw.ZC - kh / 2 - 0.3, SWITCH["y"] + half, sw.ZC + kh / 2 + 0.3))
     return unary_union(g).buffer(SIDE_STRIPES["hole_gap"], 32) if g else None
