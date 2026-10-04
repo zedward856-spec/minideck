@@ -412,6 +412,10 @@ def bottom():
     b -= box(pn[0] - 0.25, pn[4] - 7.0, FLOOR, pn[3] + 0.25, bt.YC, bt.CV_Z0 + 0.01)
     import nfc_mark                                       # NFC mark engraved under the PN532 (underside)
     b -= nfc_mark.cut()
+    import marks                                          # port labels, switch I/O, lock arrow, underside plates
+    mc = marks.base_cut()
+    if mc is not None:
+        b -= mc
     import stripes
     sc = stripes.stripes_cut("bottom")
     if sc is not None:

@@ -129,6 +129,9 @@ SIDE_STRIPES = dict(
     edge=5.0,                       # bands stop this far from each rounded case corner
     text_gap=3.0,                   # lid front: gap left either side of the MINIDECK text
     hole_gap=2.0,                   # base: stripes stay this far from every hole / recess / door
+    shallow_over_switch=True,       # left face: bars run over the knob pocket's 0.7 mm skin, cut only switch_depth there
+    switch_depth=0.2,
+    switch_gap=0.6,                 # ... and keep this far from the fin slot
     bottom=dict(z0=2.5, z1=21.0),   # base band height (covers the port area); add bar=/gap= here
                                     # to give the base its own (e.g. fatter) bars
     lid=dict(z0=30.4, z1=36.4),     # lid band height
@@ -196,3 +199,18 @@ NFC_MARK = dict(depth=0.3,                 # floor under the PN532 is 0.8 mm: 0.
 # MT3608 spot under the charger. Fed from the TP4056's B+/B- pads (battery side, past its ~3 A protection) through
 # the power switch; a protected high-drain 18650 does the over-current protection. Pads along its back edge.
 BOOST = dict(model="Pololu U3V40F5", size=(15.2, 15.2, 5.6), x0=5.0, y0=19.0, z0=9.0, pcb=1.6)
+
+# ---- cosmetic engravings (marks.py): port labels, switch I/O, lock arrow, underside plates, lid texture ----
+MARKS = dict(
+    enabled=True,
+    depth=0.3,                      # engraving depth (painted like the logos, except the lid texture)
+    wall=0.45,                      # at least this much wall stays behind every mark (else it's clipped)
+    stripe_gap=0.6,                 # stripes keep this far from the left-face marks
+    front=dict(z=23.3, h=2.4),      # port labels PWR PWR DATA (+ headphones): centre height (above the stripes) and cap height
+    switch=dict(h=2.6, line=0.55, gap=0.8, depth=0.2, round=0.18),   # | (on, knob back) left of the slot, O (off) right, seen from outside; 0.2 deep (0.7 skin)
+    lock=dict(h=4.2, w=2.6, gap=1.1, up=0.0),  # "open" arrow behind the battery lock (slide up to open)
+    battery=dict(y=53.6, h=13.0, line=0.6, inset=1.5, text_h=2.6),   # outline under the cell
+    plates=dict(w=20.4, h=37.5, line=0.55, title_h=3.4, text_h=2.6, label_h=1.9, gap=1.3,
+                name="sl01220", id_xy=(79.51, 23.2), rf_xy=(14.2, 23.2)),   # either side of the NFC mark, 1.7 mm off it (clear of the door pin)
+    texture=dict(enabled=True, cell=5.0, line=0.6, depth=0.25, edge=3.2, back=4.0, logo_gap=2.5, screw_gap=3.0, border=0.6),
+)

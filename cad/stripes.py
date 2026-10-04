@@ -52,10 +52,20 @@ def keepouts(part, face):
         g.append(sbox(bt.REC_Y1, bt.LOCK_ZB - 0.2, bt.LOCK_REC_Y1,                  # lock slider
                       bt.LOCK_ZB + bt.LOCK_TRAVEL + bt.LOCK_BODY[1] + 0.2))
     out = unary_union(g).buffer(SIDE_STRIPES["hole_gap"], 32) if g else None
-    if face == "left":                       # the switch: only its thin-walled pocket area, with a small gap
+    if face == "left":
         import switch as sw
-        sp = sw.pocket_footprint().buffer(SIDE_STRIPES.get("switch_gap", 0.8), 32)
+        if SIDE_STRIPES.get("shallow_over_switch", True):
+            # stripes run over the knob pocket's thin skin too (cut shallower there, see depth_split): they only
+            # keep off the fin slot itself
+            fw, fh = sw.slot_size()
+            sp = sbox(SWITCH["y"] - fw / 2, sw.ZC - fh / 2, SWITCH["y"] + fw / 2, sw.ZC + fh / 2).buffer(
+                SIDE_STRIPES.get("switch_gap", 0.8), 32)
+        else:                                   # the switch: only its thin-walled pocket area, with a small gap
+            sp = sw.pocket_footprint().buffer(SIDE_STRIPES.get("switch_gap", 0.8), 32)
         out = sp if out is None else out.union(sp)
+        if MARKS.get("enabled", True):          # the 1 / 0 marks and the lock arrow (marks.py)
+            import marks
+            out = out.union(marks.left_keepout())
     return out
 
 
@@ -91,6 +101,22 @@ def _xz_prism(poly, y0, y1):
     return out
 
 
+def depth_split(part, face, poly):
+    """[(polygon, depth)]: full depth, except over the knob pocket's 0.7 mm skin on the left face, where the
+    bars are cut shallow (the paint hides the difference) and clipped to where enough wall stays behind"""
+    d = SIDE_STRIPES["depth"]
+    if not (part == "bottom" and face == "left" and SIDE_STRIPES.get("shallow_over_switch", True)):
+        return [(poly, d)]
+    import switch as sw, marks
+    ds = SIDE_STRIPES.get("switch_depth", 0.2)
+    thin = sw.pocket_footprint().buffer(SIDE_STRIPES.get("switch_gap", 0.8), 32)
+    deep, shallow = poly.difference(thin), poly.intersection(thin)
+    shallow = marks.safe(shallow, "out/bottom.stl", 0, ds + 0.4, keep=0.05)   # 0.5 of the 0.7 skin stays
+    deep = marks.safe(deep, "out/bottom.stl", 0, d + MARKS["wall"], keep=0.05).union(
+        deep.difference(thin.buffer(0.5)))           # (only trim deep bars right at the pocket's edge)
+    return [(deep, d), (shallow, ds)]
+
+
 def stripes_cut(part):
     """Solid to subtract from 'bottom' or 'lid' (None if disabled)."""
     s = SIDE_STRIPES
@@ -107,7 +133,14 @@ def stripes_cut(part):
         if poly.is_empty:
             continue
         if face == "left":
-            c = yz_prism(poly, -1.0, d)
+            import marks
+            c = None
+            for pp, dd in depth_split(part, face, poly):
+                if not pp.is_empty:
+                    cc = marks.yz_prism(pp, -1.0, dd)
+                    c = cc if c is None else c + cc
+            if c is None:
+                continue
         elif face == "right":
             c = yz_prism(poly, OUT_W - d, OUT_W + 1.0)
         elif face == "front":

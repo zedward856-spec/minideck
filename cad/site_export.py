@@ -11,7 +11,7 @@ from params import ACTIVE_W, ACTIVE_H
 SRC, OUT = "out/parts_in_place", os.path.expanduser("~/minideck-site/assets")
 HY, HZ = B.HINGE_AXIS
 LID = {"screen_front", "screen_back", "screen_panel", "driver_board", "gps_patch_antenna", "lid_inserts", "screws_lid",
-       "fill_logos_lid", "fill_stripes_lid"}
+       "fill_logos_lid", "fill_stripes_lid", "fill_texture_lid"}
 # name: (label, role, max faces, explode offset in the part's own (closed) frame)
 P = {
     "bottom":        ("Case bottom", "body", 60000, (0, 0, -32)),
@@ -50,8 +50,8 @@ P = {
 }
 FILL_HOST = {"fill_nfc_base": ["bottom"], "fill_logos_base": ["keyboard_top"], "fill_caps_base": ["hinge_cap", "hinge_axle"],
              "fill_stripes_base": ["bottom"], "fill_logos_lid": ["screen_back", "screen_front"],
-             "fill_stripes_lid": ["screen_back"]}
-FILL_ROLE = {"fill_caps_base": "fill_dark"}
+             "fill_stripes_lid": ["screen_back"], "fill_marks_base": ["bottom"], "fill_texture_lid": ["screen_back"]}
+FILL_ROLE = {"fill_caps_base": "fill_dark", "fill_texture_lid": "kbplate"}   # texture: just a shade lighter
 
 def load(f, faces):
     m = pv.read(f"{SRC}/{f}.stl").triangulate().clean()

@@ -197,6 +197,10 @@ def screen_back():
     lc = lid_logo_cut()
     if lc is not None:
         s -= lc
+    import marks                                  # hex texture round the logo (marks.py)
+    mc = marks.lid_cut()
+    if mc is not None:
+        s -= mc
     import stripes
     sc = stripes.stripes_cut("lid")
     if sc is not None:

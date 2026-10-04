@@ -148,6 +148,7 @@ Scripts run from anywhere (they switch to the repo root themselves), e.g. `pytho
 | `cad/layout.py` | Places the parts from the reference layout `models/minideck.stl` |
 | `cad/base.py`, `cad/lid.py`, `cad/battery_test.py` | Case bottom, plate, hatch, hinge / lid shell and bezel / battery chamber, door and lock |
 | `cad/stripes.py`, `cad/logo.py`, `cad/fills.py` | Hazard stripes, Optic logo engraving, paint-fill preview meshes |
+| `cad/marks.py`, `cad/nfc_mark.py` | Engraved labels: PWR / PWR / DATA + headphones over the ports, &#124; / O by the power switch, open arrow by the battery lock, underside battery outline + ID and radio plates, NFC mark, lid hex texture (each clipped so ≥ 0.45 mm of wall stays) |
 | `cad/wiring.py` | Wiring plan + 3D wire routes (`WIRING.md`) |
 | `cad/keycaps.py`, `cad/screws.py` | Viewer-only silicone keycaps and screws |
 | `cad/check.py` | Fit / clearance requirements (`reports/fit_report.md`) |

@@ -57,7 +57,10 @@ def stripe_fill(part):
         if poly.is_empty:
             continue
         if face == "left":
-            out.append(B.yz_prism(poly, E, d))
+            import marks
+            for pp, dd in stripes.depth_split(part, face, poly):
+                if not pp.is_empty:
+                    out.append(marks.yz_prism(pp, E, dd))
         elif face == "right":
             out.append(B.yz_prism(poly, OUT_W - d, OUT_W - E))
         elif face == "front":
@@ -88,3 +91,6 @@ if __name__ == "__main__":
     save(stripe_fill("lid"), "fill_stripes_lid")
     save(stripe_fill("bottom"), "fill_stripes_base")
     save(nfc_fill(), "fill_nfc_base")
+    import marks
+    save(marks.base_fill(E), "fill_marks_base")
+    save(marks.lid_fill(E), "fill_texture_lid")
