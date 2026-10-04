@@ -75,6 +75,7 @@ def design():
         if tb[2] - tb[0] > inner_w - 2.0:                                     # shrink to fit inside the coil
             k = (inner_w - 2.0) / (tb[2] - tb[0]); t = affinity.scale(t, k, k); tb = t.bounds
         v -= (tb[3] - tb[1]) / 2
+        t = t.buffer(M.get("close", 0.0), 16).buffer(-M.get("close", 0.0), 16)   # merge gaps a nozzle can't print
         parts.append(affinity.translate(t, 0, v))
         v -= (tb[3] - tb[1]) / 2 + 1.4
     return unary_union(parts)

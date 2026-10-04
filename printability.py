@@ -10,7 +10,7 @@ from shapely.ops import unary_union
 from scipy.cluster.hierarchy import fcluster, linkage
 warnings.filterwarnings("ignore")
 
-PARTS = ["bottom", "keyboard_top", "screen_front", "screen_back", "battery_door", "battery_lock_slider",
+PARTS = ["bottom", "keyboard_top", "screen_front", "screen_back", "battery_door", "battery_lock_slider", "switch_knob",
          "box_hatch", "hinge_axle", "hinge_cap"]
 BED = 256.0          # Bambu X1/P1 (A1 mini: 180)
 NOZZLE, LAYER = 0.4, 0.2

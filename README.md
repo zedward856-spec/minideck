@@ -8,7 +8,11 @@ A pocket clamshell cyberdeck. It's fully parametric (Python + [build123d](https:
 
 - **Size:** 93.7 × 81.5 × 39.5 mm (closed).
 - **Lid:** opens to 180° on a hidden torque hinge with a hollow axle for the cables.
-- **Battery:** one 18650 behind a hinged door, held shut by a C-clip lock.
+- **Battery:** one protected 18650 behind a hinged door, held shut by a C-clip lock.
+- **Power switch:** a flush slide switch in the left wall; its printed fin sits level with the case so it can't get bumped in a pocket.
+- **Power:** Pololu U3V40F5 5 V boost (~2.6 A).
+
+![Left side: battery door and the flush power switch](docs/img/left_switch.png)
 
 ---
 

@@ -5,18 +5,18 @@ nozzle 0.4, layer 0.2, bed 256; parts in their print orientation
 ## bottom - 8 issue(s)
 size [93.7, 81.5, 39.5] mm
 
-- **thin wall (<0.6 mm, min 0.01) x1.3-2.6 y36.4-38.0 z0.6-0.6 (20 samples)**
-- **thin wall (<0.6 mm, min 0.01) x83.4-84.1 y68.0-69.1 z26.9-28.2 (14 samples)**
-- **thin wall (<0.6 mm, min 0.01) x1.9-3.4 y38.4-38.9 z22.6-22.6 (9 samples)**
-- **thin wall (<0.6 mm, min 0.01) x3.6-3.8 y36.4-39.0 z15.1-17.8 (9 samples)**
-- **thin wall (<0.6 mm, min 0.01) x29.3-29.7 y7.7-8.4 z15.6-15.6 (7 samples)**
-- **thin wall (<0.6 mm, min 0.01) x29.2-29.7 y27.3-28.3 z15.6-15.6 (6 samples)**
-- **gap narrower than 0.3 mm (will fuse) x2.0-3.6 y1.9-3.3 z22.1-22.4 (16 samples)**
-- **gap narrower than 0.3 mm (will fuse) x90.1-91.7 y1.9-3.3 z22.1-22.4 (13 samples)**
+- **thin wall (<0.6 mm, min 0.01) x34.5-59.2 y12.7-24.4 z0.1-0.3 (369 samples)**
+- **thin wall (<0.6 mm, min 0.01) x34.8-39.4 y27.6-32.2 z0.1-0.3 (66 samples)**
+- **thin wall (<0.6 mm, min 0.01) x49.9-58.3 y12.6-15.5 z0.1-0.3 (50 samples)**
+- **thin wall (<0.6 mm, min 0.01) x28.5-32.7 y5.6-10.0 z0.3-0.3 (47 samples)**
+- **thin wall (<0.6 mm, min 0.01) x28.5-33.1 y35.4-40.0 z0.3-0.3 (47 samples)**
+- **thin wall (<0.6 mm, min 0.01) x60.7-65.2 y5.6-10.1 z0.3-0.3 (42 samples)**
+- **gap narrower than 0.3 mm (will fuse) x2.0-3.6 y1.9-3.3 z22.1-22.4 (12 samples)**
+- **gap narrower than 0.3 mm (will fuse) x90.1-91.7 y1.9-3.3 z22.1-22.4 (11 samples)**
 - bridge ~6 mm at z=1.2 (x4-10 y65-78) - fine
 - bridge ~6 mm at z=1.2 (x84-90 y65-78) - fine
-- bridge ~6 mm at z=20.4 (x2-72 y44-52) - fine
 - bridge ~12 mm at z=22.9 (x2-92 y64-80) - fine
+- bridge ~6 mm at z=20.4 (x2-75 y44-52) - fine
 
 ## keyboard_top - 10 issue(s)
 size [93.7, 64.1, 1.4] mm
@@ -60,6 +60,10 @@ size [11.8, 9.3, 4.5] mm
 
 - **thin wall (<0.6 mm, min 0.32) x-14.7--13.5 y63.2-64.5 z0.4-0.4 (124 samples)**
 - **thin wall (<0.6 mm, min 0.32) x-10.3--9.1 y63.2-64.5 z0.4-0.4 (124 samples)**
+
+## switch_knob - OK
+size [3.4, 12.0, 2.0] mm
+
 
 ## box_hatch - 4 issue(s)
 size [85.3, 12.8, 1.2] mm

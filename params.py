@@ -185,7 +185,8 @@ NFC_MARK = dict(depth=0.3,                 # floor under the PN532 is 0.8 mm: 0.
                 line=0.55, pitch=1.25,     # line width (>= nozzle) and coil turn pitch
                 inset=0.6, coil_gap=2.2, turns=4,
                 nfc_h=6.5,
-                lines=[("13.56 MHz", 3.4), ("ISO 14443 A/B", 2.9), ("TAP HERE", 2.9)])
+                lines=[("13.56 MHz", 3.6), ("ISO 14443 A/B", 3.2), ("TAP HERE", 3.2)],
+                close=0.2)                 # small text: gaps under 0.4 mm merged (a 0.4 nozzle can't print them)
 
 # ---- 5 V boost: Pololu U3V40F5 (fixed 5 V, ~2.6 A out from 3.7 V in, 15.2 x 15.2 x 5.6 mm), lying flat in the old
 # MT3608 spot under the charger. Fed from the TP4056's B+/B- pads (battery side, past its ~3 A protection) through

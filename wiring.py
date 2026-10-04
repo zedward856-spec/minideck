@@ -281,7 +281,7 @@ def write_plan():
     L_ += ["", "## Notes", "",
            "- **Power switch**: an SS12D00 slide switch (SPDT, 8.6 x 3.6 mm body) in the left wall, beside the TP4056, "
            "breaks TP4056 B+ -> boost VIN. Middle pin = from the charger's B+ pad, one outer pin = to the boost (the other "
-           "outer pin stays empty). The printed pill knob (print/yellow/switch_knob.stl) presses onto its lever. "
+           "outer pin stays empty). The printed knob (print/yellow/switch_knob.stl) goes in from inside the case; the switch lever drops into its open-top socket. "
            "Charging still works with the switch off (the TP4056 charges the cell directly).",
            "- **5 V boost: Pololu U3V40F5** (fixed 5 V, ~2.6 A from a charged cell, ~2.1 A near empty). It is fed from the TP4056's "
            "B+/B- pads so the TP4056's ~3 A protection is out of the load path: use a **protected high-drain 18650** (button top, "
@@ -294,7 +294,7 @@ def write_plan():
            "the LoRa, the screen and the SDR. Same for GND (Radxa pin 6 + screen). The GPS runs from 5 V on pin 4 "
            "(its module has a regulator; its UART stays 3.3 V).",
            "- DAC: I2S3 (pins 12/35/40), enable the i2s3 overlay; tie the module's SCK to GND.",
-           "- GPS on UART3 (pins 3/5), LoRa E22 on UART4 (pins 15/17); M0/M1/AUX on pins 13/7/22. "
+           "- GPS on UART3 (pins 3/5), LoRa E22 on UART4 (pins 16/18); M0/M1/AUX on pins 13/7/22. "
            "Pins 8/10 (UART2) are the debug console - left free.",
            "- Screen: HDMI ribbon + its own 5 V pair straight from the boost, all through the hinge bore.",
            "- SDR on header pins 27/28 = the RK3566's spare USB2 HOST2 port (schematic page 20). On the Radxa: "
