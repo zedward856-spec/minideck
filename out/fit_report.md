@@ -13,7 +13,7 @@
 - PASS  screen panel fits the lid
 - PASS  driver board space (47.93 x 48.46, 5.6 mm tall) clear, behind the screen
 - PASS  no two parts collide with each other  — none
-- PASS  PN532 exactly where you placed it (only lowered 0.4 mm into the floor pocket, as agreed)  — x/y unchanged, z -0.40 mm
+- PASS  PN532 where agreed: centred left-right, lowered 0.4 mm into the floor pocket, front-back unchanged  — x -2.37 (centred), y unchanged, z -0.40 mm
 - PASS  battery chamber at your battery's height and front-back position  — slid 12.1 mm left so the door spring reaches it
 - PASS  other boards where you placed them (only the noted shifts, x/y/z mm)  — radxa [0.0, -2.86, -0.82]; tp4056 [0.9, -3.21, -0.66]; dac [0.0, -1.76, -1.62]; lora [0.0, 0.0, -0.02]; mt3608 [0.0, 0.0, -0.5]
 - PASS  round battery chamber  — bore 18.9 mm

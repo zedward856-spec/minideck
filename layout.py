@@ -17,6 +17,7 @@ DAC_DROP = 0.4 + 1.22          # (+1.22: room for the real Radxa's underside chi
 RADXA_DROP = 0.82              # Radxa (and so its ports, pegs, the charger level with it)
 LORA_DROP = 0.88               # LoRa, to stay under the lowered DAC
 PN532_DROP = 0.4               # PN532 sits in a 0.4 mm pocket in the floor (floor 0.8 there)
+PN532_SHIFT_X = -2.373         # PN532 (and the NFC mark under it) centred left-right in the deck
 MT3608_DROP = 0.5              # boost, to stay clear of the lowered charger
 TP4056_SHIFT_X = 0.9           # charger 0.9 mm toward the Radxa: room for the power switch beside it (flush knob)
 # ports right behind the front wall, so the wall can hug them (the user's request)
@@ -58,7 +59,7 @@ def placed_meshes():
         m.apply_translation((0, FRONT_WALL + PORT_GAP - front, 0))
     out["radxa"].apply_translation((0, 0, -RADXA_DROP))
     out["lora"].apply_translation((0, 0, -LORA_DROP))
-    out["pn532"].apply_translation((0, 0, -PN532_DROP))
+    out["pn532"].apply_translation((PN532_SHIFT_X, 0, -PN532_DROP))
     out["mt3608"].apply_translation((0, 0, -MT3608_DROP))
     # charger up so its USB-C sits level with the Radxa's two
     rz = out["radxa"].bounds[1][2] - 1.2 - 3.1 / 2

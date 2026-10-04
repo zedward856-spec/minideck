@@ -89,9 +89,11 @@ import trimesh as _t
 orig = sorted(_t.load(L.MINIDECK).split(only_watertight=False), key=lambda p: -p.bounding_box.volume)
 pn_orig = orig[5].bounds + np.array(MD_OFFSET)
 _pn_shift = P["pn532"].bounds - pn_orig
-req("PN532 exactly where you placed it (only lowered 0.4 mm into the floor pocket, as agreed)",
-    np.allclose(_pn_shift[:, :2], 0, atol=1e-3) and np.allclose(_pn_shift[:, 2], -L.PN532_DROP, atol=1e-3),
-    f"x/y unchanged, z {_pn_shift[0, 2]:+.2f} mm")
+req("PN532 where agreed: centred left-right, lowered 0.4 mm into the floor pocket, front-back unchanged",
+    np.allclose(_pn_shift[:, 0], L.PN532_SHIFT_X, atol=1e-3) and np.allclose(_pn_shift[:, 1], 0, atol=1e-3)
+    and np.allclose(_pn_shift[:, 2], -L.PN532_DROP, atol=1e-3)
+    and abs((P["pn532"].bounds[0][0] + P["pn532"].bounds[1][0]) / 2 - OUT_W / 2) < 0.01,
+    f"x {_pn_shift[0, 0]:+.2f} (centred), y unchanged, z {_pn_shift[0, 2]:+.2f} mm")
 bat = orig[3].bounds + np.array(MD_OFFSET)
 req("battery chamber at your battery's height and front-back position",
     abs(bt.YC - (bat[0][1] + bat[1][1]) / 2) < 0.01 and abs(bt.ZC - (MD_OFFSET[2] + 9.77)) < 0.01,

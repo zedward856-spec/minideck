@@ -134,7 +134,8 @@ ln = lane(); w("Screen GND", "gnd", "GND splice", "driver board GND", hinge_base
                hinge_lid("gnd", (42.0, 56.8, 35.5)), note="24-26 AWG, through the hinge")
 
 # --- I2C: Radxa -> PN532 -> CardKB (chained at the PN532's header pins)
-PNP = (69.5, 33.0, 7.6)
+import layout as _Lp
+PNP = (69.5 + _Lp.PN532_SHIFT_X, 33.0, 7.6)       # PN532 header (moves with the board)
 for i, (sig, pin, kind) in enumerate((("SCL", 29, "i2c"), ("SDA", 31, "i2c"), ("3V3", 17, "v33"), ("GND", 25, "gnd"), ("IRQ", 36, "gpio"))):
     x = PNP[0] + (i - 2) * 0.9
     w(f"PN532 {sig}", kind, f"PN532 {sig} (DIP switches: I2C)", f"Radxa pin {pin}",
