@@ -104,7 +104,7 @@ Every wire, pin and splice is in **[WIRING.md](WIRING.md)**.
 
 A 3D thermal simulation of the base (`thermal_sim.py`: every part on a 1 mm grid, heat from the SoC, SDR, boost, charger and
 cell, conduction inside, convection + radiation outside) compares the current sealed design with vents, PETG, an aluminium
-heat path, a micro blower and software limits. **[Interactive thermal lab →](https://zedward856-spec.github.io/minideck-site/thermal.html)**:
+heat path, a micro blower and software limits. **[Interactive thermal lab →](https://zedward856-spec.github.io/minideck-site/thermal/)**:
 pick a load and a cooling option, slice through the deck, hover for temperatures, or see everything above a threshold in 3D.
 Full table: [thermal_report.md](thermal_report.md).
 
