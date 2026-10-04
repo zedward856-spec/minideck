@@ -8,3 +8,6 @@ versions/
 models/radxa3w_stp/
 models/radxa3w_dxf/
 site/
+
+# Android app build output (rebuilt by app/build.sh)
+app/build/

@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0a0a0c">
+<title>Minideck</title>
+<link rel="stylesheet" href="vendor/fonts/fonts.css">
+<link rel="stylesheet" href="viewer.css">
+<link rel="stylesheet" href="parts-panel.css">
+<script type="importmap">
+{ "imports": {
+  "three": "./vendor/three/three.module.js",
+  "three/addons/": "./vendor/three/addons/"
+} }
+</script>
+<script src="parts-panel.js"></script>
+</head>
+<body class="loading">
+<canvas id="stage"></canvas>
+<div id="loader" class="mono"><video id="optic" src="optic-loading.mp4" poster="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" muted playsinline autoplay></video><b>MINIDECK</b><span id="loadpct">0%</span></div>
+<div id="lidBar" class="mono">
+  <span>lid</span><input id="lid" type="range" min="0" max="180" step="1" value="110" aria-label="Lid angle"><b id="lidDeg">110°</b>
+</div>
+<button id="resetBtn" class="mono" aria-label="Reset view">reset</button>
+<script type="module" src="viewer.js"></script>
+</body>
+</html>

@@ -6,7 +6,7 @@ A pocket clamshell cyberdeck. It's fully parametric (Python + [build123d](https:
 
 **[Print files →](print/)** · **[Build guide →](BUILD.md)** · [Wiring](WIRING.md) · Promo site: https://zedward856-spec.github.io/minideck-site/ (its own repo: [minideck-site](https://github.com/zedward856-spec/minideck-site)) · [3D viewer / AR](https://zedward856-spec.github.io/minideck-site/viewer/) · [Thermal lab](https://zedward856-spec.github.io/minideck-site/thermal/)
 
-Reports: [fit checks](out/fit_report.md) · [assembly check](assembly_report.md) · [thermal](thermal_report.md) · [printability](printability_report.md)
+Reports: [fit checks](reports/fit_report.md) · [assembly check](reports/assembly_report.md) · [thermal](reports/thermal_report.md) · [printability](reports/printability_report.md)
 
 - **Size:** 93.7 × 81.5 × 39.5 mm (closed).
 - **Lid:** opens to 180° on a hidden torque hinge with a hollow axle for the cables.
@@ -104,11 +104,11 @@ Every wire, pin and splice is in **[WIRING.md](WIRING.md)**. The same wiring as 
 
 ## Thermal
 
-A 3D thermal simulation of the base (`thermal_sim.py`: every part on a 1 mm grid, heat from the SoC, SDR, boost, charger and
+A 3D thermal simulation of the base (`cad/thermal_sim.py`: every part on a 1 mm grid, heat from the SoC, SDR, boost, charger and
 cell, conduction inside, convection + radiation outside) compares the current sealed design with vents, PETG, an aluminium
 heat path, a micro blower and software limits. **[Interactive thermal lab →](https://zedward856-spec.github.io/minideck-site/thermal/)**:
 pick a load and a cooling option, slice through the deck, hover for temperatures, or see everything above a threshold in 3D.
-Full table: [thermal_report.md](thermal_report.md).
+Full table: [thermal_report.md](reports/thermal_report.md).
 
 ![Thermal: heavy load, current vs best option](previews/thermal_compare.png)
 
@@ -128,41 +128,57 @@ itself down around 85–95 °C. Estimates for comparing options, not lab measure
 
 ## Repository layout
 
+```
+README.md  BUILD.md  WIRING.md    start here: overview, build guide, every wire
+print/      the print files, one folder per filament colour
+wiring/     Obsidian canvases of the wiring (every wire / power only)
+reports/    fit checks, assembly simulation, thermal simulation, printability
+cad/        the parametric CAD + check / simulation / export scripts (Python, build123d)
+app/        the offline Android viewer app (com.zedward.minideck)
+models/     source models, fonts, logo, component models
+out/        raw CAD output (STL, STEP, meshes in place)
+docs/img/   README renders        previews/   check / thermal preview images
+```
+
+Scripts run from anywhere (they switch to the repo root themselves), e.g. `python3 cad/base.py`.
+
 | Path | What |
 |---|---|
-| `params.py` | Every dimension and option (logos, stripes, text, inserts, radios) |
-| `layout.py` | Places the parts from the reference layout `models/minideck.stl` |
-| `base.py`, `lid.py`, `battery_test.py` | Case bottom, plate, hatch, hinge / lid shell and bezel / battery chamber, door and lock |
-| `stripes.py`, `logo.py`, `fills.py` | Hazard stripes, Optic logo engraving, paint-fill preview meshes |
-| `wiring.py` | Wiring plan + 3D wire routes (`WIRING.md`) |
-| `keycaps.py`, `screws.py` | Viewer-only silicone keycaps and screws |
-| `check.py` | Fit / clearance requirements (`out/fit_report.md`) |
-| `assembly_check.py` | Simulates the whole build part by part: can every part get in? (`assembly_report.md`) |
-| `thermal_sim.py`, `thermal_export.py` | 3D thermal simulation (`thermal_report.md`) and its export for the interactive thermal lab |
-| `printability.py` | Print audit → `printability_report.md` |
-| `viewer.py` | Interactive 3D viewer |
-| `print/` | **The print files**, one folder per colour (`python3 export_print.py` rebuilds it) |
+| `cad/params.py` | Every dimension and option (logos, stripes, text, inserts, radios) |
+| `cad/layout.py` | Places the parts from the reference layout `models/minideck.stl` |
+| `cad/base.py`, `cad/lid.py`, `cad/battery_test.py` | Case bottom, plate, hatch, hinge / lid shell and bezel / battery chamber, door and lock |
+| `cad/stripes.py`, `cad/logo.py`, `cad/fills.py` | Hazard stripes, Optic logo engraving, paint-fill preview meshes |
+| `cad/wiring.py` | Wiring plan + 3D wire routes (`WIRING.md`) |
+| `cad/keycaps.py`, `cad/screws.py` | Viewer-only silicone keycaps and screws |
+| `cad/check.py` | Fit / clearance requirements (`reports/fit_report.md`) |
+| `cad/assembly_check.py` | Simulates the whole build part by part: can every part get in? (`reports/assembly_report.md`) |
+| `cad/thermal_sim.py`, `cad/thermal_export.py` | 3D thermal simulation (`reports/thermal_report.md`) and its export for the interactive thermal lab |
+| `cad/printability.py` | Print audit → `reports/printability_report.md` |
+| `cad/viewer.py` | Interactive 3D viewer |
+| `print/` | **The print files**, one folder per colour (`python3 cad/export_print.py` rebuilds it) |
 | `out/` | Raw CAD output: STLs, STEP assemblies, `parts_in_place/` meshes for the viewer |
 | `models/` | Source models, Corpta font, logo SVG, Radxa downloads and schematic; `models/components/` real part models (sources in [BUILD.md](BUILD.md#component-models)), `models/coloured/` their real-colour versions |
 | `docs/img/` | README renders |
+| `app/` | Offline Android viewer: `app/build.sh install` bundles the site's model and installs it (see [app/README.md](app/README.md)) |
+| `wiring/` | `minideck-wiring-all.canvas` (47 wires), `minideck-wiring-power.canvas` (25), made by `cad/wiring_canvas.py` |
 
 ## Promo site
 
-Live at https://zedward856-spec.github.io/minideck-site/ (repo `minideck-site`). Re-export the web model with `python3 site_export.py && python3 plan_explode.py` (writes into `../minideck-site/assets/`; the second plans the collision-free teardown).
+Live at https://zedward856-spec.github.io/minideck-site/ (repo `minideck-site`). Re-export the web model with `python3 cad/site_export.py && python3 cad/plan_explode.py` (writes into `../minideck-site/assets/`; the second plans the collision-free teardown).
 
 ## Build and view
 
 ```bash
 pip install build123d trimesh manifold3d shapely pyvista pillow
-python3 battery_test.py && python3 base.py && python3 lid.py && python3 wiring.py && python3 fills.py && python3 check.py
-python3 viewer.py            # 1-6 palettes · g stripe fill · scroll the part list · sliders for lid angle / transparency
+python3 cad/battery_test.py && python3 cad/base.py && python3 cad/lid.py && python3 cad/wiring.py && python3 cad/fills.py && python3 cad/check.py
+python3 cad/viewer.py            # 1-6 palettes · g stripe fill · scroll the part list · sliders for lid angle / transparency
 ```
 
 Re-render the README images (product shots with no UI):
 
 ```bash
-MINIDECK_CLEAN=1 MINIDECK_PALETTE=1 python3 viewer.py --shot docs/img/palette1_front.png
-MINIDECK_CLEAN=1 MINIDECK_PALETTE=1 MINIDECK_CAM="[(190,230,140),(47,42,25),(0,0,1)]" python3 viewer.py --shot docs/img/palette1_back.png
+MINIDECK_CLEAN=1 MINIDECK_PALETTE=1 python3 cad/viewer.py --shot docs/img/palette1_front.png
+MINIDECK_CLEAN=1 MINIDECK_PALETTE=1 MINIDECK_CAM="[(190,230,140),(47,42,25),(0,0,1)]" python3 cad/viewer.py --shot docs/img/palette1_back.png
 ```
 
 ---

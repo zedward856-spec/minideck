@@ -1,7 +1,7 @@
 # Minideck build guide
 
 How to build a Minideck from the files in this repo: print, prepare, wire, assemble, first boot.
-Every wire and pin is in **[WIRING.md](WIRING.md)**, and the print audit is in [printability_report.md](printability_report.md).
+Every wire and pin is in **[WIRING.md](WIRING.md)**, and the print audit is in [printability_report.md](reports/printability_report.md).
 
 ![Minideck](docs/img/palette1_front.png)
 
@@ -27,7 +27,7 @@ Every wire and pin is in **[WIRING.md](WIRING.md)**, and the print audit is in [
 | 1 | TP4056 USB-C charger (with protection) | |
 | 1 | **Pololu U3V40F5** 5 V step-up (15.2 × 15.2 mm) | Fixed 5 V, ~2.6 A. Replaces the MT3608, which is too weak. Plus a 47 µF capacitor on its input |
 | 1 | **Protected high-drain 18650, button top, ≤ 70 mm** | Its built-in protection (≥ 5 A) guards the load path, e.g. Nitecore NL1835HP (8 A, 69.3 mm) or Keeppower 3500 protected (10 A, 68.9 mm) |
-| 1 | SS12D00 mini slide switch (SPDT) | Power switch: 8.6 × 3.6 × 3.5 mm body; the lever gets trimmed to 1.05 mm. Different size? Edit `SWITCH` in `params.py` |
+| 1 | SS12D00 mini slide switch (SPDT) | Power switch: 8.6 × 3.6 × 3.5 mm body; the lever gets trimmed to 1.05 mm. Different size? Edit `SWITCH` in `cad/params.py` |
 | 1 | microSD card | For the OS |
 
 ### Hardware
@@ -36,7 +36,7 @@ Every wire and pin is in **[WIRING.md](WIRING.md)**, and the print audit is in [
 |---|---|---|
 | 8 | M2 heat-set inserts, 3.5 OD × 3 mm (hole Ø3.2) | 4 in the hinge-box floor (hatch), 4 in the lid shell (bezel) |
 | 12 | M2 × 4 countersunk screws | 4 keyboard plate (into printed Ø1.7 pilots), 4 hatch, 4 bezel |
-| 1 | Friction torque hinge, cylinder type, body Ø8 × 16, D-shaft Ø5 | Left hinge cheek. Different hinge? Edit `TORQUE` in `base.py` |
+| 1 | Friction torque hinge, cylinder type, body Ø8 × 16, D-shaft Ø5 | Left hinge cheek. Different hinge? Edit `TORQUE` in `cad/base.py` |
 | 1 | 1.75 mm filament, ~26 mm | Battery-door hinge pin |
 | – | Silicone wire 20–22 AWG (battery → boost) / 24 AWG (5 V to the loads), 28–30 AWG (signals), heat-shrink, Kapton tape | |
 
@@ -79,7 +79,7 @@ Files are in **[`print/`](print/)**, one folder per filament colour (one batch e
 
 ## 4. Wire
 
-Solder everything **before** it goes into the case: one wire per Radxa pad, laid flat (there's about 3 mm above the board under the keyboard). [WIRING.md](WIRING.md) has the full table; the 3D wire routes are in `out/parts_in_place/wires_*.stl` and show in `viewer.py`.
+Solder everything **before** it goes into the case: one wire per Radxa pad, laid flat (there's about 3 mm above the board under the keyboard). [WIRING.md](WIRING.md) has the full table; the 3D wire routes are in `out/parts_in_place/wires_*.stl` and show in `cad/viewer.py`.
 
 - **Power:** 18650 → TP4056 B+/B− (charging) and, from those same B+/B− pads, → **power switch** (middle pin in, one outer pin out) → **Pololu U3V40F5** → a 5 V / GND splice behind the Radxa → Radxa pins 2/6, the screen (through the hinge) and the GPS (pin 4).
 - **I²C5** (pins 29/31): PN532, with the CardKB chained onto the PN532's pins.
@@ -128,7 +128,7 @@ The order follows the collision-checked teardown on the promo site, played forwa
 20. **microSD:** there's no outside slot. The socket is at the Radxa's left end, under the keyboard. Flash the card and put it in before step 13, or later take the keyboard plate (4 screws) and keyboard off to swap it.
 ---
 
-Every step above was simulated part by part, each against everything already fitted (`python3 assembly_check.py` → [assembly_report.md](assembly_report.md)): no part has to be forced. Tight spots are marked there.
+Every step above was simulated part by part, each against everything already fitted (`python3 cad/assembly_check.py` → [reports/assembly_report.md](reports/assembly_report.md)): no part has to be forced. Tight spots are marked there.
 
 ## 6. First boot
 
@@ -144,7 +144,7 @@ Every step above was simulated part by part, each against everything already fit
 
 ## Component models
 
-`models/components/` holds the downloaded reference models (sources and licences below), and `models/coloured/` holds the real-colour web versions made from them by `components_web.py` / `coloured_radxa.py`.
+`models/components/` holds the downloaded reference models (sources and licences below), and `models/coloured/` holds the real-colour web versions made from them by `cad/components_web.py` / `cad/coloured_radxa.py`.
 
 | Part | Source | Licence |
 |---|---|---|

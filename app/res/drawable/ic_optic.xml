@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The Optic logo, centred in the 108dp adaptive-icon canvas (inside the 66dp safe zone) -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="210" android:viewportHeight="210">
+    <group android:translateX="45" android:translateY="45">
+        <path android:fillColor="#f7d116" android:pathData="M7.5,57.5 L35,30 L85,30 L112.5,57.5 L102.5,57.5 L82.5,37.5 L37.5,37.5 L17.5,57.5 Z"/>
+        <path android:fillColor="#f7d116" android:pathData="M17.5,62.5 L37.5,82.5 L82.5,82.5 L102.5,62.5 L112.5,62.5 L85,90 L35,90 L7.5,62.5 Z"/>
+        <path android:fillColor="#f7d116" android:pathData="M40,57.5 L60,37.5 L80,57.5 L67.5,57.5 L60,50 L52.5,57.5 Z"/>
+        <path android:fillColor="#f7d116" android:pathData="M52.5,62.5 L60,70 L67.5,62.5 L80,62.5 L60,82.5 L40,62.5 Z"/>
+    </group>
+</vector>

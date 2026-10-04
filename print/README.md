@@ -1,7 +1,7 @@
 # Print files
 
 One folder per filament colour, so each folder is one print batch. Every part is already in its print orientation, flat on the bed.
-PLA, 0.4 mm nozzle. Rebuild this folder from the CAD with `python3 export_print.py`.
+PLA, 0.4 mm nozzle. Rebuild this folder from the CAD with `python3 cad/export_print.py`.
 
 ## `charcoal/` · Charcoal `#2D2D2D` (e.g. Bambu PLA Matte Charcoal)
 
