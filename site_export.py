@@ -26,7 +26,7 @@ P = {
     "18650":         ("18650 cell", "cell", 4000, (-26, -8, 8)),
     "pn532":         ("PN532 NFC", "pcb_red", 6000, (14, -14, 10)),
     "dac":           ("PCM5102 DAC", "pcb_purple", 6000, (10, -22, 6)),
-    "mt3608":        ("MT3608 boost", "pcb_blue", 4000, (18, 0, 10)),
+    "mt3608":        ("Pololu U3V40F5 boost", "pcb_green", 4000, (18, 0, 10)),
     "tp4056":        ("TP4056 charger", "pcb_blue", 4000, (-6, -24, 6)),
     "lora":          ("E22 LoRa radio", "metal", 6000, (24, 10, 16)),
     "gps_module":    ("GPS module", "pcb_green", 4000, (22, -6, 18)),

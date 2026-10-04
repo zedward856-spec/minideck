@@ -32,7 +32,7 @@ PLA, 0.4 mm nozzle. Rebuild this folder from the CAD with `python3 export_print.
 
 | File | Qty | Size (mm) | Settings |
 |---|---|---|---|
-| `battery_door_fit_test.stl` | 1 | 75.1 × 29.6 × 22.7 | optional: the door, lock and chamber end, to check the fit first |
+| `battery_door_fit_test.stl` | 1 | 77.9 × 29.6 × 22.7 | optional: the door, lock and chamber end, to check the fit first |
 
 ## Also needed
 

@@ -43,11 +43,13 @@ not the 3D routes, and check the square pad / '1' mark on your board before sold
 |---|---|---|---|
 | BAT+ | 18650 + contact (right end) | TP4056 B+ | 24 AWG silicone, red |
 | BAT- | 18650 - contact (door spring) | TP4056 B- | 24 AWG black - through the hole in the chamber divider |
-| TP OUT+ -> switch | TP4056 OUT+ | power switch middle pin (common) | 24 AWG red, over the top of the charger |
-| switch -> boost IN+ | power switch outer pin (the ON end) | MT3608 VIN+ | 24 AWG red; check with a multimeter which outer pin is ON with the knob toward the back |
-| TP OUT- -> boost IN- | TP4056 OUT- | MT3608 VIN- | 24 AWG black |
-| boost 5V -> splice | MT3608 OUT+ (set to 5.1 V) | 5 V splice | 22 AWG red - one thick lead, split at a heat-shrunk splice behind the Radxa |
-| boost GND -> splice | MT3608 OUT- | GND splice | 22 AWG black |
+| B+ -> switch | TP4056 B+ | power switch middle pin (common) | 20-22 AWG red, over the top of the charger (battery side: the TP4056's protection is not in the load path) |
+| switch -> boost VIN | power switch outer pin (the ON end) | BOOST VIN | 20-22 AWG red; check with a multimeter which outer pin is ON with the knob toward the back |
+| B- -> boost GND | TP4056 B- | BOOST GND (in) | 20-22 AWG black |
+| input cap + | input capacitor + (47 uF) | BOOST VIN | 47 uF 10 V low-ESR electrolytic or ceramic right at the input pads (Pololu's advice for long battery leads) |
+| input cap - | input capacitor - (47 uF) | BOOST GND (in) | (the capacitor's other leg) |
+| boost 5V -> splice | BOOST VOUT (fixed 5 V) | 5 V splice | 20-22 AWG red - one thick lead, split at a heat-shrunk splice behind the Radxa |
+| boost GND -> splice | BOOST GND (out) | GND splice | 20-22 AWG black |
 | 5V -> Radxa | 5 V splice | Radxa pin 2 (+5V) | 24 AWG |
 | GND -> Radxa | GND splice | Radxa pin 6 (GND) | 24 AWG |
 | Screen 5V | 5 V splice | driver board 5V (USB-C pads) | 24-26 AWG, through the hinge |
@@ -88,8 +90,8 @@ not the 3D routes, and check the square pad / '1' mark on your board before sold
 
 ## Notes
 
-- **Power switch**: an SS12D00 slide switch (SPDT, 8.6 x 3.6 mm body) in the left wall, beside the TP4056, breaks TP4056 OUT+ -> MT3608 VIN+. Middle pin = from the charger, one outer pin = to the boost (the other outer pin stays empty). The printed pill knob (print/yellow/switch_knob.stl) presses onto its lever. Charging still works with the switch off (the TP4056 charges the cell directly).
-- Set the MT3608 to 5.1 V *before* connecting the Radxa. It is ~1.4 A max - a 3 A boost is safer.
+- **Power switch**: an SS12D00 slide switch (SPDT, 8.6 x 3.6 mm body) in the left wall, beside the TP4056, breaks TP4056 B+ -> boost VIN. Middle pin = from the charger's B+ pad, one outer pin = to the boost (the other outer pin stays empty). The printed pill knob (print/yellow/switch_knob.stl) presses onto its lever. Charging still works with the switch off (the TP4056 charges the cell directly).
+- **5 V boost: Pololu U3V40F5** (fixed 5 V, ~2.6 A from a charged cell, ~2.1 A near empty). It is fed from the TP4056's B+/B- pads so the TP4056's ~3 A protection is out of the load path: use a **protected high-drain 18650** (button top, <= 70 mm, protection >= 5 A, e.g. Nitecore NL1835HP or Keeppower 3500 protected). The TP4056 now only charges; its OUT pads stay empty. 47 uF on the boost input. Have the Radxa shut down cleanly near 3.2-3.3 V cell voltage.
 - One wire per Radxa pad. I2C (CardKB 0x5F, PN532 0x24) on I2C5 (pins 29/31) runs Radxa -> PN532, and the CardKB is chained onto the PN532's header pins. Power both from 3.3 V (pin 17) so the bus pull-ups stay at 3.3 V (the Radxa is not 5 V tolerant). Enable the i2c5 overlay.
 - 5 V: one 22 AWG lead from the boost to a heat-shrunk splice just behind the Radxa, branching to Radxa pin 2, the LoRa, the screen and the SDR. Same for GND (Radxa pin 6 + screen). The GPS runs from 5 V on pin 4 (its module has a regulator; its UART stays 3.3 V).
 - DAC: I2S3 (pins 12/35/40), enable the i2s3 overlay; tie the module's SCK to GND.

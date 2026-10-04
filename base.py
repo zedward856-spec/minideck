@@ -302,11 +302,13 @@ def bottom():
         lx0, lx1 = sorted((cx + sx * 0.25, cx - sx * 0.6))
         b += box(lx0, max(py0, IN_Y0), FLOOR + 2.3, lx1, py1, FLOOR + 3.1)
 
-    # GPS module in the free bay right of the battery: drops straight in between the chamber's end
-    # wall and the right wall (~0.5 mm each side), two low stops front/back, foam tape underneath
+    # GPS module in the bay right of the battery, standing on its long edge with its back against the
+    # chamber's end wall (foam tape): tall stops front/back and a low lip so its bottom edge can't slide out
     gy0, gy1 = GPS_Y0, GPS_Y0 + GPS_MODULE[1]
-    for y0, y1 in ((gy0 - 1.2, gy0), (gy1, gy1 + 1.2)):
-        b += box(bt.END_X, y0, FLOOR, IN_X1, y1, FLOOR + 1.5)
+    ge = GPS_EDGE; gx1 = bt.END_X + ge["gap"] + GPS_MODULE[2]
+    for y0, y1 in ((gy0 - ge["stop"][0], gy0), (gy1, gy1 + ge["stop"][0])):
+        b += box(bt.END_X - 0.01, y0, FLOOR - 0.01, gx1 + ge["lip"][0], y1, FLOOR + ge["stop"][1])
+    b += box(gx1, gy0, FLOOR - 0.01, gx1 + ge["lip"][0], gy1, FLOOR + ge["lip"][1])
 
     # front face: the wall hugs each port - a port-sized slot with a shallow plug recess
     ports, rp = L.port_cutouts(), L.radxa_ports()

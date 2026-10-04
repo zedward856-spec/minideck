@@ -147,7 +147,18 @@ def layered():
     jx, jz, jy = pc["jack"]
     by_layer("dac", hexc("#5b2a9e"), metal=hexc("#1a1a1c"),
              metal_sel=lambda c: (np.hypot(c[:, 0] - jx, c[:, 2] - jz) < 3.4) & (c[:, 1] < jy + 13.0))
-    by_layer("mt3608", hexc("#1f4fc4"))
+    boost()
+
+def boost():
+    """Pololu U3V40F5: green board, black shielded inductor, the converter chip, pads along the back edge"""
+    lo, hi = placeholder("mt3608").bounds; t = 1.6
+    pcb = box(lo, (hi[0], hi[1], lo[2] + t)); top = lo[2] + t
+    cx, cy = (lo[0] + hi[0]) / 2, (lo[1] + hi[1]) / 2
+    ind = box((cx - 3.9, cy - 3.9, top), (cx + 3.9, cy + 3.9, hi[2]))
+    chip = box((lo[0] + 1.5, lo[1] + 1.5, top), (lo[0] + 4.5, lo[1] + 4.5, top + 1.0))
+    caps = trimesh.util.concatenate([box((hi[0] - 4.0, lo[1] + 1.2 + k * 3.2, top), (hi[0] - 1.2, lo[1] + 2.8 + k * 3.2, top + 1.6)) for k in range(3)])
+    pads = trimesh.util.concatenate([cyl(0.8, 0.05, 2, (lo[0] + 2.5 + k * 2.5, hi[1] - 1.2, top + 0.02), 20) for k in range(5)])
+    save("mt3608", [(pcb, hexc("#1f6d3a")), (ind, hexc("#16161a")), (trimesh.util.concatenate([chip, caps]), hexc("#2a2a2c")), (pads, hexc("#d4a93a"))])
 
 # ---------------------------------------------------------------- own models
 def box(lo, hi):
@@ -171,15 +182,17 @@ def own():
     save("18650", [(wrap, hexc("#2c64c8")), (trimesh.util.concatenate([neg, pos, btn]), hexc("#c7c9cc")),
                    (ring, hexc("#f2f2f0"))])
 
-    # ATGM336H mini board: green PCB, silver module can, gold IPEX, two small chips
+    # ATGM336H mini board standing on its long edge: green PCB against the chamber wall (low x), silver module
+    # can, gold IPEX and two small chips on the face toward the right wall; pads along its top edge
     lo, hi = placeholder("gps_module").bounds; t = 1.0
-    pcb = box(lo, (hi[0], hi[1], lo[2] + t))
-    cx, cy = (lo[0] + hi[0]) / 2, (lo[1] + hi[1]) / 2
-    can = box((cx - 5.0, cy - 4.85 + 1.2, lo[2] + t), (cx + 5.0, cy + 4.85 + 1.2, lo[2] + t + 2.2))
-    ipex = cyl(1.0, 1.2, 2, (hi[0] - 2.4, lo[1] + 2.4, lo[2] + t + 0.6), 24)
-    chips = trimesh.util.concatenate([box((lo[0] + 1.2, lo[1] + 1.0, lo[2] + t), (lo[0] + 3.4, lo[1] + 2.6, lo[2] + t + 0.9)),
-                                      box((lo[0] + 4.2, lo[1] + 1.0, lo[2] + t), (lo[0] + 5.6, lo[1] + 2.0, lo[2] + t + 0.6))])
-    pads = trimesh.util.concatenate([box((lo[0] + 1.0 + k * 2.54, hi[1] - 1.6, lo[2] + t), (lo[0] + 2.4 + k * 2.54, hi[1] - 0.4, lo[2] + t + 0.04)) for k in range(5)])
+    f = lo[0] + t                                   # component face
+    cy, cz = (lo[1] + hi[1]) / 2, (lo[2] + hi[2]) / 2
+    pcb = box(lo, (f, hi[1], hi[2]))
+    can = box((f, cy - 4.85, cz - 5.0 - 1.0), (f + 2.2, cy + 4.85, cz + 5.0 - 1.0))
+    ipex = cyl(1.0, 1.2, 0, (f + 0.6, hi[1] - 2.4, hi[2] - 2.6), 24)
+    chips = trimesh.util.concatenate([box((f, lo[1] + 1.0, lo[2] + 1.2), (f + 0.9, lo[1] + 2.6, lo[2] + 3.4)),
+                                      box((f, lo[1] + 1.0, lo[2] + 4.2), (f + 0.6, lo[1] + 2.0, lo[2] + 5.6))])
+    pads = trimesh.util.concatenate([box((f, lo[1] + 1.0 + k * 2.54, hi[2] - 1.6), (f + 0.04, lo[1] + 2.4 + k * 2.54, hi[2] - 0.4)) for k in range(5)])
     save("gps_module", [(pcb, hexc("#1d6b3a")), (can, hexc("#cfd2d6")), (trimesh.util.concatenate([ipex, pads]), hexc("#d4a93a")), (chips, hexc("#141416"))])
 
     # NESDR Nano 2+: black anodised body, silver USB plug end, gold MCX jack on top

@@ -80,8 +80,8 @@ Suggested filament: Bambu PLA Matte Charcoal, PLA Basic Dark Gray and PLA Basic 
 | NooElec NESDR Nano 2+ | SDR, wired to header pins 27/28 (USB2 HOST2) – no hub |
 | Molex 211140 / 146153 FPC antennas | LoRa, Wi-Fi/BT and SDR antennas |
 | TP4056 (USB-C) | 18650 charger |
-| MT3608 | Boost to 5.1 V |
-| 18650 cell | Battery |
+| Pololu U3V40F5 | 5 V boost, ~2.6 A (fed past the charger's protection) |
+| Protected high-drain 18650 (button top, ≤ 70 mm) | Battery |
 
 ### Hardware
 

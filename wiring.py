@@ -95,7 +95,9 @@ def w(name, kind, a, b, base, lid=None, note=""):
 import layout as _L
 _tx = _L.TP4056_SHIFT_X
 TP = dict(bp=(8.0 + _tx, 29.5, 19.4), bn=(11.0 + _tx, 29.5, 19.4), op=(16.0 + _tx, 29.5, 19.4), on=(19.0 + _tx, 29.5, 19.4))
-MT = dict(ip=(7.0, 34.6, 15.9), in_=(10.0, 34.6, 15.9), op=(21.5, 7.0, 12.5), on=(21.5, 9.0, 12.5))
+_bx, _by, _bz = BOOST["x0"], BOOST["y0"], BOOST["z0"] + BOOST["pcb"]
+_bpy = _by + BOOST["size"][1] - 1.2                     # its pads, along the back edge (past the charger's edge)
+BST = dict(vin=(_bx + 2.5, _bpy, _bz), gin=(_bx + 5.0, _bpy, _bz), gout=(_bx + 10.0, _bpy, _bz), vout=(_bx + 12.5, _bpy, _bz))
 S5 = np.array([25.6, YB - 1.0, 11.6])          # 5 V splice (heat-shrunk), just behind the Radxa
 SG = np.array([25.6, YB + 1.0, 11.6])          # GND splice
 
@@ -108,24 +110,31 @@ w("BAT+", "pwr", "18650 + contact (right end)", "TP4056 B+",
 w("BAT-", "gnd", "18650 - contact (door spring)", "TP4056 B-",
   [(bt.WIRE_X_IN, bt.YC - 6.0, bt.WIRE_Z), (bt.WIRE_X_IN, 36.6, bt.WIRE_Z), (TP["bn"][0], 31.0, 20.0), TP["bn"]],
   note="24 AWG black - through the hole in the chamber divider")
-# the power switch (SS12D00, inside the left wall) breaks TP4056 OUT+ -> MT3608 VIN+
+# load path: TP4056 B+/B- pads (battery side, past its ~3 A protection) -> power switch -> Pololu U3V40F5 -> splices
 import switch as SW
 _pz = SW.ZC; _px = SW.X1 + SWITCH["pins"][2] - 0.3
-w("TP OUT+ -> switch", "pwr", "TP4056 OUT+", "power switch middle pin (common)",
-  [TP["op"], (TP["op"][0], 29.5, 20.6), (10.4, SWITCH["y"], 20.9), (_px, SWITCH["y"], _pz)],
-  note="24 AWG red, over the top of the charger")
-w("switch -> boost IN+", "pwr", "power switch outer pin (the ON end)", "MT3608 VIN+",
+w("B+ -> switch", "pwr", "TP4056 B+", "power switch middle pin (common)",
+  [TP["bp"], (TP["bp"][0], 29.5, 20.6), (10.4, SWITCH["y"], 20.9), (_px, SWITCH["y"], _pz)],
+  note="20-22 AWG red, over the top of the charger (battery side: the TP4056's protection is not in the load path)")
+w("switch -> boost VIN", "pwr", "power switch outer pin (the ON end)", "BOOST VIN",
   [(_px, SWITCH["y"] + SWITCH["pins"][1], _pz), (9.8, SWITCH["y"] + SWITCH["pins"][1], 21.0), (9.8, 31.6, 20.9),
-   (8.0, 32.8, 18.0), (7.0, 34.6, 16.6), MT["ip"]],
-  note="24 AWG red; check with a multimeter which outer pin is ON with the knob toward the back")
-w("TP OUT- -> boost IN-", "gnd", "TP4056 OUT-", "MT3608 VIN-", [TP["on"], (TP["on"][0], 33.0, 18.0), (10.0, 34.6, 16.6), MT["in_"]],
-  note="24 AWG black")
-w("boost 5V -> splice", "pwr", "MT3608 OUT+ (set to 5.1 V)", "5 V splice",
-  [MT["op"], (22.4, 14.6, 12.7), (23.2, 14.6, 12.7), (25.6, 14.6, 12.7), (25.6, 18.0, 10.2), (25.6, 32.6, 10.2), S5],
-  note="22 AWG red - one thick lead, split at a heat-shrunk splice behind the Radxa")
-w("boost GND -> splice", "gnd", "MT3608 OUT-", "GND splice",
-  [MT["on"], (22.4, 16.6, 11.6), (23.2, 16.6, 11.6), (26.6, 16.6, 11.6), (26.6, 19.0, 9.2), (26.6, 33.0, 9.2), SG],
-  note="22 AWG black")
+   (8.6, 33.2, 17.5), (BST["vin"][0], _bpy + 0.6, 13.0), BST["vin"]],
+  note="20-22 AWG red; check with a multimeter which outer pin is ON with the knob toward the back")
+w("B- -> boost GND", "gnd", "TP4056 B-", "BOOST GND (in)",
+  [TP["bn"], (TP["bn"][0], 31.6, 19.0), (BST["gin"][0], _bpy + 0.6, 13.6), BST["gin"]],
+  note="20-22 AWG black")
+w("input cap +", "pwr", "input capacitor + (47 uF)", "BOOST VIN",
+  [(BST["vin"][0] - 0.6, _bpy + 2.6, _bz + 3.2), (BST["vin"][0] - 0.3, _bpy + 0.8, _bz + 1.0), BST["vin"]],
+  note="47 uF 10 V low-ESR electrolytic or ceramic right at the input pads (Pololu's advice for long battery leads)")
+w("input cap -", "gnd", "input capacitor - (47 uF)", "BOOST GND (in)",
+  [(BST["gin"][0] + 0.6, _bpy + 2.6, _bz + 3.2), (BST["gin"][0] + 0.3, _bpy + 0.8, _bz + 1.0), BST["gin"]],
+  note="(the capacitor's other leg)")
+w("boost 5V -> splice", "pwr", "BOOST VOUT (fixed 5 V)", "5 V splice",
+  [BST["vout"], (BST["vout"][0], _bpy + 1.2, _bz + 1.6), (23.0, S5[1], S5[2] + 0.6), S5],
+  note="20-22 AWG red - one thick lead, split at a heat-shrunk splice behind the Radxa")
+w("boost GND -> splice", "gnd", "BOOST GND (out)", "GND splice",
+  [BST["gout"], (BST["gout"][0], _bpy + 1.2, _bz + 1.0), (23.0, SG[1], SG[2] - 0.6), SG],
+  note="20-22 AWG black")
 ln = lane(); w("5V -> Radxa", "pwr", "5 V splice", "Radxa pin 2 (+5V)", header(2, [S5], ln), note="24 AWG")
 ln = lane(); w("GND -> Radxa", "gnd", "GND splice", "Radxa pin 6 (GND)", header(6, [SG], ln), note="24 AWG")
 ln = lane(); w("Screen 5V", "pwr", "5 V splice", "driver board 5V (USB-C pads)", hinge_base(ln, S5, "5v"),
@@ -159,11 +168,11 @@ for i, (sig, pin, kind) in enumerate((("BCK", 12, "i2s"), ("LRCK", 35, "i2s"), (
       note="28-30 AWG; DAC module: SCK to GND, FMT low, XSMT high")
 
 # --- GPS (UART3), powered from 5 V (its regulator) so it needs no 3.3 V pad
-GPSP = ((bt.END_X + B.IN_X1) / 2, B.GPS_Y0 + 0.6, 5.2)
+GPSP = (bt.END_X + GPS_EDGE["gap"] + 2.6, B.GPS_Y0 + 0.6, FLOOR + 0.3 + GPS_MODULE[0] - 1.2)   # pads at its top edge
 for i, (sig, pin, kind) in enumerate((("TX -> Radxa RX", 3, "uart"), ("RX <- Radxa TX", 5, "uart"), ("VCC 5V", 4, "pwr"), ("GND", 9, "gnd"))):
     x = GPSP[0] + (i - 1.5) * 0.9
     w(f"GPS {sig}", kind, f"GPS module {sig.split()[0]}", f"Radxa pin {pin}",
-      header(pin, [(x, GPSP[1], GPSP[2]), (x, 36.6, 9.0)], lane()), note="28-30 AWG")
+      header(pin, [(x, GPSP[1], GPSP[2]), (x, 36.6, GPSP[2]), (x, 36.6, 9.0)], lane()), note="28-30 AWG")
 
 # --- LoRa E22 (UART4) + mode pins; VCC from the 5 V splice
 LRP = (63.0, 22.1, 10.6)
@@ -202,7 +211,7 @@ w("HDMI ribbon", "hdmi", "Radxa micro-HDMI (soldered)", "driver board mini-HDMI 
   hinge_lid("hdmi", (32.0, 57.0, 35.0)), note="FPV FPC ribbon, rolled through the 8.4 mm hinge bore")
 ln = lane()
 w("GPS antenna coax", "coax", "GPS module u.FL", "patch antenna (lid)",
-  [(GPSP[0] + 3.0, GPSP[1] + 8.0, 6.0), (GPSP[0] + 3.0, 36.6, 9.5)] + hinge_base(ln, np.array((GPSP[0] + 3.0, 36.6, 9.5)), "coax")[1:],
+  [(GPSP[0] + 1.4, GPSP[1] + 8.0, GPSP[2] - 3.0), (GPSP[0] + 1.4, 36.6, GPSP[2] - 3.0), (GPSP[0] + 1.4, 36.6, 9.5)] + hinge_base(ln, np.array((GPSP[0] + 1.4, 36.6, 9.5)), "coax")[1:],
   hinge_lid("coax", (Ld.PATCH_X0 + 9.4, 49.5, 37.4)), note="1.13 mm u.FL-u.FL coax, ~150 mm")
 ln = lane()
 w("LoRa antenna coax", "coax", "E22 u.FL", "LoRa FPC antenna (box back wall)",
@@ -271,10 +280,13 @@ def write_plan():
         L_.append(f"| {wd['name']} | {wd['a']} | {wd['b']} | {wd['note']} |")
     L_ += ["", "## Notes", "",
            "- **Power switch**: an SS12D00 slide switch (SPDT, 8.6 x 3.6 mm body) in the left wall, beside the TP4056, "
-           "breaks TP4056 OUT+ -> MT3608 VIN+. Middle pin = from the charger, one outer pin = to the boost (the other "
+           "breaks TP4056 B+ -> boost VIN. Middle pin = from the charger's B+ pad, one outer pin = to the boost (the other "
            "outer pin stays empty). The printed pill knob (print/yellow/switch_knob.stl) presses onto its lever. "
            "Charging still works with the switch off (the TP4056 charges the cell directly).",
-           "- Set the MT3608 to 5.1 V *before* connecting the Radxa. It is ~1.4 A max - a 3 A boost is safer.",
+           "- **5 V boost: Pololu U3V40F5** (fixed 5 V, ~2.6 A from a charged cell, ~2.1 A near empty). It is fed from the TP4056's "
+           "B+/B- pads so the TP4056's ~3 A protection is out of the load path: use a **protected high-drain 18650** (button top, "
+           "<= 70 mm, protection >= 5 A, e.g. Nitecore NL1835HP or Keeppower 3500 protected). The TP4056 now only charges; its OUT pads stay empty. "
+           "47 uF on the boost input. Have the Radxa shut down cleanly near 3.2-3.3 V cell voltage.",
            "- One wire per Radxa pad. I2C (CardKB 0x5F, PN532 0x24) on I2C5 (pins 29/31) runs Radxa -> PN532, and the "
            "CardKB is chained onto the PN532's header pins. Power both from 3.3 V (pin 17) so the bus pull-ups stay at "
            "3.3 V (the Radxa is not 5 V tolerant). Enable the i2c5 overlay.",
@@ -295,6 +307,9 @@ def write_plan():
            "- Wire: 24 AWG silicone for power, 28-30 AWG silicone for signals, 1.13 mm coax for antennas.",
            "- The CardKB Grove pads sit over the battery block: a 1.2 mm groove in its top lets those 4 wires out."]
     open("WIRING.md", "w").write("\n".join(L_) + "\n")
+    import json                                          # structured copy for the Obsidian canvas diagrams
+    json.dump([dict(name=wd["name"], kind=wd["kind"], a=wd["a"], b=wd["b"], note=wd["note"]) for wd in P],
+              open("out/wires.json", "w"), indent=1)
 
 if __name__ == "__main__":
     files = build()

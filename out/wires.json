@@ -1,0 +1,324 @@
+[
+ {
+  "name": "BAT+",
+  "kind": "pwr",
+  "a": "18650 + contact (right end)",
+  "b": "TP4056 B+",
+  "note": "24 AWG silicone, red"
+ },
+ {
+  "name": "BAT-",
+  "kind": "gnd",
+  "a": "18650 - contact (door spring)",
+  "b": "TP4056 B-",
+  "note": "24 AWG black - through the hole in the chamber divider"
+ },
+ {
+  "name": "B+ -> switch",
+  "kind": "pwr",
+  "a": "TP4056 B+",
+  "b": "power switch middle pin (common)",
+  "note": "20-22 AWG red, over the top of the charger (battery side: the TP4056's protection is not in the load path)"
+ },
+ {
+  "name": "switch -> boost VIN",
+  "kind": "pwr",
+  "a": "power switch outer pin (the ON end)",
+  "b": "BOOST VIN",
+  "note": "20-22 AWG red; check with a multimeter which outer pin is ON with the knob toward the back"
+ },
+ {
+  "name": "B- -> boost GND",
+  "kind": "gnd",
+  "a": "TP4056 B-",
+  "b": "BOOST GND (in)",
+  "note": "20-22 AWG black"
+ },
+ {
+  "name": "input cap +",
+  "kind": "pwr",
+  "a": "input capacitor + (47 uF)",
+  "b": "BOOST VIN",
+  "note": "47 uF 10 V low-ESR electrolytic or ceramic right at the input pads (Pololu's advice for long battery leads)"
+ },
+ {
+  "name": "input cap -",
+  "kind": "gnd",
+  "a": "input capacitor - (47 uF)",
+  "b": "BOOST GND (in)",
+  "note": "(the capacitor's other leg)"
+ },
+ {
+  "name": "boost 5V -> splice",
+  "kind": "pwr",
+  "a": "BOOST VOUT (fixed 5 V)",
+  "b": "5 V splice",
+  "note": "20-22 AWG red - one thick lead, split at a heat-shrunk splice behind the Radxa"
+ },
+ {
+  "name": "boost GND -> splice",
+  "kind": "gnd",
+  "a": "BOOST GND (out)",
+  "b": "GND splice",
+  "note": "20-22 AWG black"
+ },
+ {
+  "name": "5V -> Radxa",
+  "kind": "pwr",
+  "a": "5 V splice",
+  "b": "Radxa pin 2 (+5V)",
+  "note": "24 AWG"
+ },
+ {
+  "name": "GND -> Radxa",
+  "kind": "gnd",
+  "a": "GND splice",
+  "b": "Radxa pin 6 (GND)",
+  "note": "24 AWG"
+ },
+ {
+  "name": "Screen 5V",
+  "kind": "pwr",
+  "a": "5 V splice",
+  "b": "driver board 5V (USB-C pads)",
+  "note": "24-26 AWG, through the hinge"
+ },
+ {
+  "name": "Screen GND",
+  "kind": "gnd",
+  "a": "GND splice",
+  "b": "driver board GND",
+  "note": "24-26 AWG, through the hinge"
+ },
+ {
+  "name": "PN532 SCL",
+  "kind": "i2c",
+  "a": "PN532 SCL (DIP switches: I2C)",
+  "b": "Radxa pin 29",
+  "note": "28-30 AWG"
+ },
+ {
+  "name": "PN532 SDA",
+  "kind": "i2c",
+  "a": "PN532 SDA (DIP switches: I2C)",
+  "b": "Radxa pin 31",
+  "note": "28-30 AWG"
+ },
+ {
+  "name": "PN532 3V3",
+  "kind": "v33",
+  "a": "PN532 3V3 (DIP switches: I2C)",
+  "b": "Radxa pin 17",
+  "note": "28-30 AWG"
+ },
+ {
+  "name": "PN532 GND",
+  "kind": "gnd",
+  "a": "PN532 GND (DIP switches: I2C)",
+  "b": "Radxa pin 25",
+  "note": "28-30 AWG"
+ },
+ {
+  "name": "PN532 IRQ",
+  "kind": "gpio",
+  "a": "PN532 IRQ (DIP switches: I2C)",
+  "b": "Radxa pin 36",
+  "note": "28-30 AWG"
+ },
+ {
+  "name": "CardKB SCL",
+  "kind": "i2c",
+  "a": "CardKB Grove pad SCL (underside)",
+  "b": "PN532 SCL pin (chain)",
+  "note": "28-30 AWG; out of the keyboard through the groove, chained onto the PN532's pins"
+ },
+ {
+  "name": "CardKB SDA",
+  "kind": "i2c",
+  "a": "CardKB Grove pad SDA (underside)",
+  "b": "PN532 SDA pin (chain)",
+  "note": "28-30 AWG; out of the keyboard through the groove, chained onto the PN532's pins"
+ },
+ {
+  "name": "CardKB 3V3",
+  "kind": "v33",
+  "a": "CardKB Grove pad 3V3 (underside)",
+  "b": "PN532 3V3 pin (chain)",
+  "note": "28-30 AWG; out of the keyboard through the groove, chained onto the PN532's pins"
+ },
+ {
+  "name": "CardKB GND",
+  "kind": "gnd",
+  "a": "CardKB Grove pad GND (underside)",
+  "b": "PN532 GND pin (chain)",
+  "note": "28-30 AWG; out of the keyboard through the groove, chained onto the PN532's pins"
+ },
+ {
+  "name": "DAC BCK",
+  "kind": "i2s",
+  "a": "PCM5102 BCK",
+  "b": "Radxa pin 12",
+  "note": "28-30 AWG; DAC module: SCK to GND, FMT low, XSMT high"
+ },
+ {
+  "name": "DAC LRCK",
+  "kind": "i2s",
+  "a": "PCM5102 LRCK",
+  "b": "Radxa pin 35",
+  "note": "28-30 AWG; DAC module: SCK to GND, FMT low, XSMT high"
+ },
+ {
+  "name": "DAC DIN",
+  "kind": "i2s",
+  "a": "PCM5102 DIN",
+  "b": "Radxa pin 40",
+  "note": "28-30 AWG; DAC module: SCK to GND, FMT low, XSMT high"
+ },
+ {
+  "name": "DAC VIN 3V3",
+  "kind": "v33",
+  "a": "PCM5102 VIN 3V3",
+  "b": "Radxa pin 1",
+  "note": "28-30 AWG; DAC module: SCK to GND, FMT low, XSMT high"
+ },
+ {
+  "name": "DAC GND",
+  "kind": "gnd",
+  "a": "PCM5102 GND",
+  "b": "Radxa pin 30",
+  "note": "28-30 AWG; DAC module: SCK to GND, FMT low, XSMT high"
+ },
+ {
+  "name": "GPS TX -> Radxa RX",
+  "kind": "uart",
+  "a": "GPS module TX",
+  "b": "Radxa pin 3",
+  "note": "28-30 AWG"
+ },
+ {
+  "name": "GPS RX <- Radxa TX",
+  "kind": "uart",
+  "a": "GPS module RX",
+  "b": "Radxa pin 5",
+  "note": "28-30 AWG"
+ },
+ {
+  "name": "GPS VCC 5V",
+  "kind": "pwr",
+  "a": "GPS module VCC",
+  "b": "Radxa pin 4",
+  "note": "28-30 AWG"
+ },
+ {
+  "name": "GPS GND",
+  "kind": "gnd",
+  "a": "GPS module GND",
+  "b": "Radxa pin 9",
+  "note": "28-30 AWG"
+ },
+ {
+  "name": "LoRa TXD -> Radxa RX",
+  "kind": "uart",
+  "a": "E22 TXD",
+  "b": "Radxa pin 16",
+  "note": "28-30 AWG"
+ },
+ {
+  "name": "LoRa RXD <- Radxa TX",
+  "kind": "uart",
+  "a": "E22 RXD",
+  "b": "Radxa pin 18",
+  "note": "28-30 AWG"
+ },
+ {
+  "name": "LoRa M0",
+  "kind": "gpio",
+  "a": "E22 M0",
+  "b": "Radxa pin 13",
+  "note": "28-30 AWG"
+ },
+ {
+  "name": "LoRa M1",
+  "kind": "gpio",
+  "a": "E22 M1",
+  "b": "Radxa pin 7",
+  "note": "28-30 AWG"
+ },
+ {
+  "name": "LoRa AUX",
+  "kind": "gpio",
+  "a": "E22 AUX",
+  "b": "Radxa pin 22",
+  "note": "28-30 AWG"
+ },
+ {
+  "name": "LoRa GND",
+  "kind": "gnd",
+  "a": "E22 GND",
+  "b": "Radxa pin 34",
+  "note": "28-30 AWG"
+ },
+ {
+  "name": "LoRa VCC 5V",
+  "kind": "pwr",
+  "a": "5 V splice",
+  "b": "E22 VCC",
+  "note": "24-26 AWG"
+ },
+ {
+  "name": "SDR D+",
+  "kind": "usb",
+  "a": "SDR USB D+ (plug removed)",
+  "b": "Radxa pin 27",
+  "note": "D+/D- as a twisted pair, keep it short; 28 AWG"
+ },
+ {
+  "name": "SDR D-",
+  "kind": "usb",
+  "a": "SDR USB D- (plug removed)",
+  "b": "Radxa pin 28",
+  "note": "D+/D- as a twisted pair, keep it short; 28 AWG"
+ },
+ {
+  "name": "SDR GND",
+  "kind": "gnd",
+  "a": "SDR USB GND (plug removed)",
+  "b": "Radxa pin 14",
+  "note": "24-26 AWG"
+ },
+ {
+  "name": "SDR 5V",
+  "kind": "pwr",
+  "a": "5 V splice",
+  "b": "SDR USB VBUS",
+  "note": "24-26 AWG"
+ },
+ {
+  "name": "HDMI ribbon",
+  "kind": "hdmi",
+  "a": "Radxa micro-HDMI (soldered)",
+  "b": "driver board mini-HDMI (C2 plug)",
+  "note": "FPV FPC ribbon, rolled through the 8.4 mm hinge bore"
+ },
+ {
+  "name": "GPS antenna coax",
+  "kind": "coax",
+  "a": "GPS module u.FL",
+  "b": "patch antenna (lid)",
+  "note": "1.13 mm u.FL-u.FL coax, ~150 mm"
+ },
+ {
+  "name": "LoRa antenna coax",
+  "kind": "coax",
+  "a": "E22 u.FL",
+  "b": "LoRa FPC antenna (box back wall)",
+  "note": "1.13 mm u.FL coax, ~120 mm (Molex 211140 has its own 100 mm lead)"
+ },
+ {
+  "name": "Wi-Fi antenna coax",
+  "kind": "coax",
+  "a": "Radxa u.FL (Wi-Fi)",
+  "b": "Wi-Fi FPC antenna (box roof)",
+  "note": "1.13 mm u.FL coax; enable the external antenna overlay in rsetup"
+ }
+]

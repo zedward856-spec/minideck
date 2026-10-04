@@ -19,7 +19,7 @@ PARTS = [  # file, label, colour, start visible
     ("bottom", "case bottom", "#9aa7b0", True), ("keyboard_top", "keyboard plate (your cover)", "#4a4f55", True),
     ("battery_door", "battery door", "#e8741a", True), ("18650", "18650 cell", "#3060d0", True),
     ("keyboard", "keyboard", "#2a6e3f", True), ("radxa", "Radxa Zero 3W", "#2e8b57", True),
-    ("pn532", "PN532", "#c0392b", True), ("dac", "DAC", "#d4ac0d", True), ("mt3608", "MT3608 boost", "#2471a3", True),
+    ("pn532", "PN532", "#c0392b", True), ("dac", "DAC", "#d4ac0d", True), ("mt3608", "Pololu U3V40F5 5 V boost", "#1f6d3a", True),
     ("tp4056", "TP4056 charger", "#1abc9c", True), ("lora", "LoRa", "#8e44ad", True),
     ("screen_front", "screen front", "#3a3f44", True), ("screen_back", "screen back", "#7d8b96", True),
     ("screen_panel", "screen panel", "#101830", True),

@@ -25,8 +25,8 @@ Every wire and pin is in **[WIRING.md](WIRING.md)**, and the print audit is in [
 | 1 | NooElec NESDR Nano 2+ | Its USB plug is cut off; it's wired to header pins 27/28 |
 | 3 | FPC antennas: Molex 211140 (LoRa), Molex 146153 (Wi-Fi/BT), one for the SDR | Stuck inside the hinge box |
 | 1 | TP4056 USB-C charger (with protection) | |
-| 1 | MT3608 boost converter | Set to **5.1 V before** connecting anything |
-| 1 | 18650 cell (button top) | |
+| 1 | **Pololu U3V40F5** 5 V step-up (15.2 × 15.2 mm) | Fixed 5 V, ~2.6 A. Replaces the MT3608, which is too weak. Plus a 47 µF capacitor on its input |
+| 1 | **Protected high-drain 18650, button top, ≤ 70 mm** | Its built-in protection (≥ 5 A) guards the load path, e.g. Nitecore NL1835HP (8 A, 69.3 mm) or Keeppower 3500 protected (10 A, 68.9 mm) |
 | 1 | SS12D00 mini slide switch (SPDT) | Power switch: 8.6 × 3.6 × 3.5 mm body; the lever gets trimmed to 1.05 mm. Different size? Edit `SWITCH` in `params.py` |
 | 1 | microSD card | For the OS |
 
@@ -38,7 +38,7 @@ Every wire and pin is in **[WIRING.md](WIRING.md)**, and the print audit is in [
 | 12 | M2 × 4 countersunk screws | 4 keyboard plate (into printed Ø1.7 pilots), 4 hatch, 4 bezel |
 | 1 | Friction torque hinge, cylinder type, body Ø8 × 16, D-shaft Ø5 | Left hinge cheek. Different hinge? Edit `TORQUE` in `base.py` |
 | 1 | 1.75 mm filament, ~26 mm | Battery-door hinge pin |
-| – | Silicone wire 22/24 AWG (power), 28–30 AWG (signals), heat-shrink, Kapton tape | |
+| – | Silicone wire 20–22 AWG (battery → boost) / 24 AWG (5 V to the loads), 28–30 AWG (signals), heat-shrink, Kapton tape | |
 
 ### Tools
 
@@ -68,7 +68,7 @@ Files are in **[`print/`](print/)**, one folder per filament colour (one batch e
 ## 3. Prepare
 
 1. **Heat-set inserts.** Push the 8 inserts in at about 200 °C: 4 into the hinge-box floor and 4 into the lid shell's bezel bosses. Keep them square and flush.
-2. **MT3608.** Power it from the bench (or from the TP4056 with a cell) and turn the trimmer until the output reads **5.1 V**.
+2. **Boost.** The Pololu U3V40F5 is fixed at 5 V, so there's nothing to adjust. Solder the 47 µF capacitor straight across its input pads.
 3. **Radxa: free USB2 HOST2 for the SDR.** Remove **R32** and **R39** (0 Ω; they route I²C4 to pins 27/28) and bridge **R45** and **R46** (marked NC). Pins 27/28 then carry HOST2 D+/D−. See WIRING.md for details.
 4. **SDR.** Cut the USB-A plug off the NESDR Nano 2+. Keep VBUS, D−, D+ and GND short; D+/D− stay twisted.
 5. **PN532.** DIP switches to **I²C**.
@@ -81,7 +81,7 @@ Files are in **[`print/`](print/)**, one folder per filament colour (one batch e
 
 Solder everything **before** it goes into the case: one wire per Radxa pad, laid flat (there's about 3 mm above the board under the keyboard). [WIRING.md](WIRING.md) has the full table; the 3D wire routes are in `out/parts_in_place/wires_*.stl` and show in `viewer.py`.
 
-- **Power:** 18650 → TP4056 B+/B− → TP4056 OUT+ → **power switch** (middle pin in, one outer pin out) → MT3608 → a 5 V / GND splice behind the Radxa → Radxa pins 2/6, the screen (through the hinge) and the GPS (pin 4).
+- **Power:** 18650 → TP4056 B+/B− (charging) and, from those same B+/B− pads, → **power switch** (middle pin in, one outer pin out) → **Pololu U3V40F5** → a 5 V / GND splice behind the Radxa → Radxa pins 2/6, the screen (through the hinge) and the GPS (pin 4).
 - **I²C5** (pins 29/31): PN532, with the CardKB chained onto the PN532's pins.
 - **UART3** (3/5): GPS. **UART4** (16/18): LoRa, plus M0/M1/AUX on 13/7/22.
 - **I²S3** (12/35/40): DAC.
@@ -101,7 +101,7 @@ The order follows the collision-checked teardown on the promo site, played forwa
 2. **FPC antennas** onto the hinge-box walls: LoRa and SDR on the back wall, Wi-Fi/BT on the top.
 3. **LoRa module** and **DAC**, jack into its front hole.
 4. **Radxa**, upside down, USB-C ports into the front-wall openings. Its microSD socket is at the board's **left** end (the camera connector is at the right end).
-5. **GPS board** in the bay right of the battery; **MT3608** and **TP4056** (USB-C into its front opening).
+5. **Pololu boost** flat in its spot under the charger, then the **TP4056** over it (USB-C into its front opening). **GPS board** standing on its long edge in its cradle right of the battery, back against the chamber wall (foam tape), parts and u.FL facing the right wall.
    **Power switch:** trim the SS12D00's lever to **1.05 mm** above the body with flush cutters. From inside the case, drop the printed knob into the gap between the left wall and the charger, fin toward the wall, and push it sideways into its pocket. The fin pokes out through the small slot, flush with the outside, and the knob can't fall out of the case. Then lower the switch straight down onto its block: its lever slides down the groove in the wall into the knob's open-topped socket. A dab of hot glue holds the switch; wires go to its pins over the charger.
 6. **SDR** into the hinge box; route its antenna coax.
 

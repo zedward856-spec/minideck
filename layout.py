@@ -61,6 +61,10 @@ def placed_meshes():
     out["lora"].apply_translation((0, 0, -LORA_DROP))
     out["pn532"].apply_translation((PN532_SHIFT_X, 0, -PN532_DROP))
     out["mt3608"].apply_translation((0, 0, -MT3608_DROP))
+    # the MT3608 is replaced by a Pololu U3V40F5 (kept under the "mt3608" key so every tool still finds it)
+    from params import BOOST
+    bx, by, bz = BOOST["x0"], BOOST["y0"], BOOST["z0"]; sx, sy, sz = BOOST["size"]
+    out["mt3608"] = trimesh.creation.box(bounds=[[bx, by, bz], [bx + sx, by + sy, bz + sz]])
     # charger up so its USB-C sits level with the Radxa's two
     rz = out["radxa"].bounds[1][2] - 1.2 - 3.1 / 2
     tp = out["tp4056"].vertices

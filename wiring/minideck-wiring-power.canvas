@@ -1,0 +1,760 @@
+{
+ "nodes": [
+  {
+   "id": "g_cell",
+   "type": "group",
+   "x": -1500,
+   "y": -40,
+   "width": 226,
+   "height": 152,
+   "label": "18650 cell"
+  },
+  {
+   "id": "p_cell_0",
+   "type": "text",
+   "x": -1482,
+   "y": 6,
+   "width": 190,
+   "height": 36,
+   "text": "+ (button)"
+  },
+  {
+   "id": "p_cell_1",
+   "type": "text",
+   "x": -1482,
+   "y": 50,
+   "width": 190,
+   "height": 36,
+   "text": "\u2212 (door spring)"
+  },
+  {
+   "id": "g_tp4056",
+   "type": "group",
+   "x": -1160,
+   "y": -40,
+   "width": 226,
+   "height": 152,
+   "label": "TP4056 USB-C charger (charging only)"
+  },
+  {
+   "id": "p_tp4056_0",
+   "type": "text",
+   "x": -1142,
+   "y": 6,
+   "width": 190,
+   "height": 36,
+   "text": "B+"
+  },
+  {
+   "id": "p_tp4056_1",
+   "type": "text",
+   "x": -1142,
+   "y": 50,
+   "width": 190,
+   "height": 36,
+   "text": "B-"
+  },
+  {
+   "id": "g_switch",
+   "type": "group",
+   "x": -1160,
+   "y": 182,
+   "width": 226,
+   "height": 152,
+   "label": "SS12D00 power switch"
+  },
+  {
+   "id": "p_switch_0",
+   "type": "text",
+   "x": -1142,
+   "y": 228,
+   "width": 190,
+   "height": 36,
+   "text": "middle (common)"
+  },
+  {
+   "id": "p_switch_1",
+   "type": "text",
+   "x": -1142,
+   "y": 272,
+   "width": 190,
+   "height": 36,
+   "text": "outer (ON end)"
+  },
+  {
+   "id": "g_boost",
+   "type": "group",
+   "x": -820,
+   "y": -198,
+   "width": 226,
+   "height": 240,
+   "label": "Pololu U3V40F5 5 V boost"
+  },
+  {
+   "id": "p_boost_0",
+   "type": "text",
+   "x": -802,
+   "y": -152,
+   "width": 190,
+   "height": 36,
+   "text": "VIN"
+  },
+  {
+   "id": "p_boost_1",
+   "type": "text",
+   "x": -802,
+   "y": -108,
+   "width": 190,
+   "height": 36,
+   "text": "GND (in)"
+  },
+  {
+   "id": "p_boost_2",
+   "type": "text",
+   "x": -802,
+   "y": -64,
+   "width": 190,
+   "height": 36,
+   "text": "VOUT (fixed 5 V)"
+  },
+  {
+   "id": "p_boost_3",
+   "type": "text",
+   "x": -802,
+   "y": -20,
+   "width": 190,
+   "height": 36,
+   "text": "GND (out)"
+  },
+  {
+   "id": "g_cap",
+   "type": "group",
+   "x": -820,
+   "y": -420,
+   "width": 226,
+   "height": 152,
+   "label": "boost input capacitor"
+  },
+  {
+   "id": "p_cap_0",
+   "type": "text",
+   "x": -802,
+   "y": -374,
+   "width": 190,
+   "height": 36,
+   "text": "+ 47 \u00b5F"
+  },
+  {
+   "id": "p_cap_1",
+   "type": "text",
+   "x": -802,
+   "y": -330,
+   "width": 190,
+   "height": 36,
+   "text": "\u2212 47 \u00b5F"
+  },
+  {
+   "id": "g_splice5",
+   "type": "group",
+   "x": -520,
+   "y": 120,
+   "width": 226,
+   "height": 108,
+   "label": "5 V splice"
+  },
+  {
+   "id": "p_splice5_0",
+   "type": "text",
+   "x": -502,
+   "y": 166,
+   "width": 190,
+   "height": 36,
+   "text": "5 V splice"
+  },
+  {
+   "id": "g_spliceG",
+   "type": "group",
+   "x": -520,
+   "y": 298,
+   "width": 226,
+   "height": 108,
+   "label": "GND splice"
+  },
+  {
+   "id": "p_spliceG_0",
+   "type": "text",
+   "x": -502,
+   "y": 344,
+   "width": 190,
+   "height": 36,
+   "text": "GND splice"
+  },
+  {
+   "id": "g_radxa",
+   "type": "group",
+   "x": 0,
+   "y": 0,
+   "width": 434,
+   "height": 944,
+   "label": "Radxa ZERO 3W \u2014 40-pin header"
+  },
+  {
+   "id": "p_radxa_1",
+   "type": "text",
+   "x": 18,
+   "y": 46,
+   "width": 190,
+   "height": 36,
+   "text": "**1** \u00b7 3V3"
+  },
+  {
+   "id": "p_radxa_2",
+   "type": "text",
+   "x": 226,
+   "y": 46,
+   "width": 190,
+   "height": 36,
+   "text": "**2** \u00b7 5V"
+  },
+  {
+   "id": "p_radxa_4",
+   "type": "text",
+   "x": 226,
+   "y": 90,
+   "width": 190,
+   "height": 36,
+   "text": "**4** \u00b7 5V"
+  },
+  {
+   "id": "p_radxa_6",
+   "type": "text",
+   "x": 226,
+   "y": 134,
+   "width": 190,
+   "height": 36,
+   "text": "**6** \u00b7 GND"
+  },
+  {
+   "id": "p_radxa_9",
+   "type": "text",
+   "x": 18,
+   "y": 222,
+   "width": 190,
+   "height": 36,
+   "text": "**9** \u00b7 GND"
+  },
+  {
+   "id": "p_radxa_14",
+   "type": "text",
+   "x": 226,
+   "y": 310,
+   "width": 190,
+   "height": 36,
+   "text": "**14** \u00b7 GND"
+  },
+  {
+   "id": "p_radxa_17",
+   "type": "text",
+   "x": 18,
+   "y": 398,
+   "width": 190,
+   "height": 36,
+   "text": "**17** \u00b7 3V3"
+  },
+  {
+   "id": "p_radxa_25",
+   "type": "text",
+   "x": 18,
+   "y": 574,
+   "width": 190,
+   "height": 36,
+   "text": "**25** \u00b7 GND"
+  },
+  {
+   "id": "p_radxa_30",
+   "type": "text",
+   "x": 226,
+   "y": 662,
+   "width": 190,
+   "height": 36,
+   "text": "**30** \u00b7 GND"
+  },
+  {
+   "id": "p_radxa_34",
+   "type": "text",
+   "x": 226,
+   "y": 750,
+   "width": 190,
+   "height": 36,
+   "text": "**34** \u00b7 GND"
+  },
+  {
+   "id": "g_driver",
+   "type": "group",
+   "x": 60,
+   "y": -620,
+   "width": 226,
+   "height": 152,
+   "label": "EHD-40P-V3 screen driver (lid)"
+  },
+  {
+   "id": "p_driver_0",
+   "type": "text",
+   "x": 78,
+   "y": -574,
+   "width": 190,
+   "height": 36,
+   "text": "5V"
+  },
+  {
+   "id": "p_driver_1",
+   "type": "text",
+   "x": 78,
+   "y": -530,
+   "width": 190,
+   "height": 36,
+   "text": "GND"
+  },
+  {
+   "id": "g_pn532",
+   "type": "group",
+   "x": 720,
+   "y": 120,
+   "width": 226,
+   "height": 152,
+   "label": "PN532 NFC"
+  },
+  {
+   "id": "p_pn532_0",
+   "type": "text",
+   "x": 738,
+   "y": 166,
+   "width": 190,
+   "height": 36,
+   "text": "3V3"
+  },
+  {
+   "id": "p_pn532_1",
+   "type": "text",
+   "x": 738,
+   "y": 210,
+   "width": 190,
+   "height": 36,
+   "text": "GND"
+  },
+  {
+   "id": "g_cardkb",
+   "type": "group",
+   "x": 1100,
+   "y": 120,
+   "width": 226,
+   "height": 152,
+   "label": "M5Stack CardKB"
+  },
+  {
+   "id": "p_cardkb_0",
+   "type": "text",
+   "x": 1118,
+   "y": 166,
+   "width": 190,
+   "height": 36,
+   "text": "3V3"
+  },
+  {
+   "id": "p_cardkb_1",
+   "type": "text",
+   "x": 1118,
+   "y": 210,
+   "width": 190,
+   "height": 36,
+   "text": "GND"
+  },
+  {
+   "id": "g_dac",
+   "type": "group",
+   "x": -820,
+   "y": 334,
+   "width": 226,
+   "height": 152,
+   "label": "PCM5102 DAC"
+  },
+  {
+   "id": "p_dac_0",
+   "type": "text",
+   "x": -802,
+   "y": 380,
+   "width": 190,
+   "height": 36,
+   "text": "VIN 3V3"
+  },
+  {
+   "id": "p_dac_1",
+   "type": "text",
+   "x": -802,
+   "y": 424,
+   "width": 190,
+   "height": 36,
+   "text": "GND"
+  },
+  {
+   "id": "g_gps",
+   "type": "group",
+   "x": -820,
+   "y": 112,
+   "width": 226,
+   "height": 152,
+   "label": "ATGM336H GPS"
+  },
+  {
+   "id": "p_gps_0",
+   "type": "text",
+   "x": -802,
+   "y": 158,
+   "width": 190,
+   "height": 36,
+   "text": "VCC"
+  },
+  {
+   "id": "p_gps_1",
+   "type": "text",
+   "x": -802,
+   "y": 202,
+   "width": 190,
+   "height": 36,
+   "text": "GND"
+  },
+  {
+   "id": "g_lora",
+   "type": "group",
+   "x": 720,
+   "y": 342,
+   "width": 226,
+   "height": 152,
+   "label": "Ebyte E22 LoRa"
+  },
+  {
+   "id": "p_lora_0",
+   "type": "text",
+   "x": 738,
+   "y": 388,
+   "width": 190,
+   "height": 36,
+   "text": "GND"
+  },
+  {
+   "id": "p_lora_1",
+   "type": "text",
+   "x": 738,
+   "y": 432,
+   "width": 190,
+   "height": 36,
+   "text": "VCC"
+  },
+  {
+   "id": "g_sdr",
+   "type": "group",
+   "x": 720,
+   "y": 564,
+   "width": 226,
+   "height": 152,
+   "label": "NESDR Nano 2+ (USB wired to pins)"
+  },
+  {
+   "id": "p_sdr_0",
+   "type": "text",
+   "x": 738,
+   "y": 610,
+   "width": 190,
+   "height": 36,
+   "text": "GND"
+  },
+  {
+   "id": "p_sdr_1",
+   "type": "text",
+   "x": 738,
+   "y": 654,
+   "width": 190,
+   "height": 36,
+   "text": "VBUS"
+  },
+  {
+   "id": "title",
+   "type": "text",
+   "x": -1500,
+   "y": -980,
+   "width": 900,
+   "height": 120,
+   "text": "# Minideck \u2014 power wiring\n25 wires \u00b7 generated from the wiring plan (`python3 wiring_canvas.py`)"
+  },
+  {
+   "id": "legend",
+   "type": "text",
+   "x": -560,
+   "y": -980,
+   "width": 320,
+   "height": 112,
+   "text": "**Wire colours**\n- <span style=\"color:#e03131\">\u25a0</span> 5 V / battery +\n- <span style=\"color:#868e96\">\u25a0</span> GND\n- <span style=\"color:#f08c00\">\u25a0</span> 3.3 V"
+  },
+  {
+   "id": "notes",
+   "type": "text",
+   "x": -200,
+   "y": -980,
+   "width": 720,
+   "height": 216,
+   "text": "**Notes**\n- Boost: Pololu U3V40F5, fixed 5 V (nothing to adjust), ~2.6 A out from a charged cell.\n- Load is taken from the TP4056's B+/B\u2212 pads, so its ~3 A protection is not in the power path: use a protected high-drain 18650 (button top, \u226470 mm).\n- TP4056 = charging only; its OUT pads stay empty. Charging works with the switch off.\n- Power switch: middle pin from B+, one outer pin to the boost VIN (check the ON end with a meter).\n- 47 \u00b5F capacitor right across the boost's input pads.\n- Battery \u2192 charger \u2192 switch \u2192 boost: 20\u201322 AWG; splice \u2192 loads: 24 AWG."
+  }
+ ],
+ "edges": [
+  {
+   "id": "w0",
+   "fromNode": "p_cell_0",
+   "fromSide": "right",
+   "toNode": "p_tp4056_0",
+   "toSide": "left",
+   "toEnd": "none",
+   "color": "#e03131",
+   "label": "BAT+"
+  },
+  {
+   "id": "w1",
+   "fromNode": "p_cell_1",
+   "fromSide": "right",
+   "toNode": "p_tp4056_1",
+   "toSide": "left",
+   "toEnd": "none",
+   "color": "#868e96",
+   "label": "BAT-"
+  },
+  {
+   "id": "w2",
+   "fromNode": "p_tp4056_0",
+   "fromSide": "left",
+   "toNode": "p_switch_0",
+   "toSide": "left",
+   "toEnd": "none",
+   "color": "#e03131",
+   "label": "B+ -> switch"
+  },
+  {
+   "id": "w3",
+   "fromNode": "p_switch_1",
+   "fromSide": "right",
+   "toNode": "p_boost_0",
+   "toSide": "left",
+   "toEnd": "none",
+   "color": "#e03131",
+   "label": "switch -> boost VIN"
+  },
+  {
+   "id": "w4",
+   "fromNode": "p_tp4056_1",
+   "fromSide": "right",
+   "toNode": "p_boost_1",
+   "toSide": "left",
+   "toEnd": "none",
+   "color": "#868e96",
+   "label": "B- -> boost GND"
+  },
+  {
+   "id": "w5",
+   "fromNode": "p_cap_0",
+   "fromSide": "left",
+   "toNode": "p_boost_0",
+   "toSide": "left",
+   "toEnd": "none",
+   "color": "#e03131",
+   "label": "input cap +"
+  },
+  {
+   "id": "w6",
+   "fromNode": "p_cap_1",
+   "fromSide": "left",
+   "toNode": "p_boost_1",
+   "toSide": "left",
+   "toEnd": "none",
+   "color": "#868e96",
+   "label": "input cap -"
+  },
+  {
+   "id": "w7",
+   "fromNode": "p_boost_2",
+   "fromSide": "right",
+   "toNode": "p_splice5_0",
+   "toSide": "left",
+   "toEnd": "none",
+   "color": "#e03131",
+   "label": "boost 5V -> splice"
+  },
+  {
+   "id": "w8",
+   "fromNode": "p_boost_3",
+   "fromSide": "right",
+   "toNode": "p_spliceG_0",
+   "toSide": "left",
+   "toEnd": "none",
+   "color": "#868e96",
+   "label": "boost GND -> splice"
+  },
+  {
+   "id": "w9",
+   "fromNode": "p_splice5_0",
+   "fromSide": "right",
+   "toNode": "p_radxa_2",
+   "toSide": "left",
+   "toEnd": "none",
+   "color": "#e03131",
+   "label": "5V -> Radxa"
+  },
+  {
+   "id": "w10",
+   "fromNode": "p_spliceG_0",
+   "fromSide": "right",
+   "toNode": "p_radxa_6",
+   "toSide": "left",
+   "toEnd": "none",
+   "color": "#868e96",
+   "label": "GND -> Radxa"
+  },
+  {
+   "id": "w11",
+   "fromNode": "p_splice5_0",
+   "fromSide": "right",
+   "toNode": "p_driver_0",
+   "toSide": "left",
+   "toEnd": "none",
+   "color": "#e03131",
+   "label": "Screen 5V"
+  },
+  {
+   "id": "w12",
+   "fromNode": "p_spliceG_0",
+   "fromSide": "right",
+   "toNode": "p_driver_1",
+   "toSide": "left",
+   "toEnd": "none",
+   "color": "#868e96",
+   "label": "Screen GND"
+  },
+  {
+   "id": "w13",
+   "fromNode": "p_pn532_0",
+   "fromSide": "left",
+   "toNode": "p_radxa_17",
+   "toSide": "right",
+   "toEnd": "none",
+   "color": "#f08c00",
+   "label": "PN532 3V3"
+  },
+  {
+   "id": "w14",
+   "fromNode": "p_pn532_1",
+   "fromSide": "left",
+   "toNode": "p_radxa_25",
+   "toSide": "right",
+   "toEnd": "none",
+   "color": "#868e96",
+   "label": "PN532 GND"
+  },
+  {
+   "id": "w15",
+   "fromNode": "p_cardkb_0",
+   "fromSide": "left",
+   "toNode": "p_pn532_0",
+   "toSide": "right",
+   "toEnd": "none",
+   "color": "#f08c00",
+   "label": "CardKB 3V3"
+  },
+  {
+   "id": "w16",
+   "fromNode": "p_cardkb_1",
+   "fromSide": "left",
+   "toNode": "p_pn532_1",
+   "toSide": "right",
+   "toEnd": "none",
+   "color": "#868e96",
+   "label": "CardKB GND"
+  },
+  {
+   "id": "w17",
+   "fromNode": "p_dac_0",
+   "fromSide": "right",
+   "toNode": "p_radxa_1",
+   "toSide": "left",
+   "toEnd": "none",
+   "color": "#f08c00",
+   "label": "DAC VIN 3V3"
+  },
+  {
+   "id": "w18",
+   "fromNode": "p_dac_1",
+   "fromSide": "right",
+   "toNode": "p_radxa_30",
+   "toSide": "left",
+   "toEnd": "none",
+   "color": "#868e96",
+   "label": "DAC GND"
+  },
+  {
+   "id": "w19",
+   "fromNode": "p_gps_0",
+   "fromSide": "right",
+   "toNode": "p_radxa_4",
+   "toSide": "left",
+   "toEnd": "none",
+   "color": "#e03131",
+   "label": "GPS VCC 5V"
+  },
+  {
+   "id": "w20",
+   "fromNode": "p_gps_1",
+   "fromSide": "right",
+   "toNode": "p_radxa_9",
+   "toSide": "left",
+   "toEnd": "none",
+   "color": "#868e96",
+   "label": "GPS GND"
+  },
+  {
+   "id": "w21",
+   "fromNode": "p_lora_0",
+   "fromSide": "left",
+   "toNode": "p_radxa_34",
+   "toSide": "right",
+   "toEnd": "none",
+   "color": "#868e96",
+   "label": "LoRa GND"
+  },
+  {
+   "id": "w22",
+   "fromNode": "p_splice5_0",
+   "fromSide": "right",
+   "toNode": "p_lora_1",
+   "toSide": "left",
+   "toEnd": "none",
+   "color": "#e03131",
+   "label": "LoRa VCC 5V"
+  },
+  {
+   "id": "w23",
+   "fromNode": "p_sdr_0",
+   "fromSide": "left",
+   "toNode": "p_radxa_14",
+   "toSide": "right",
+   "toEnd": "none",
+   "color": "#868e96",
+   "label": "SDR GND"
+  },
+  {
+   "id": "w24",
+   "fromNode": "p_splice5_0",
+   "fromSide": "right",
+   "toNode": "p_sdr_1",
+   "toSide": "left",
+   "toEnd": "none",
+   "color": "#e03131",
+   "label": "SDR 5V"
+  }
+ ]
+}

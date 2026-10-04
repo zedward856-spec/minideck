@@ -227,8 +227,10 @@ def clear_time(n):
 start = 0.0
 for i, n in enumerate(order):
     t0 = max(i / max(N - 1, 1) * SPAN, start)
-    for j in order[:i]:                    # wait for anything it touches to be clear first
-        if INIT[n].get(idx[j], 0) > 0 or INIT[j].get(idx[n], 0) > 0:
+    for j in order[:i]:                    # wait for anything it overlaps or rests against to be clear first
+        lo_n, hi_n = V[n].min(0), V[n].max(0); lo_j, hi_j = V[j].min(0), V[j].max(0)
+        touching = bool(((lo_n <= hi_j + 2) & (lo_j <= hi_n + 2)).all()) and (n.startswith("screws") or j.startswith("screws"))
+        if INIT[n].get(idx[j], 0) > 0 or INIT[j].get(idx[n], 0) > 0 or touching:
             t0 = max(t0, clear_time(j) + 0.002)
     plan[n].update(t0=float(t0), t1=float(t0 + dur), order=i, tumble=TUMBLE[n])
     start = t0

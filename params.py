@@ -34,7 +34,7 @@ LID_GAP = KEY_PROUD + 0.3                # the screen lid stands this far above 
 
 # ---- 18650 chamber: where the user put the battery (y, z), slid left for the door spring ----
 CELL_D = 18.55
-CELL_L = 67.2
+CELL_L = 70.0                            # protected high-drain cells (Nitecore NL1835HP 69.3, Keeppower 3500 68.9) + clearance
 CELL_BUTTON = 1.0
 BORE = 18.9                              # round chamber; the keyboard is its roof
 CH_YC = 60.3 + MD_OFFSET[1]
@@ -74,7 +74,10 @@ C2_HEAD_DEPTH = 5.0                      # C2 (mini-HDMI 90 deg) end stands behi
 # ---- GPS: module in the free bay right of the battery, ceramic patch antenna in the lid --------
 # (the bay is under the keyboard, which would shade a GPS antenna; the patch goes in the lid,
 #  joined to the module by a 1.13 mm u.FL coax that runs through the hollow hinge)
-GPS_MODULE = (15.6, 16.4, 4.5)           # max module size x, y, height (mini ATGM336H boards ~13x15)
+GPS_MODULE = (15.6, 16.4, 4.5)           # max module size: length, width, height incl. parts (mini ATGM336H ~13x15)
+# the GPS stands on its long edge against the battery chamber's end wall (parts + u.FL face the right wall),
+# so the longer chamber for a protected cell fits; cables still run along the right wall past it
+GPS_EDGE = dict(gap=0.4, lip=(0.7, 2.0), stop=(1.2, 8.0))
 GPS_PATCH = (18.0, 18.0, 4.5)            # 18x18 patch fits; a 15x15 one sits centred on foam tape
 
 # ---- M2 heat-set inserts (brass, knurled; pushed in with a soldering iron) ----------------
@@ -183,3 +186,8 @@ NFC_MARK = dict(depth=0.3,                 # floor under the PN532 is 0.8 mm: 0.
                 inset=0.6, coil_gap=2.2, turns=4,
                 nfc_h=6.5,
                 lines=[("13.56 MHz", 3.4), ("ISO 14443 A/B", 2.9), ("TAP HERE", 2.9)])
+
+# ---- 5 V boost: Pololu U3V40F5 (fixed 5 V, ~2.6 A out from 3.7 V in, 15.2 x 15.2 x 5.6 mm), lying flat in the old
+# MT3608 spot under the charger. Fed from the TP4056's B+/B- pads (battery side, past its ~3 A protection) through
+# the power switch; a protected high-drain 18650 does the over-current protection. Pads along its back edge.
+BOOST = dict(model="Pololu U3V40F5", size=(15.2, 15.2, 5.6), x0=5.0, y0=19.0, z0=9.0, pcb=1.6)

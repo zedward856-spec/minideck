@@ -1,6 +1,6 @@
 # Minideck fit + requirements check
 
-**54 / 54 pass**
+**55 / 55 pass**
 
 - PASS  keyboard fits in the case (no part of it inside the plastic)  — deepest contact 0.13 mm
 - PASS  radxa fits in the case (no part of it inside the plastic)  — deepest contact 0.00 mm
@@ -15,7 +15,7 @@
 - PASS  no two parts collide with each other  — none
 - PASS  PN532 where agreed: centred left-right, lowered 0.4 mm into the floor pocket, front-back unchanged  — x -2.37 (centred), y unchanged, z -0.40 mm
 - PASS  battery chamber at your battery's height and front-back position  — slid 12.1 mm left so the door spring reaches it
-- PASS  other boards where you placed them (only the noted shifts, x/y/z mm)  — radxa [0.0, -2.86, -0.82]; tp4056 [0.9, -3.21, -0.66]; dac [0.0, -1.76, -1.62]; lora [0.0, 0.0, -0.02]; mt3608 [0.0, 0.0, -0.5]
+- PASS  other boards where you placed them (only the noted shifts, x/y/z mm)  — radxa [0.0, -2.86, -0.82]; tp4056 [0.9, -3.21, -0.66]; dac [0.0, -1.76, -1.62]; lora [0.0, 0.0, -0.02]; mt3608 [-1.49, -1.51, -1.82]
 - PASS  round battery chamber  — bore 18.9 mm
 - PASS  hinged battery door opens to 90 deg (held shut by the lock, no click latch)  — overlap by angle [0, 0, 0, 0, 0, 0]
 - PASS  battery door up/down lock: blocks the door when down, free when up  — door tab 1.6 mm into the case, 1.3 thick x 4.0 tall, held by a 0.8 mm flange; M2 screw + washer keeps the slider captive; slide 4.4 mm up to open
@@ -47,7 +47,7 @@
 - PASS  battery-door lock is a one-piece C-clip on a rail: slides only up/down, can't fall off  — blocked pull out, push in, forward, back; lips hook 0.4 mm behind the rail; detent press along the travel [0, 0.08, 0.08, 0.08, 0] mm3 (clicks at both ends)
 - PASS  radios fit in the box under the hinge: LoRa + Wi-Fi/BT + SDR FPC antennas, NESDR Nano 2+ with USB adapter  — inside the plastic: {'antenna_lora': 0, 'antenna_sdr': 0, 'antenna_wifi': 0, 'sdr_dongle': 0}; touching each other: none
 - PASS  coax + SDR USB reach the boards (bay opening into the box)  — 13.4 x 18.5 mm opening, shared with the screen cables
-- PASS  GPS module fits its cradle in the bay right of the battery  — modules up to 15.6 x 16.4 mm
+- PASS  GPS module fits its cradle in the bay right of the battery (standing on its edge)  — modules up to 15.6 x 16.4 mm
 - PASS  GPS patch antenna fits the lid frame, clear of the screen and driver board  — 18.0 x 18.0 patch, faces the lid back (sky)
 - PASS  side walls closed at the Radxa's ends (no slot in front of the camera connector or the microSD; the left one only has the switch's fin slot)
 - PASS  power switch (both positions) clear of the case, TP4056, MT3608, keyboard and wires  — none
@@ -56,3 +56,4 @@
 - PASS  switch knob fits from the inside only: its plate is bigger than the outside slot, so it can't fall out  — plate 12.0 x 3.4 mm behind a 3.5 x 3.3 mm slot
 - PASS  TP4056 still fits under the switch  — switch body ends at x 5.50, charger starts at x 5.89
 - PASS  switch and knob fit from inside: knob drops in beside the charger and slides into its pocket, switch drops onto it  — both paths clear
+- PASS  5 V supply covers the estimated peak load (Pololu U3V40F5, fed past the TP4056's protection)  — peak ~1.82 A; boost ~2.6 A (charged) / ~2.1 A (near empty); cell ~3.4 A at 3.0 V

@@ -258,15 +258,14 @@ req("coax + SDR USB reach the boards (bay opening into the box)", True,
     f"{_bo[1] - _bo[0]:.1f} x {_bo[3] - _bo[2]:.1f} mm opening, shared with the screen cables")
 hinge_parts = {"m2_hardware": hw_m, **radios, "lid_inserts": lid_hw_m, "torque_hinge": tq_m, "hinge_cap": cap_m, "hinge_axle": tm(B.axle(), "axle_asm"), "box_hatch": tm(B.hatch(), "hatch_asm"), "door_lock": tm(bt.door_lock(), "lock_asm")}
 # GPS: module in the bay cradle, patch antenna in the lid frame
-gmx = (bt.END_X + B.IN_X1) / 2
-gps_m = tm(box(gmx - GPS_MODULE[0] / 2, B.GPS_Y0 + 0.2, FLOOR + 0.8, gmx + GPS_MODULE[0] / 2, B.GPS_Y0 + GPS_MODULE[1] - 0.2,
-               FLOOR + 2.4) +
-           box(gmx - 4.5, B.GPS_Y0 + 3.0, FLOOR + 2.4, gmx + 4.5, B.GPS_Y0 + 13.0, FLOOR + GPS_MODULE[2]), "gps")
+_gx0 = bt.END_X + GPS_EDGE["gap"]; _gz0 = FLOOR + 0.3        # standing on its edge against the chamber end wall
+gps_m = tm(box(_gx0, B.GPS_Y0 + 0.2, _gz0, _gx0 + 1.0, B.GPS_Y0 + GPS_MODULE[1] - 0.2, _gz0 + GPS_MODULE[0]) +
+           box(_gx0 + 1.0, B.GPS_Y0 + 3.0, _gz0 + 2.0, _gx0 + GPS_MODULE[2] - 0.1, B.GPS_Y0 + 13.0, _gz0 + 12.0), "gps")
 top_in = Ld.LID_TOP - Ld.TOP_T
 patch_m = tm(box(Ld.PATCH_X0 + 0.2, Ld.PATCH_Y0 + 0.2, top_in - GPS_PATCH[2], Ld.PATCH_X0 + 0.2 + GPS_PATCH[0],
                  Ld.PATCH_Y0 + 0.2 + GPS_PATCH[1], top_in), "patch")
 lid_parts["gps_patch_antenna"] = patch_m
-req("GPS module fits its cradle in the bay right of the battery",
+req("GPS module fits its cradle in the bay right of the battery (standing on its edge)",
     depth_into(gps_m, bot) < 0.05, f"modules up to {GPS_MODULE[0]} x {GPS_MODULE[1]} mm")
 req("GPS patch antenna fits the lid frame, clear of the screen and driver board",
     depth_into(patch_m, back) < 0.05 and depth_into(patch_m, front) < 0.05 and
@@ -374,6 +373,14 @@ for _dz in (10, 7, 5, 3, 2, 1, 0.5, 0.0):                        # switch: strai
         if n: _ins[f"switch {k} @dz{_dz}"] = n
 req("switch and knob fit from inside: knob drops in beside the charger and slides into its pocket, switch drops onto it",
     not _ins, ", ".join(f"{k} {v}" for k, v in list(_ins.items())[:6]) or "both paths clear")
+
+# ---------------- 5 V supply vs the load ----------------
+_LOAD = {"Radxa ZERO 3W (load + Wi-Fi)": 1.0, "screen + driver": 0.25, "NESDR Nano 2+": 0.30, "E22 LoRa TX": 0.12,
+         "PN532 + GPS + DAC + CardKB": 0.15}
+_peak = sum(_LOAD.values()); _supply_full, _supply_empty = 2.6, 2.1      # Pololu U3V40F5 at 3.7 V / 3.0 V in
+req("5 V supply covers the estimated peak load (Pololu U3V40F5, fed past the TP4056's protection)",
+    _supply_empty >= _peak * 1.1,
+    f"peak ~{_peak:.2f} A; boost ~{_supply_full} A (charged) / ~{_supply_empty} A (near empty); cell ~{_peak * 5 / 3.0 / 0.9:.1f} A at 3.0 V")
 
 # ---------------- report ----------------
 lines = ["# Minideck fit + requirements check", ""]
