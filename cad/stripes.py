@@ -102,18 +102,21 @@ def _xz_prism(poly, y0, y1):
 
 
 def depth_split(part, face, poly):
-    """[(polygon, depth)]: full depth, except over the knob pocket's 0.7 mm skin on the left face, where the
-    bars are cut shallow (the paint hides the difference) and clipped to where enough wall stays behind"""
+    """[(polygon, depth)]: full depth, except the bars on the left face that reach over the knob pocket's 0.7 mm
+    skin: those are cut shallow along their WHOLE length (one depth per bar, so no step / seam where the pocket
+    starts; the paint hides the difference), clipped to where enough wall stays behind"""
     d = SIDE_STRIPES["depth"]
     if not (part == "bottom" and face == "left" and SIDE_STRIPES.get("shallow_over_switch", True)):
         return [(poly, d)]
     import switch as sw, marks
+    from shapely.ops import unary_union
     ds = SIDE_STRIPES.get("switch_depth", 0.2)
     thin = sw.pocket_footprint().buffer(SIDE_STRIPES.get("switch_gap", 0.8), 32)
-    deep, shallow = poly.difference(thin), poly.intersection(thin)
-    shallow = marks.safe(shallow, "out/bottom.stl", 0, ds + 0.4, keep=0.05)   # 0.5 of the 0.7 skin stays
-    deep = marks.safe(deep, "out/bottom.stl", 0, d + MARKS["wall"], keep=0.05).union(
-        deep.difference(thin.buffer(0.5)))           # (only trim deep bars right at the pocket's edge)
+    bars = list(poly.geoms) if hasattr(poly, "geoms") else [poly]
+    deep = unary_union([b for b in bars if not b.intersects(thin)])
+    shallow = unary_union([b for b in bars if b.intersects(thin)])
+    # wall test just past the existing 0.6 mm stripe floors (0.62), inside the 0.65-0.7 mm skins
+    shallow = marks.safe(shallow, "out/bottom.stl", 0, max(ds + 0.4, d + 0.02), keep=0.05)
     return [(deep, d), (shallow, ds)]
 
 
