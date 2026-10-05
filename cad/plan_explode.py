@@ -1,6 +1,6 @@
 """Collision-free teardown for the promo site's exploded view.
 
-Reads ../minideck-site/assets/minideck.glb + parts.json, voxelises every part (0.5 mm), then:
+Reads out/web/minideck_raw.glb (site_export.py) + parts.json, voxelises every part (0.5 mm), then:
   1. finds a removal order: each step takes a part that can slide straight out along one of a
      few directions without touching anything still assembled (screws first, keycaps, plate ...)
   2. places every part's resting spot so no two overlap (parts removed later rest nearer)
@@ -26,7 +26,7 @@ DUR_K = 1.5                                       # each part's move lasts DUR_K
 
 meta = json.load(open(f"{SITE}/parts.json"))
 H = meta["_hinge"]
-scene = trimesh.load(f"{SITE}/minideck.glb")
+scene = trimesh.load("out/web/minideck_raw.glb")       # the uncompressed export (the site copy is meshopt-packed)
 
 def lid_matrix(deg):
     """lid frame -> case frame at a given opening (rotation about the hinge axis, X)."""

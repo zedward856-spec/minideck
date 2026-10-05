@@ -1,6 +1,7 @@
 // Minideck app viewer: the deck on its own. Drag to orbit, pinch to zoom, two fingers to pan.
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import { MeshoptDecoder } from "three/addons/libs/meshopt_decoder.module.js";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { toCreasedNormals } from "three/addons/utils/BufferGeometryUtils.js";
@@ -91,7 +92,7 @@ function resetView() {
 
 async function load() {
   const meta = await (await fetch("assets/parts.json")).json();
-  const gltf = await new GLTFLoader().loadAsync("assets/minideck.glb", (e) => {
+  const gltf = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).loadAsync("assets/minideck.glb", (e) => {
     if (e.total) document.getElementById("loadpct").textContent = Math.round((e.loaded / e.total) * 100) + "%";
   });
   const root = gltf.scene;
@@ -110,7 +111,7 @@ async function load() {
       const gold = c.r > 0.7 && c.g > 0.45 && c.b < 0.45 && c.r - c.b > 0.3;
       o.material = new THREE.MeshStandardMaterial({ color: c, roughness: grey || gold ? 0.32 : 0.55, metalness: grey || gold ? 0.75 : 0.08 });
     } else o.material = mat(m ? m.role : "body");
-    o.geometry = toCreasedNormals(o.geometry, THREE.MathUtils.degToRad(35));
+    if (!meta._baked_normals) o.geometry = toCreasedNormals(o.geometry, THREE.MathUtils.degToRad(35));
   });
 
   // paint fills, inserts and keycaps ride inside their host, so hiding the host hides them too

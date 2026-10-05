@@ -129,9 +129,16 @@ for f, role in (("tp4056", "metal"), ("dac", "dark")):
     if f not in NATIVE:
         meshes[f], port = port_split(f, meshes[f]); extra.append((f + "_port", port, role, f))
 
+CREASE = np.radians(35)        # sharp edges baked in here (vertices split at > 35 deg), so the browser
+                               # doesn't spend seconds on toCreasedNormals at every page load
+
+def crease(tm):
+    return trimesh.graph.smooth_shade(tm, angle=CREASE, facet_minarea=None)
+
 def add(name, tm, role, parent):
     tm = tm.copy()
     trimesh.repair.fix_winding(tm); trimesh.repair.fix_inversion(tm, multibody=True)   # outward faces (web renders one side)
+    tm = crease(tm)
     if parent == "lid":
         tm.apply_translation((0, -HY, -HZ))
     tm.metadata["name"] = name
@@ -178,6 +185,7 @@ def add_native(name, parts, parent):
         if parent == "lid":
             g.apply_translation((0, -HY, -HZ))
         trimesh.repair.fix_winding(g); trimesh.repair.fix_inversion(g, multibody=True)
+        g = crease(g)
         cn = f"{name}__c{i}"
         scene.add_geometry(g, geom_name=cn, node_name=cn, parent_node_name=name)
         cols[cn] = "#%02x%02x%02x" % rgb
@@ -218,6 +226,13 @@ meta["_screen"] = dict(cx=Ld.ACT_X0 + ACTIVE_W / 2, cy=Ld.ACT_Y0 + ACTIVE_H / 2 
 import battery_test as BT
 meta["_battery"] = dict(hx=BT.HX, hy=BT.HY, travel=BT.LOCK_TRAVEL, cell_out=BT.CELL_L + 12.0, door_open=100.0)
 meta["_hinge"] = dict(y=HY, z=HZ, max_open=B.MAX_OPEN)
-scene.export(f"{OUT}/minideck.glb")
+meta["_baked_normals"] = True
+# meshopt-compressed + quantized (positions 14 bit, normals 8 bit): ~0.9 MB to download instead of ~2.3 MB, and
+# no normals work in the browser. The pages decode it with three's MeshoptDecoder.
+os.makedirs("out/web", exist_ok=True)
+scene.export("out/web/minideck_raw.glb", include_normals=True)
+import subprocess
+subprocess.run(["npx", "--yes", "gltfpack@1.3.0", "-i", "out/web/minideck_raw.glb", "-o", f"{OUT}/minideck.glb",
+                "-cc", "-kn", "-km", "-vp", "14", "-vn", "8"], check=True, capture_output=True)
 json.dump(meta, open(f"{OUT}/parts.json", "w"), indent=1, default=float)
 print("glb", os.path.getsize(f"{OUT}/minideck.glb") // 1024, "kB,", len(meta), "entries")

@@ -11,3 +11,6 @@ site/
 
 # Android app build output (rebuilt by app/build.sh)
 app/build/
+
+# raw (uncompressed) web model, before gltfpack
+out/web/
