@@ -344,7 +344,9 @@ def bottom():
         usb.append(((x0 + x1) / 2, sum(rp["z"]) / 2, x1 - x0, rp["z"][1] - rp["z"][0]))
     for xc, zc, w, h in usb:
         b -= port_slot(xc, zc, w + 2 * USB_SLOT_CLR, h + 2 * USB_SLOT_CLR)
-        b -= port_recess(xc, zc, *USB_RECESS)
+    b -= port_recess(usb[0][0], usb[0][1], *USB_RECESS)              # charger
+    (xa, za, _, _), (xb, zb, _, _) = usb[1], usb[2]                  # the Radxa's two ports share one recess (the
+    b -= port_recess((xa + xb) / 2, (za + zb) / 2, xb - xa + USB_RECESS[0], *USB_RECESS[1:])   # web between was 0.66 mm)
     jx, jz, _ = ports["jack"]
     b -= cyl_y(-1, IN_Y0 + 0.1, jx, jz, JACK_HOLE)
     b -= cyl_y(-1, JACK_RECESS[1], jx, jz, JACK_RECESS[0])

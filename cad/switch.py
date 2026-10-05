@@ -90,7 +90,9 @@ if __name__ == "__main__":
     export_stl(knob(-1), "out/parts_in_place/switch_knob.stl")        # shown in the OFF position
     export_stl(body(-1), "out/parts_in_place/power_switch.stl")
     k = knob(0); bb = k.bounding_box()
-    export_stl(Rot(0, 90, 0) * Pos(-bb.max.X, -S["y"], -ZC) * k, "out/switch_knob.stl")    # flat back on the bed, ridge up
+    # printed on its long edge (as installed, z up): every layer holds the fin AND the plate side by side, so the fin
+    # isn't standing on a single bridged layer over the socket; the lever socket opens upward (no supports)
+    export_stl(Pos(-(bb.min.X + bb.max.X) / 2, -S["y"], -bb.min.Z) * k, "out/switch_knob.stl")
     print("switch body x", round(X0, 2), round(X1, 2), "z", round(Z0, 2), round(Z1, 2), "y", Y0, Y1)
     print("knob", round(bb.size.X, 2), "x", round(bb.size.Y, 2), "x", round(bb.size.Z, 2), "| fin top at x", round(bb.min.X, 3),
           "(0 = flush) | lever tip at x", round(X0 - S["lever"][2], 2), "| outside slot", [round(v, 2) for v in slot_size()],

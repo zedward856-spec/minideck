@@ -17,7 +17,7 @@ PARTS = [
     ("battery_lock_slider", "yellow",    "battery_lock_clip",  1, "0.12 mm layers"),
     ("hinge_cap",           "yellow",    "torque_hinge_cap",   1, "0.12 mm layers, logo up"),
     ("hinge_axle",          "yellow",    "hinge_axle",         1, "0.12 mm layers, flange down"),
-    ("switch_knob",         "yellow",    "switch_knob",        1, "0.12 mm layers, flat back down, fin up; goes in from inside the case, the switch lever drops into its open-top socket"),
+    ("switch_knob",         "yellow",    "switch_knob",        1, "0.12 mm layers, **on its long edge** (as exported: socket opening up) so the fin and plate share every layer; goes in from inside the case, the switch lever drops into its open-top socket"),
     ("battery_strip_test",  "tests",     "battery_door_fit_test", 1, "optional: the door, lock and chamber end, to check the fit first"),
 ]
 COLOURS = {
@@ -43,7 +43,8 @@ def main():
 
     md = ["# Print files", "",
           "One folder per filament colour, so each folder is one print batch. Every part is already in its print orientation, flat on the bed.",
-          "PLA, 0.4 mm nozzle. Rebuild this folder from the CAD with `python3 cad/export_print.py`.", ""]
+          "PLA, 0.4 mm nozzle. Rebuild this folder from the CAD with `python3 cad/export_print.py`.", "",
+          "**[Print simulation →](../docs/print-sim/README.md)**: every part sliced, layer by layer, with print time and filament.", ""]
     for folder in ("charcoal", "dark-grey", "yellow", "tests"):
         col, fil = COLOURS[folder]
         md += [f"## `{folder}/` · {col}" + (f" (e.g. {fil})" if folder != "tests" else ""), "",

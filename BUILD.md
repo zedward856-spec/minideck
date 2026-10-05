@@ -27,7 +27,7 @@ Every wire and pin is in **[WIRING.md](WIRING.md)**, and the print audit is in [
 | 1 | TP4056 USB-C charger (with protection) | |
 | 1 | **Pololu U3V40F5** 5 V step-up (15.2 × 15.2 mm) | Fixed 5 V, ~2.6 A. Replaces the MT3608, which is too weak. Plus a 47 µF capacitor on its input |
 | 1 | **Protected high-drain 18650, button top, ≤ 70 mm** | Its built-in protection (≥ 5 A) guards the load path, e.g. Nitecore NL1835HP (8 A, 69.3 mm) or Keeppower 3500 protected (10 A, 68.9 mm) |
-| 1 | SS12D00 mini slide switch (SPDT) | Power switch: 8.6 × 3.6 × 3.5 mm body; the lever gets trimmed to 1.05 mm. Different size? Edit `SWITCH` in `cad/params.py` |
+| 1 | SS12D00 mini slide switch (SPDT) | Power switch: 8.6 × 3.6 × 3.5 mm body; the lever gets trimmed to 0.6 mm. Different size? Edit `SWITCH` in `cad/params.py` |
 | 1 | microSD card | For the OS |
 
 ### Hardware
@@ -102,7 +102,7 @@ The order follows the collision-checked teardown on the promo site, played forwa
 3. **LoRa module** and **DAC**, jack into its front hole.
 4. **Radxa**, upside down: hold it a few mm back, slide it forward so its front edge goes under the keyboard ledge (ports at the front-wall openings), then drop it onto its four short pegs. Its microSD socket is at the board's **left** end (the camera connector is at the right end).
 5. **Pololu boost** flat in its spot under the charger, then the **TP4056** over it (USB-C into its front opening). **GPS board** standing on its long edge in its cradle right of the battery, back against the chamber wall (foam tape), parts and u.FL facing the right wall.
-   **Power switch:** trim the SS12D00's lever to **1.05 mm** above the body with flush cutters. From inside the case, drop the printed knob into the gap between the left wall and the charger, fin toward the wall, and push it sideways into its pocket. The fin pokes out through the small slot, flush with the outside, and the knob can't fall out of the case. Then lower the switch straight down onto its block: its lever slides down the groove in the wall into the knob's open-topped socket. A dab of hot glue holds the switch; wires go to its pins over the charger.
+   **Power switch:** trim the SS12D00's lever to **0.6 mm** above the body with flush cutters. From inside the case, drop the printed knob into the gap between the left wall and the charger, fin toward the wall, and push it sideways into its pocket. The fin pokes out through the small slot, flush with the outside, and the knob can't fall out of the case. Then lower the switch straight down onto its block: its lever slides down the groove in the wall into the knob's open-topped socket. A dab of hot glue holds the switch; wires go to its pins over the charger.
 6. **SDR** into the hinge box, MCX jack to the left, USB end (wires) to the right toward the bay opening. Fit the MCX-to-u.FL pigtail to the SDR FPC antenna (its u.FL is at the antenna's left end). With the deck upside down, screw the **hatch** on over it: its two thin ribs and four little posts locate the SDR, so it ends up standing on the rib tops, off the floor (only the ribs touch it).
 
 **Lid**

@@ -195,13 +195,17 @@ def plate_designs():
     # radios: small label over each value
     g = [ring(W, H, 1.6, p["line"])]
     v = H / 2 - 2.6
-    for lab, val in (("LORA", "920 MHz"), ("GPS", "L1 1575 MHz"), ("WI-FI · BT", "2.4 / 5 GHz"), ("POWER", "5 V · 2.6 A")):
+    for lab, val in (("RTL-SDR", "25–1750 MHz"), ("LORA", "920 MHz"), ("GPS", "L1 1575 MHz"),
+                     ("WI-FI · BT", "2.4 / 5 GHz"), ("POWER", "5 V · 2.6 A")):
         a = _fit(text(lab, p["label_h"], bold=True), W - 4.0)
         b = _fit(text(val, p["text_h"], bold=True), W - 4.0)
         v -= (a.bounds[3] - a.bounds[1]) / 2
         g.append(_at(a, 0, v)); v -= (a.bounds[3] - a.bounds[1]) / 2 + 0.9
         v -= (b.bounds[3] - b.bounds[1]) / 2
         g.append(_at(b, 0, v)); v -= (b.bounds[3] - b.bounds[1]) / 2 + p["gap"] + 0.6
+    body = unary_union(g[1:])                       # centre the list in its frame (no empty band at the bottom)
+    bb = body.bounds
+    g = [g[0], affinity.translate(body, 0, -(bb[1] + bb[3]) / 2)]
     out.append((_close(unary_union(g)), p["rf_xy"]))
     return out
 

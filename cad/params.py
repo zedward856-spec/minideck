@@ -95,8 +95,8 @@ SDR_BODY = (14.0, 67.5, 1.55, 38.0, 75.5, 22.55)     # NESDR Nano 2+: 24 x 21 x 
 # sits on the desk), between four locating posts; 0.38 mm of air stays above it under the compartment roof
 # the hatch's edge is stepped: a thin outer flange tucks under a ledge in the case all round (no straight gap to see
 # through or for dust; the screws pull it up against the ledge), plus a low stiffening rim along its long edges inside
-HATCH_STEP = dict(flange=0.6, overlap=0.8, rim_t=0.8, rim_h=1.6, rim_x=(10.6, 83.1))
-SDR_REST = dict(lift=0.35, rib_w=1.2, rib_in=1.5, post=(1.2, 0.8, 2.0), end=(0.8, 2.4, 2.0), clr=0.25)
+HATCH_STEP = dict(flange=0.6, overlap=0.8, rim_t=1.0, rim_h=1.6, rim_x=(10.6, 83.1))   # rims >= 2 lines
+SDR_REST = dict(lift=0.35, rib_w=1.2, rib_in=1.5, post=(1.2, 1.0, 2.0), end=(1.2, 2.4, 2.0), clr=0.25)   # >= 2 lines thick
 SDR_USB = (38.0, 67.75, 6.5, 50.0, 72.25, 18.5)      # (unused: plug cut off, wired to header pins 27/28)
 SDR_ADAPTER = (50.0, 66.5, 5.5, 68.0, 73.5, 19.5)    # (unused)
 
@@ -180,7 +180,8 @@ SD_CARD = dict(y=(12.4, 23.4), z=(20.42, 21.17), mouth_x=26.5, protrude=2.0)   #
 # than the outside slot, so it can never come out of the case; only its thin vertical fin shows, flush with the
 # outside face. The switch body behind it keeps it in. Set to your switch:
 SWITCH = dict(body=(8.6, 3.5, 3.6),      # along the slide (y), lever axis (x), across (z)
-              lever=(1.5, 1.3, 1.05),    # lever: along slide, across, length out of the body AFTER trimming
+              lever=(1.5, 1.3, 0.6),     # lever: along slide, across, length out of the body AFTER trimming (0.6: leaves a
+                                         # solid 0.6 mm backbone in the knob behind its socket, under the fin)
               travel=2.0,                # lever travel end to end
               pins=(3, 2.54, 3.5, 0.5),  # count, pitch, length, size
               y=20.0, top=22.5,          # body centre (y) and top (under the keyboard at 22.73)

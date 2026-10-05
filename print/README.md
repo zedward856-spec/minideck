@@ -3,6 +3,8 @@
 One folder per filament colour, so each folder is one print batch. Every part is already in its print orientation, flat on the bed.
 PLA, 0.4 mm nozzle. Rebuild this folder from the CAD with `python3 cad/export_print.py`.
 
+**[Print simulation →](../docs/print-sim/README.md)**: every part sliced, layer by layer, with print time and filament.
+
 ## `charcoal/` · Charcoal `#2D2D2D` (e.g. Bambu PLA Matte Charcoal)
 
 | File | Qty | Size (mm) | Settings |
@@ -26,7 +28,7 @@ PLA, 0.4 mm nozzle. Rebuild this folder from the CAD with `python3 cad/export_pr
 | `battery_lock_clip.stl` | 1 | 11.8 × 9.3 × 4.5 | 0.12 mm layers |
 | `torque_hinge_cap.stl` | 1 | 10.9 × 10.8 × 1.2 | 0.12 mm layers, logo up |
 | `hinge_axle.stl` | 1 | 11.9 × 13.0 × 15.2 | 0.12 mm layers, flange down |
-| `switch_knob.stl` | 1 | 3.4 × 12.0 × 2.0 | 0.12 mm layers, flat back down, fin up; goes in from inside the case, the switch lever drops into its open-top socket |
+| `switch_knob.stl` | 1 | 2.0 × 12.0 × 3.4 | 0.12 mm layers, **on its long edge** (as exported: socket opening up) so the fin and plate share every layer; goes in from inside the case, the switch lever drops into its open-top socket |
 
 ## `tests/` · any
 
