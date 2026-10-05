@@ -268,7 +268,8 @@ p.add_slider_widget(set_opacity, [0.05, 1.0], value=OPACITY, title="transparency
 ROLE = {"bottom": "body", "screen_back": "body", "box_hatch": "body", "keyboard_top": "kbplate",
         "screen_front": "kbplate", "battery_door": "accent", "door_lock": "accent2", "hinge_cap": "accent2",
         "hinge_axle": "accent2", "switch_knob": "accent2", "fill_logos_base": "accent", "fill_logos_lid": "accent",
-        "fill_stripes_base": "accent", "fill_stripes_lid": "accent", "fill_caps_base": "body", "fill_nfc_base": "accent"}
+        "fill_stripes_base": "accent", "fill_stripes_lid": "accent", "fill_caps_base": "body", "fill_nfc_base": "accent",
+        "fill_marks_base": "accent", "fill_texture_lid": "kbplate"}   # labels / plates follow the main accent
 _paltext = [None]
 def apply_palette(key):
     pal = PALETTES[key]

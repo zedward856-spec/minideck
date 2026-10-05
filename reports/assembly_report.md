@@ -27,16 +27,16 @@ Parts go in one by one in the build-guide order, each against the case + everyth
 | keyboard plate | OK, **tight** (< 0.3 mm room) | straight in along (0, 0, -1) |
 | plate screw (front left) | OK, sliding contact (rubs, <= 0.3 mm) | straight in along (0, 0, -1) |
 | plate screw (back left) | OK, sliding contact (rubs, <= 0.3 mm) | straight in along (0, 0, -1) |
-| plate screw (front right) | OK, clear | straight in along (0, 0, -1) |
-| plate screw (back right) | OK, sliding contact (rubs, <= 0.3 mm) | straight in along (0, 0, -1) |
+| plate screw (front right) | OK, sliding contact (rubs, <= 0.3 mm) | straight in along (0, 0, -1) |
+| plate screw (back right) | OK, clear | straight in along (0, 0, -1) |
 | 18650 in through the door opening (door still off) | **snap / press fit** (0.3-0.6 mm) | straight in along (1, 0, 0) |
 | battery door (hinge pin from the top) | OK, clear | straight in along (1, 0, 0) |
 | C-clip lock onto its rail | OK, snap-on C-clip by design: spreads over the rail (fit suite: lips hook 0.4 mm behind it) |  |
 | hinge-box hatch (from below) | OK, clear | straight in along (0, 0, 1) |
-| hatch screw | OK, **tight** (< 0.3 mm room) | straight in along (0, 0, 1) |
 | hatch screw | OK, sliding contact (rubs, <= 0.3 mm) | straight in along (0, 0, 1) |
 | hatch screw | OK, sliding contact (rubs, <= 0.3 mm) | straight in along (0, 0, 1) |
-| hatch screw | OK, clear | straight in along (0, 0, 1) |
+| hatch screw | OK, sliding contact (rubs, <= 0.3 mm) | straight in along (0, 0, 1) |
+| hatch screw | OK, sliding contact (rubs, <= 0.3 mm) | straight in along (0, 0, 1) |
 
 ## Lid
 
@@ -46,8 +46,8 @@ Parts go in one by one in the build-guide order, each against the case + everyth
 | screen driver board | OK, clear | straight in along (0, 0, 1) |
 | screen panel | OK, clear | straight in along (0, 0, 1) |
 | screen bezel | OK, clear | straight in along (0, 0, 1) |
-| bezel screw | OK, sliding contact (rubs, <= 0.3 mm) | straight in along (0, 0, 1) |
-| bezel screw | OK, sliding contact (rubs, <= 0.3 mm) | straight in along (0, 0, 1) |
 | bezel screw | OK, clear | straight in along (0, 0, 1) |
 | bezel screw | OK, clear | straight in along (0, 0, 1) |
+| bezel screw | OK, **tight** (< 0.3 mm room) | straight in along (0, 0, 1) |
+| bezel screw | OK, **tight** (< 0.3 mm room) | straight in along (0, 0, 1) |
 

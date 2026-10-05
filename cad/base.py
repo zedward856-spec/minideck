@@ -227,8 +227,13 @@ def kb_outline(grow=0.0):
 
 def hatch():
     """Floor hatch of the antenna compartment (4 x M2 from below, countersunk)."""
-    e = HATCH_CLR
-    h = box(HATCH[0] + e, HATCH[1] + e, 0, HATCH[2] - e, HATCH[3] - e, FLOOR)
+    e, st = HATCH_CLR, HATCH_STEP
+    f, ov = st["flange"], st["overlap"]
+    h = box(HATCH[0] + e, HATCH[1] + e, 0, HATCH[2] - e, HATCH[3] - e, f)                     # outer flange
+    h += box(HATCH[0] + ov + e, HATCH[1] + ov + e, f - 0.01, HATCH[2] - ov - e, HATCH[3] - ov - e, FLOOR)
+    y0, y1 = HATCH[1] + ov + e, HATCH[3] - ov - e                                            # stiffening rims
+    for ya, yb in ((y0, y0 + st["rim_t"]), (y1 - st["rim_t"], y1)):
+        h += box(st["rim_x"][0], ya, FLOOR - 0.01, st["rim_x"][1], yb, FLOOR + st["rim_h"])
     for x, y in HATCH_SCREWS:
         h -= cyl_z(x, y, -1, FLOOR + 1, M2_CLEAR)
         h -= Pos(x, y, -0.01) * Cone(M2_CSK / 2, M2_CLEAR / 2, 0.9, align=CEN)
@@ -379,7 +384,9 @@ def bottom():
               min(bt.LOCK_ZB + bt.LOCK_TRAVEL + bt.LOCK_BODY[1] + 1.2, CMP_TOP))
     # floor hatch: opening + 4 tabs above its edges for the M2 screws
     h0, h1 = HATCH[:2], HATCH[2:]
-    bx -= box(h0[0], h0[1], -1, h1[0], h1[1], FLOOR + 0.1)
+    ov = HATCH_STEP["overlap"]                       # stepped: the flange's recess, then the smaller opening above
+    bx -= box(h0[0], h0[1], -1, h1[0], h1[1], HATCH_STEP["flange"])
+    bx -= box(h0[0] + ov, h0[1] + ov, HATCH_STEP["flange"] - 0.01, h1[0] - ov, h1[1] - ov, FLOOR + 0.1)
     # two side rails from the front wall to the back wall (print as clean bridges), then the
     # insert holes - cut after all the rails are in, so no rail fills another's hole
     for xa, xb in ((BOX_WALL - 0.1, HATCH[0] + 6.0), (HATCH[2] - 6.0, OUT_W - BOX_WALL + 0.1)):

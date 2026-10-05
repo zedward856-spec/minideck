@@ -90,9 +90,12 @@ M2_INSERT_LONG = dict(od=3.5, hole=3.2, l=4.0)   # M2 x 4 x 3.5: battery-door lo
 ANT_LORA = (12.0, 79.79, 12.0, 50.0, 79.89, 22.0)    # Molex 211140-0100, 868/915 MHz FPC: 38 x 10 x 0.1
 ANT_SDR = (11.0, 79.59, 1.6, 81.0, 79.89, 11.6)      # slot for an SDR FPC up to ~70 x 10 (pick by band)
 ANT_WIFI = (48.0, 70.5, 22.73, 82.9, 79.5, 22.93)    # Molex 146153-0100, 2.4/5 GHz FPC: 34.9 x 9, under the roof
-SDR_BODY = (14.0, 67.0, 1.55, 38.0, 75.0, 22.55)     # NESDR Nano 2+: 24 x 21 x 8, stood on its edge, lifted
+SDR_BODY = (14.0, 67.5, 1.55, 38.0, 75.5, 22.55)     # NESDR Nano 2+: 24 x 21 x 8, stood on its edge, lifted
 # it stands on two thin ribs on the hatch (air under it instead of its whole 24 x 8 face on the floor, which
 # sits on the desk), between four locating posts; 0.38 mm of air stays above it under the compartment roof
+# the hatch's edge is stepped: a thin outer flange tucks under a ledge in the case all round (no straight gap to see
+# through or for dust; the screws pull it up against the ledge), plus a low stiffening rim along its long edges inside
+HATCH_STEP = dict(flange=0.6, overlap=0.8, rim_t=0.8, rim_h=1.6, rim_x=(10.6, 83.1))
 SDR_REST = dict(lift=0.35, rib_w=1.2, rib_in=1.5, post=(1.2, 0.8, 2.0), end=(0.8, 2.4, 2.0), clr=0.25)
 SDR_USB = (38.0, 67.75, 6.5, 50.0, 72.25, 18.5)      # (unused: plug cut off, wired to header pins 27/28)
 SDR_ADAPTER = (50.0, 66.5, 5.5, 68.0, 73.5, 19.5)    # (unused)

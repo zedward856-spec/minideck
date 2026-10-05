@@ -1,0 +1,181 @@
+{
+ "pins": {
+  "1": {
+   "fn": "3V3",
+   "wires": [
+    "DAC VIN 3V3"
+   ]
+  },
+  "2": {
+   "fn": "5V",
+   "wires": [
+    "5V -> Radxa"
+   ]
+  },
+  "3": {
+   "fn": "GPIO1_A0 / UART3 RX",
+   "wires": [
+    "GPS TX -> Radxa RX"
+   ]
+  },
+  "4": {
+   "fn": "5V",
+   "wires": [
+    "GPS VCC 5V"
+   ]
+  },
+  "5": {
+   "fn": "GPIO1_A1 / UART3 TX",
+   "wires": [
+    "GPS RX <- Radxa TX"
+   ]
+  },
+  "6": {
+   "fn": "GND",
+   "wires": [
+    "GND -> Radxa"
+   ]
+  },
+  "7": {
+   "fn": "GPIO3_C4",
+   "wires": [
+    "LoRa M1"
+   ]
+  },
+  "9": {
+   "fn": "GND",
+   "wires": [
+    "GPS GND"
+   ]
+  },
+  "12": {
+   "fn": "GPIO3_A3 / I2S3 SCLK (BCK)",
+   "wires": [
+    "DAC BCK"
+   ]
+  },
+  "13": {
+   "fn": "GPIO3_A2",
+   "wires": [
+    "LoRa M0"
+   ]
+  },
+  "14": {
+   "fn": "GND",
+   "wires": [
+    "SDR GND"
+   ]
+  },
+  "16": {
+   "fn": "GPIO3_B1 / UART4 RX",
+   "wires": [
+    "LoRa TXD -> Radxa RX"
+   ]
+  },
+  "17": {
+   "fn": "3V3",
+   "wires": [
+    "PN532 3V3"
+   ]
+  },
+  "18": {
+   "fn": "GPIO3_B2 / UART4 TX",
+   "wires": [
+    "LoRa RXD <- Radxa TX"
+   ]
+  },
+  "22": {
+   "fn": "GPIO3_C1",
+   "wires": [
+    "LoRa AUX"
+   ]
+  },
+  "25": {
+   "fn": "GND",
+   "wires": [
+    "PN532 GND"
+   ]
+  },
+  "27": {
+   "fn": "USB2 HOST2 D+ (after R32->R45 swap)",
+   "wires": [
+    "SDR D+"
+   ]
+  },
+  "28": {
+   "fn": "USB2 HOST2 D- (after R39->R46 swap)",
+   "wires": [
+    "SDR D-"
+   ]
+  },
+  "29": {
+   "fn": "GPIO3_B3 / I2C5 SCL",
+   "wires": [
+    "PN532 SCL"
+   ]
+  },
+  "30": {
+   "fn": "GND",
+   "wires": [
+    "DAC GND"
+   ]
+  },
+  "31": {
+   "fn": "GPIO3_B4 / I2C5 SDA",
+   "wires": [
+    "PN532 SDA"
+   ]
+  },
+  "34": {
+   "fn": "GND",
+   "wires": [
+    "LoRa GND"
+   ]
+  },
+  "35": {
+   "fn": "GPIO3_A4 / I2S3 LRCK",
+   "wires": [
+    "DAC LRCK"
+   ]
+  },
+  "36": {
+   "fn": "GPIO3_A7",
+   "wires": [
+    "PN532 IRQ"
+   ]
+  },
+  "40": {
+   "fn": "GPIO3_A5 / I2S3 SDO (DIN)",
+   "wires": [
+    "DAC DIN"
+   ]
+  }
+ },
+ "notes": [
+  "**Power switch**: an SS12D00 slide switch (SPDT, 8.6 x 3.6 mm body) in the left wall, beside the TP4056, breaks TP4056 B+ -> boost VIN. Middle pin = from the charger's B+ pad, one outer pin = to the boost (the other outer pin stays empty). The printed knob (print/yellow/switch_knob.stl) goes in from inside the case; the switch lever drops into its open-top socket. Charging still works with the switch off (the TP4056 charges the cell directly).",
+  "**5 V boost: Pololu U3V40F5** (fixed 5 V, ~2.6 A from a charged cell, ~2.1 A near empty). It is fed from the TP4056's B+/B- pads so the TP4056's ~3 A protection is out of the load path: use a **protected high-drain 18650** (button top, <= 70 mm, protection >= 5 A, e.g. Nitecore NL1835HP or Keeppower 3500 protected). The TP4056 now only charges; its OUT pads stay empty. 47 uF on the boost input. Have the Radxa shut down cleanly near 3.2-3.3 V cell voltage.",
+  "One wire per Radxa pad. I2C (CardKB 0x5F, PN532 0x24) on I2C5 (pins 29/31) runs Radxa -> PN532, and the CardKB is chained onto the PN532's header pins. Power both from 3.3 V (pin 17) so the bus pull-ups stay at 3.3 V (the Radxa is not 5 V tolerant). Enable the i2c5 overlay.",
+  "5 V: one 22 AWG lead from the boost to a heat-shrunk splice just behind the Radxa, branching to Radxa pin 2, the LoRa, the screen and the SDR. Same for GND (Radxa pin 6 + screen). The GPS runs from 5 V on pin 4 (its module has a regulator; its UART stays 3.3 V).",
+  "DAC: I2S3 (pins 12/35/40), enable the i2s3 overlay; tie the module's SCK to GND.",
+  "GPS on UART3 (pins 3/5), LoRa E22 on UART4 (pins 16/18); M0/M1/AUX on pins 13/7/22. Pins 8/10 (UART2) are the debug console - left free.",
+  "Screen: HDMI ribbon + its own 5 V pair straight from the boost, all through the hinge bore.",
+  "SDR on header pins 27/28 = the RK3566's spare USB2 HOST2 port (schematic page 20). On the Radxa: remove R32 and R39 (0 ohm, they route I2C4 to those pins) and fit 0 ohm / a solder bridge on R45 and R46 (marked NC). Cut the dongle's USB-A plug off and take VBUS from the 5 V splice and solder D-/D+/GND to pins 28/27/14. Keep D+/D- twisted and short. Software: the HOST2 (EHCI/OHCI) controller must be enabled in the device tree - check rsetup overlays, or ask me for an overlay.",
+  "Pin map checked against Radxa's schematic (page 20): 3V3 = pins 1 & 17; UART4 RX/TX = 16/18; GND = 6, 9, 14, 20, 25, 30, 34, 39 (the web pin table has some of these wrong).",
+  "CardKB at 3.3 V: M5Stack specs it for 5 V. Its ATmega8A usually runs fine at 3.3 V, but if keys are missed, power it from 5 V and keep the bus at 3.3 V (remove the CardKB's I2C pull-ups or add a small level shifter) - never pull SDA/SCL up to 5 V on the Radxa.",
+  "Battery level: the RK3566's ADC inputs aren't on the header, so nothing measures the cell yet. Easiest: a MAX17048 fuel gauge (3 x 3 mm, I2C 0x36) on the same I2C5 bus, its CELL+ on the battery side of the switch - gives % and voltage for a clean shutdown at ~3.3 V.",
+  "Wire: 20-22 AWG silicone for the battery/boost leads, 24 AWG for 5 V branches, 28-30 AWG silicone for signals, 1.13 mm coax for antennas.",
+  "The CardKB Grove pads sit over the battery block: a 1.2 mm groove in its top lets those 4 wires out."
+ ],
+ "colors": {
+  "usb": "#9d4edd",
+  "pwr": "#d62828",
+  "gnd": "#1b1b1b",
+  "v33": "#f77f00",
+  "i2c": "#277da1",
+  "i2s": "#43aa8b",
+  "uart": "#f9c74f",
+  "gpio": "#f2f2f2",
+  "hdmi": "#c46b2c",
+  "coax": "#8d99ae"
+ }
+}

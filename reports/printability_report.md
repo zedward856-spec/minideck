@@ -5,18 +5,19 @@ nozzle 0.4, layer 0.2, bed 256; parts in their print orientation
 ## bottom - 8 issue(s)
 size [93.7, 81.5, 39.5] mm
 
-- **thin wall (<0.6 mm, min 0.01) x41.8-59.2 y17.4-24.2 z0.1-0.3 (176 samples)**
-- **thin wall (<0.6 mm, min 0.01) x34.6-44.0 y17.5-24.4 z0.1-0.3 (62 samples)**
-- **thin wall (<0.6 mm, min 0.01) x35.5-47.2 y12.7-15.5 z0.1-0.3 (59 samples)**
-- **thin wall (<0.6 mm, min 0.01) x34.8-39.3 y27.8-32.1 z0.1-0.3 (39 samples)**
-- **thin wall (<0.6 mm, min 0.01) x75.8-86.9 y24.5-26.4 z0.1-0.2 (38 samples)**
-- **thin wall (<0.6 mm, min 0.01) x60.5-65.2 y5.6-10.2 z0.3-0.3 (37 samples)**
-- **gap narrower than 0.3 mm (will fuse) x90.4-91.7 y2.0-3.3 z22.1-22.4 (9 samples)**
-- **gap narrower than 0.3 mm (will fuse) x2.0-3.4 y2.0-3.2 z22.1-22.4 (9 samples)**
-- bridge ~6 mm at z=1.2 (x4-10 y65-78) - fine
-- bridge ~6 mm at z=1.2 (x84-90 y65-78) - fine
+- **thin wall (<0.6 mm, min 0.01) x41.9-59.2 y17.5-24.2 z0.1-0.3 (170 samples)**
+- **thin wall (<0.6 mm, min 0.01) x34.5-44.0 y17.5-24.0 z0.1-0.3 (70 samples)**
+- **thin wall (<0.6 mm, min 0.01) x35.5-47.2 y12.7-15.5 z0.1-0.3 (61 samples)**
+- **thin wall (<0.6 mm, min 0.01) x28.5-33.1 y35.3-39.9 z0.3-0.3 (41 samples)**
+- **thin wall (<0.6 mm, min 0.01) x34.9-39.1 y28.0-32.2 z0.1-0.3 (41 samples)**
+- **thin wall (<0.6 mm, min 0.01) x28.6-33.1 y5.5-10.0 z0.3-0.3 (39 samples)**
+- **gap narrower than 0.3 mm (will fuse) x90.1-91.7 y1.9-3.3 z22.1-22.4 (11 samples)**
+- **gap narrower than 0.3 mm (will fuse) x2.0-3.5 y2.0-3.2 z22.1-22.4 (9 samples)**
+- bridge ~12 mm at z=0.6 (x4-90 y65-78) - fine
 - bridge ~12 mm at z=22.9 (x2-92 y64-80) - fine
 - bridge ~6 mm at z=20.4 (x2-75 y44-52) - fine
+- bridge ~4 mm at z=1.2 (x84-89 y66-78) - fine
+- bridge ~4 mm at z=1.2 (x5-10 y66-78) - fine
 
 ## keyboard_top - 10 issue(s)
 size [93.7, 64.1, 1.4] mm
@@ -66,13 +67,14 @@ size [11.8, 9.3, 4.5] mm
 size [3.4, 12.0, 2.0] mm
 
 
-## box_hatch - 4 issue(s)
+## box_hatch - 5 issue(s)
 size [85.3, 12.8, 3.2] mm
 
-- **thin wall (<0.6 mm, min 0.56) x85.5-88.0 y74.3-76.7 z0.8-0.8 (126 samples)**
-- **thin wall (<0.6 mm, min 0.56) x85.5-88.0 y67.1-69.5 z0.8-0.8 (126 samples)**
-- **thin wall (<0.6 mm, min 0.56) x5.8-8.2 y67.1-69.5 z0.8-0.8 (126 samples)**
-- **thin wall (<0.6 mm, min 0.56) x5.8-8.2 y74.3-76.7 z0.8-0.8 (126 samples)**
+- **thin wall (<0.6 mm, min 0.44) x85.5-89.3 y73.0-77.7 z0.0-0.8 (189 samples)**
+- **thin wall (<0.6 mm, min 0.44) x85.5-89.3 y66.0-70.0 z0.0-0.8 (188 samples)**
+- **thin wall (<0.6 mm, min 0.44) x4.5-8.2 y73.0-77.7 z0.0-0.8 (187 samples)**
+- **thin wall (<0.6 mm, min 0.44) x4.7-8.2 y66.0-69.8 z0.0-0.8 (186 samples)**
+- **thin wall (<0.6 mm, min 0.44) x32.9-35.3 y77.5-78.0 z0.0-0.6 (10 samples)**
 
 ## hinge_axle - OK
 size [11.9, 13.0, 15.2] mm

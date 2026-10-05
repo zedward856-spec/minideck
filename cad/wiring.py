@@ -18,11 +18,12 @@ _b = L.bounds("radxa"); _rp = L.radxa_ports()
 _ZP = (_rp["z"][0] + _rp["z"][1]) / 2 + 3.16 / 2         # same placement as the official model
 PAD_Z = _ZP + 1.6                                          # the PCB face that now points up
 def pad(n):
-    """Radxa ZERO 3W header pin n. Pi-Zero layout assumed: pin 1 at the microSD end, odd pins on
-    the inner row (model y 25.41), even pins on the edge row (27.95), 2.54 pitch."""
+    """Radxa ZERO 3W header pin n. Pi-Zero layout: pin 1 at the microSD end - the board's LEFT end in this case
+    (Radxa's drawing; the camera FPC is at the right end) - odd pins on the inner row (model y 25.41), even pins
+    on the edge row (27.95), 2.54 pitch. (The header is centred on the board, so 8.32 holds from either end.)"""
     col, even = (n - 1) // 2, n % 2 == 0
     mx, my = 8.32 + 2.54 * col, 27.95 if even else 25.41
-    return np.array([_b[3] - mx, my + 1.5 + _b[1], PAD_Z])
+    return np.array([_b[0] + mx, my + 1.5 + _b[1], PAD_Z])
 
 def grove_pads():
     """Where the CardKB's (desoldered) Grove connector was: its through-hole pads, bottom side."""
@@ -107,10 +108,10 @@ ln = lane()
 w("BAT+", "pwr", "18650 + contact (right end)", "TP4056 B+",
   [(bt.POS_SLOT_X + 1.0, bt.YC, B.CV_Z0 - 0.7), (77.6, bt.YC, 20.6), (77.6, 37.0, ln[1]), (77.6, ln[0], ln[1]),
    (23.9, ln[0], ln[1]), (23.9, 36.9, 20.9), (20.0, 32.5, 20.9), (TP["bp"][0], 31.0, 20.2), TP["bp"]],
-  note="24 AWG silicone, red")
+  note="20-22 AWG silicone, red - it carries the whole load (up to ~3.4 A from a low cell), not just charging")
 w("BAT-", "gnd", "18650 - contact (door spring)", "TP4056 B-",
   [(bt.WIRE_X_IN, bt.YC - 6.0, bt.WIRE_Z), (bt.WIRE_X_IN, 36.6, bt.WIRE_Z), (TP["bn"][0], 31.0, 20.0), TP["bn"]],
-  note="24 AWG black - through the hole in the chamber divider")
+  note="20-22 AWG black (whole load current) - through the hole in the chamber divider")
 # load path: TP4056 B+/B- pads (battery side, past its ~3 A protection) -> power switch -> Pololu U3V40F5 -> splices
 import switch as SW
 _pz = SW.ZC; _px = SW.X1 + SWITCH["pins"][2] - 0.3
@@ -269,8 +270,7 @@ def write_plan():
           "keyboard - solder wires on that side and lay them flat (~3 mm of room above the board).",
           "Pin 1 is at the microSD end (Pi-Zero layout). Radxa's board drawing puts the microSD socket at the",
           "board's **left** end in this case (the camera FPC is at the right end), so pin 1 is at the left end.",
-          "The 3D wire routes in the viewer were drawn with pin 1 at the right end: go by the pin numbers below,",
-          "not the 3D routes, and check the square pad / '1' mark on your board before soldering.", "",
+          "The 3D wire routes follow that too. Still check the square pad / '1' mark on your board before soldering.", "",
           "## Radxa header use", "", "| Pin | Function | Wires |", "|---|---|---|"]
     fn = {1: "3V3", 2: "5V", 3: "GPIO1_A0 / UART3 RX", 4: "5V", 5: "GPIO1_A1 / UART3 TX", 6: "GND",
           7: "GPIO3_C4", 9: "GND", 12: "GPIO3_A3 / I2S3 SCLK (BCK)", 13: "GPIO3_A2", 14: "GND",
@@ -304,17 +304,26 @@ def write_plan():
            "- Screen: HDMI ribbon + its own 5 V pair straight from the boost, all through the hinge bore.",
            "- SDR on header pins 27/28 = the RK3566's spare USB2 HOST2 port (schematic page 20). On the Radxa: "
            "remove R32 and R39 (0 ohm, they route I2C4 to those pins) and fit 0 ohm / a solder bridge on R45 and "
-           "R46 (marked NC). Cut the dongle's USB-A plug off and solder VBUS/D-/D+/GND straight to pins 2/28/27/14. "
+           "R46 (marked NC). Cut the dongle's USB-A plug off and take VBUS from the 5 V splice and solder D-/D+/GND to pins 28/27/14. "
            "Keep D+/D- twisted and short. Software: the HOST2 (EHCI/OHCI) controller must be enabled in the "
            "device tree - check rsetup overlays, or ask me for an overlay.",
            "- Pin map checked against Radxa's schematic (page 20): 3V3 = pins 1 & 17; UART4 RX/TX = 16/18; "
            "GND = 6, 9, 14, 20, 25, 30, 34, 39 (the web pin table has some of these wrong).",
-           "- Wire: 24 AWG silicone for power, 28-30 AWG silicone for signals, 1.13 mm coax for antennas.",
+           "- CardKB at 3.3 V: M5Stack specs it for 5 V. Its ATmega8A usually runs fine at 3.3 V, but if keys are "
+           "missed, power it from 5 V and keep the bus at 3.3 V (remove the CardKB's I2C pull-ups or add a small "
+           "level shifter) - never pull SDA/SCL up to 5 V on the Radxa.",
+           "- Battery level: the RK3566's ADC inputs aren't on the header, so nothing measures the cell yet. Easiest: "
+           "a MAX17048 fuel gauge (3 x 3 mm, I2C 0x36) on the same I2C5 bus, its CELL+ on the battery side of the "
+           "switch - gives % and voltage for a clean shutdown at ~3.3 V.",
+           "- Wire: 20-22 AWG silicone for the battery/boost leads, 24 AWG for 5 V branches, 28-30 AWG silicone for signals, 1.13 mm coax for antennas.",
            "- The CardKB Grove pads sit over the battery block: a 1.2 mm groove in its top lets those 4 wires out."]
     open("WIRING.md", "w").write("\n".join(L_) + "\n")
     import json                                          # structured copy for the Obsidian canvas diagrams
     json.dump([dict(name=wd["name"], kind=wd["kind"], a=wd["a"], b=wd["b"], note=wd["note"]) for wd in P],
               open("out/wires.json", "w"), indent=1)
+    notes = [l[2:] for l in L_[L_.index("## Notes") + 2:] if l.startswith("- ")]
+    json.dump(dict(pins={str(p): dict(fn=fn.get(p, ""), wires=pins[p]) for p in sorted(pins)}, notes=notes,
+                   colors=COLORS), open("out/wiring_site.json", "w"), indent=1)   # for the site's wiring page
 
 if __name__ == "__main__":
     files = build()

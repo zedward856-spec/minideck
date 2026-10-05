@@ -4,8 +4,7 @@ Radxa ZERO 3W, mounted upside down: the 40 header pads (no header fitted) face U
 keyboard - solder wires on that side and lay them flat (~3 mm of room above the board).
 Pin 1 is at the microSD end (Pi-Zero layout). Radxa's board drawing puts the microSD socket at the
 board's **left** end in this case (the camera FPC is at the right end), so pin 1 is at the left end.
-The 3D wire routes in the viewer were drawn with pin 1 at the right end: go by the pin numbers below,
-not the 3D routes, and check the square pad / '1' mark on your board before soldering.
+The 3D wire routes follow that too. Still check the square pad / '1' mark on your board before soldering.
 
 ## Radxa header use
 
@@ -41,8 +40,8 @@ not the 3D routes, and check the square pad / '1' mark on your board before sold
 
 | Wire | From | To | Type / note |
 |---|---|---|---|
-| BAT+ | 18650 + contact (right end) | TP4056 B+ | 24 AWG silicone, red |
-| BAT- | 18650 - contact (door spring) | TP4056 B- | 24 AWG black - through the hole in the chamber divider |
+| BAT+ | 18650 + contact (right end) | TP4056 B+ | 20-22 AWG silicone, red - it carries the whole load (up to ~3.4 A from a low cell), not just charging |
+| BAT- | 18650 - contact (door spring) | TP4056 B- | 20-22 AWG black (whole load current) - through the hole in the chamber divider |
 | B+ -> switch | TP4056 B+ | power switch middle pin (common) | 20-22 AWG red, over the top of the charger (battery side: the TP4056's protection is not in the load path) |
 | switch -> boost VIN | power switch outer pin (the ON end) | BOOST VIN | 20-22 AWG red; check with a multimeter which outer pin is ON with the knob toward the back |
 | B- -> boost GND | TP4056 B- | BOOST GND (in) | 20-22 AWG black |
@@ -98,7 +97,9 @@ not the 3D routes, and check the square pad / '1' mark on your board before sold
 - DAC: I2S3 (pins 12/35/40), enable the i2s3 overlay; tie the module's SCK to GND.
 - GPS on UART3 (pins 3/5), LoRa E22 on UART4 (pins 16/18); M0/M1/AUX on pins 13/7/22. Pins 8/10 (UART2) are the debug console - left free.
 - Screen: HDMI ribbon + its own 5 V pair straight from the boost, all through the hinge bore.
-- SDR on header pins 27/28 = the RK3566's spare USB2 HOST2 port (schematic page 20). On the Radxa: remove R32 and R39 (0 ohm, they route I2C4 to those pins) and fit 0 ohm / a solder bridge on R45 and R46 (marked NC). Cut the dongle's USB-A plug off and solder VBUS/D-/D+/GND straight to pins 2/28/27/14. Keep D+/D- twisted and short. Software: the HOST2 (EHCI/OHCI) controller must be enabled in the device tree - check rsetup overlays, or ask me for an overlay.
+- SDR on header pins 27/28 = the RK3566's spare USB2 HOST2 port (schematic page 20). On the Radxa: remove R32 and R39 (0 ohm, they route I2C4 to those pins) and fit 0 ohm / a solder bridge on R45 and R46 (marked NC). Cut the dongle's USB-A plug off and take VBUS from the 5 V splice and solder D-/D+/GND to pins 28/27/14. Keep D+/D- twisted and short. Software: the HOST2 (EHCI/OHCI) controller must be enabled in the device tree - check rsetup overlays, or ask me for an overlay.
 - Pin map checked against Radxa's schematic (page 20): 3V3 = pins 1 & 17; UART4 RX/TX = 16/18; GND = 6, 9, 14, 20, 25, 30, 34, 39 (the web pin table has some of these wrong).
-- Wire: 24 AWG silicone for power, 28-30 AWG silicone for signals, 1.13 mm coax for antennas.
+- CardKB at 3.3 V: M5Stack specs it for 5 V. Its ATmega8A usually runs fine at 3.3 V, but if keys are missed, power it from 5 V and keep the bus at 3.3 V (remove the CardKB's I2C pull-ups or add a small level shifter) - never pull SDA/SCL up to 5 V on the Radxa.
+- Battery level: the RK3566's ADC inputs aren't on the header, so nothing measures the cell yet. Easiest: a MAX17048 fuel gauge (3 x 3 mm, I2C 0x36) on the same I2C5 bus, its CELL+ on the battery side of the switch - gives % and voltage for a clean shutdown at ~3.3 V.
+- Wire: 20-22 AWG silicone for the battery/boost leads, 24 AWG for 5 V branches, 28-30 AWG silicone for signals, 1.13 mm coax for antennas.
 - The CardKB Grove pads sit over the battery block: a 1.2 mm groove in its top lets those 4 wires out.

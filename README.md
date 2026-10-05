@@ -4,7 +4,7 @@ A pocket clamshell cyberdeck. It's fully parametric (Python + [build123d](https:
 
 ![Minideck, Cyber yellow](docs/img/palette1_front.png)
 
-**[Print files →](print/)** · **[Build guide →](BUILD.md)** · [Wiring](WIRING.md) · Promo site: https://zedward856-spec.github.io/minideck-site/ (its own repo: [minideck-site](https://github.com/zedward856-spec/minideck-site)) · [3D viewer / AR](https://zedward856-spec.github.io/minideck-site/viewer/) · [Thermal lab](https://zedward856-spec.github.io/minideck-site/thermal/)
+**[Print files →](print/)** · **[Build guide →](BUILD.md)** · [Wiring](WIRING.md) · Promo site: https://zedward856-spec.github.io/minideck-site/ (its own repo: [minideck-site](https://github.com/zedward856-spec/minideck-site)) · [3D viewer / AR](https://zedward856-spec.github.io/minideck-site/viewer/) · [Wiring](https://zedward856-spec.github.io/minideck-site/wiring/) · [Thermal lab](https://zedward856-spec.github.io/minideck-site/thermal/)
 
 Reports: [fit checks](reports/fit_report.md) · [assembly check](reports/assembly_report.md) · [thermal](reports/thermal_report.md) · [printability](reports/printability_report.md)
 
@@ -161,6 +161,7 @@ Scripts run from anywhere (they switch to the repo root themselves), e.g. `pytho
 | `models/` | Source models, Corpta font, logo SVG, Radxa downloads and schematic; `models/components/` real part models (sources in [BUILD.md](BUILD.md#component-models)), `models/coloured/` their real-colour versions |
 | `docs/img/` | README renders |
 | `app/` | Offline Android viewer: `app/build.sh install` bundles the site's model and installs it (see [app/README.md](app/README.md)) |
+| `cad/site_wiring.py` | Data for the site's wiring page (pin map, every wire, notes, canvases) |
 | `wiring/` | `minideck-wiring-all.canvas` (47 wires), `minideck-wiring-power.canvas` (25), made by `cad/wiring_canvas.py` |
 
 ## Promo site

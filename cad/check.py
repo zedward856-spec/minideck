@@ -254,6 +254,10 @@ _pairs = [(a, b) for a in _rad for b in _rad if a < b and (box(*_rad[a]) & box(*
 req("radios fit in the box under the hinge: LoRa + Wi-Fi/BT + SDR FPC antennas, NESDR Nano 2+ with USB adapter",
     max(_hits.values()) == 0 and not _pairs,
     f"inside the plastic: {_hits}; touching each other: {_pairs or 'none'}")
+_st = HATCH_STEP
+req("hatch joint is stepped: its flange tucks under a ledge all round (no straight gap to look or dust through), rims stiffen it",
+    _st["overlap"] > 0 and 0 < _st["flange"] < FLOOR,
+    f"{_st['flange']} mm flange under a {_st['overlap']} mm ledge; {_st['rim_t']} x {_st['rim_h']} mm rims along both long edges")
 # SDR off the floor: stands on two thin hatch ribs, so only the rib tops touch it (was its whole bottom face)
 _sdr, _rest, _hb = box(*SDR_BODY), B.sdr_rest(), B.hatch().bounding_box()
 _rr = _rest.bounding_box()
